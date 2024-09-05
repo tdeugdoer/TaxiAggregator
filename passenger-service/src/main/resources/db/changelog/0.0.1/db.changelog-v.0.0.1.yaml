@@ -1,4 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: changeset-create-passengers-table.sql
-      relativeToChangelogFile: true
