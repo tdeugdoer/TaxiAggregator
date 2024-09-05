@@ -7,10 +7,9 @@ allprojects {
 	version = '0.0.1-SNAPSHOT'
 
 	ext {
-		springBootVersion = '3.3.2'
+		springBootVersion = '3.3.3'
 		springDependencyManagementVersion = '1.1.6'
 		mapstructVersion = '1.5.5.Final'
-		lombokVersion = '1.18.34'
 	}
 
 	repositories {
@@ -23,3 +22,4 @@ allprojects {
 		}
 	}
 }
+
