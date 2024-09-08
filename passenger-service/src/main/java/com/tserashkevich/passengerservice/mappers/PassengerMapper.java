@@ -13,12 +13,10 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PassengerMapper {
-
     @Mapping(target = "id", ignore = true)
     Passenger toModel(PassengerRequest userRequest);
     PassengerResponse toResponse(Passenger user);
     List<PassengerResponse> toResponses(List<Passenger> users);
     @Mapping(target = "id", ignore = true)
     void updateModel(@MappingTarget Passenger user, PassengerRequest userRequest);
-
 }

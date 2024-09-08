@@ -10,6 +10,9 @@ allprojects {
 		springBootVersion = '3.3.3'
 		springDependencyManagementVersion = '1.1.6'
 		mapstructVersion = '1.5.5.Final'
+		querydslVersion = '5.1.0'
+		ewerkVersion = '1.0.10'
+		jakartaPersistenceApiVersion = '3.1.0'
 	}
 
 	repositories {

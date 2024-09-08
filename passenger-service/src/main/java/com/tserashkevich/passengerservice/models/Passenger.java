@@ -17,7 +17,6 @@ import java.util.UUID;
 @Entity
 @Table(name = "passengers")
 public class Passenger {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
