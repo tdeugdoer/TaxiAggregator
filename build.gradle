@@ -1,28 +1,28 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.3'
-	id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'com.tserashkevich'
-version = '0.0.1-SNAPSHOT'
+allprojects {
+	group = 'com.tereshkevich'
+	version = '0.0.1-SNAPSHOT'
 
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+	ext {
+		springBootVersion = '3.3.3'
+		springDependencyManagementVersion = '1.1.6'
+		mapstructVersion = '1.5.5.Final'
+		querydslVersion = '5.1.0'
+		ewerkVersion = '1.0.10'
+		jakartaPersistenceApiVersion = '3.1.0'
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	java {
+		toolchain {
+			languageVersion.set(JavaLanguageVersion.of(21))
+		}
 	}
 }
 
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
