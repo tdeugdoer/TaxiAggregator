@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -35,7 +36,7 @@ public class Driver {
 
     private Boolean available;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id")
-    private Car car;
+    private List<Car> car;
 }

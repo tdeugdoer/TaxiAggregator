@@ -86,7 +86,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Transactional(readOnly = true)
     @Override
-    public DriverResponse findOne(UUID driverId) {
+    public DriverResponse findById(UUID driverId) {
         Driver driver = getOrThrow(driverId);
         log.info(LogList.FIND_DRIVER, driverId);
         return driverMapper.toResponse(driver);
@@ -96,7 +96,7 @@ public class DriverServiceImpl implements DriverService {
     public DriverResponse addCar(UUID driverId, CarRequest carRequest) {
         Driver driver = getOrThrow(driverId);
         Car car = carMapper.toModel(carRequest);
-        driver.setCar(car);
+        driver.getCar().add(car);
         driverRepository.save(driver);
         return driverMapper.toResponse(driver);
     }

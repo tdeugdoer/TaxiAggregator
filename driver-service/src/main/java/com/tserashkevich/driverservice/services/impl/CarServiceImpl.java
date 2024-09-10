@@ -81,7 +81,7 @@ public class CarServiceImpl implements CarService {
 
     @Transactional(readOnly = true)
     @Override
-    public CarResponse findOne(Long carId) {
+    public CarResponse findById(Long carId) {
         Car car = getOrThrow(carId);
         log.info(LogList.FIND_CAR, carId);
         return carMapper.toResponse(car);

@@ -16,7 +16,7 @@ public interface DriverService {
     void delete(UUID driverId);
     PageResponse<DriverResponse> findAll(int page, int limit, Sort sort, Gender gender,
                                          LocalDate birthDateStart, LocalDate birthDateEnd, Boolean available);
-    DriverResponse findOne(UUID driverId);
+    DriverResponse findById(UUID driverId);
     DriverResponse addCar(UUID driverId, CarRequest carRequest);
     Boolean existByPhoneNumber(String phoneNumber);
     DriverResponse changeAvailableStatus(UUID driverId, Boolean available);

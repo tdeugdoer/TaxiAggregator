@@ -55,7 +55,7 @@ public class DriverController {
 
     @GetMapping("/{driverId}")
     public DriverResponse findDriverById(@PathVariable UUID driverId) {
-        return driverService.findOne(driverId);
+        return driverService.findById(driverId);
     }
 
     @PutMapping("/addCar/{driverId}")

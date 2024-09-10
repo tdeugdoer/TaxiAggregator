@@ -11,6 +11,6 @@ public interface CarService {
     CarResponse update(Long carId, CarRequest carRequest);
     void delete(Long carId);
     PageResponse<CarResponse> findAll(int page, int limit, Sort sort, String number, String brand, String model, Color color);
-    CarResponse findOne(Long carId);
+    CarResponse findById(Long carId);
     Boolean existByCarNumber(String carNumber);
 }
