@@ -5,5 +5,5 @@ CREATE TABLE cars
     brand  VARCHAR(10)        NOT NULL,
     model  VARCHAR(10)        NOT NULL,
     color  VARCHAR(10)        NOT NULL CHECK (color IN
-                                              ('GREEN', 'RED', 'YELLOW', 'BLACK', 'WHITE', 'METALLIC', 'GRAY', 'ORANGE'))
+                                              ('Green', 'Red', 'Yellow', 'Black', 'White', 'Metallic', 'Gray', 'Orange', 'Blue'))
 );

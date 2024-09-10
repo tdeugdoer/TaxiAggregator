@@ -1,5 +1,5 @@
 INSERT INTO cars (number, brand, model, color)
-VALUES ('A123BB', 'Toyota', 'Camry', 'WHITE'),
-       ('B456CC', 'Honda', 'Civic', 'RED'),
-       ('C789DD', 'Ford', 'Focus', 'GRAY'),
-       ('D101EE', 'BMW', 'X5', 'BLACK');
+VALUES ('A123BB', 'Toyota', 'Camry', 'White'),
+       ('B456CC', 'Honda', 'Civic', 'Red'),
+       ('C789DD', 'Ford', 'Focus', 'Gray'),
+       ('D101EE', 'BMW', 'X5', 'Black');

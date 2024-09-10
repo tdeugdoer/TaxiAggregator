@@ -35,7 +35,6 @@ public class Driver {
 
     private Boolean available;
 
-
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "car_id")
     private Car car;
