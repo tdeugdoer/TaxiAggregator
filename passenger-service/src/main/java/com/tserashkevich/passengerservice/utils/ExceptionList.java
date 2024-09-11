@@ -10,14 +10,14 @@ import java.util.Locale;
 
 @AllArgsConstructor
 public enum ExceptionList {
-    PASSENGER_NOT_FOUND("passenger-not-found");
+    PASSENGER_NOT_FOUND("passenger.not.found");
 
     private final String key;
     private static MessageSource messageSource;
 
     static {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("exceptions");
+        messageSource.setBasename("exceptionMessages");
         messageSource.setDefaultLocale(Locale.ENGLISH);
         messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
         ExceptionList.messageSource = messageSource;

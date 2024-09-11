@@ -82,16 +82,10 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Transactional(readOnly = true)
     @Override
-    public PassengerResponse findOne(UUID id) {
+    public PassengerResponse findById(UUID id) {
         Passenger passenger = getOrThrow(id);
         log.info(LogList.FIND_PASSENGER, id);
         return passengerMapper.toResponse(passenger);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public Boolean existByName(String name) {
-        return passengerRepository.existsByName(name);
     }
 
     @Transactional(readOnly = true)

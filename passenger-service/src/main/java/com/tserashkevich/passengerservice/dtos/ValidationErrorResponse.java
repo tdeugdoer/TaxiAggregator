@@ -1,9 +1,13 @@
 package com.tserashkevich.passengerservice.dtos;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 
-
-public record ValidationErrorResponse(List<Violation> violations) {
-
+@Getter
+@RequiredArgsConstructor
+public class ValidationErrorResponse{
+    private final List<Violation> violations;
 }
 

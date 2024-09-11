@@ -9,6 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, UUID>, QuerydslPredicateExecutor<Passenger> {
-    Boolean existsByName(String name);
     Boolean existsByPhoneNumber(String phoneNumber);
 }

@@ -2,7 +2,6 @@ package com.tserashkevich.passengerservice.dtos;
 
 import com.tserashkevich.passengerservice.utils.PatternList;
 import com.tserashkevich.passengerservice.utils.ValidationList;
-import com.tserashkevich.passengerservice.validators.validAnnotations.ValidPassengerName;
 import com.tserashkevich.passengerservice.validators.validAnnotations.ValidPassengerPhoneNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
@@ -16,9 +15,8 @@ import java.time.LocalDate;
 @Getter
 @RequiredArgsConstructor
 public class PassengerRequest {
-    @ValidPassengerName(message = ValidationList.NAME_ALREADY_EXIST)
     @NotBlank(message = ValidationList.USERNAME_REQUIRED)
-    @Size(max = 50, message = ValidationList.WRONG_MAX_USERNAME_SIZE)
+    @Size(max = 50, message = ValidationList.WRONG_MAX_USERNAME_LENGTH)
     private final String name;
 
     @NotBlank(message = ValidationList.GENDER_REQUIRED)

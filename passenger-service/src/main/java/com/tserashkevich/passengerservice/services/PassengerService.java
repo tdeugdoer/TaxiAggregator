@@ -14,7 +14,6 @@ public interface PassengerService {
     PassengerResponse update(UUID id, PassengerRequest passengerRequest);
     void delete(UUID id);
     PageResponse<PassengerResponse> findAll(int page, int limit, Sort sort, Gender gender, LocalDate birthDateStart, LocalDate birthDateEnd);
-    PassengerResponse findOne(UUID id);
-    Boolean existByName(String name);
-    Boolean existByPhoneNumber(String name);
+    PassengerResponse findById(UUID id);
+    Boolean existByPhoneNumber(String phoneNumber);
 }
