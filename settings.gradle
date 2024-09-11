@@ -1,3 +1,4 @@
 rootProject.name = 'TaxiAggregator'
 
 include 'passenger-service'
+include 'driver-service'

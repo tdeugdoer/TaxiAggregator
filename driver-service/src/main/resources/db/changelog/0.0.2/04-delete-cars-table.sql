@@ -1,0 +1,1 @@
+DELETE FROM cars WHERE number IN ('A123BB', 'B456CC', 'C789DD', 'D101EE');
