@@ -2,7 +2,7 @@ spring:
   application.name: passenger-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/taxi_aggregator
+    url: jdbc:postgresql://localhost:5432/passenger_service
     username: postgres
     password: postgres
   jpa:

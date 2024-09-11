@@ -11,12 +11,14 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
+@Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/passengers")
 public class PassengerController {
@@ -24,23 +26,23 @@ public class PassengerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PassengerResponse createProduct(@Valid @RequestBody PassengerRequest passengerRequest) {
+    public PassengerResponse createPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
         return passengerService.create(passengerRequest);
     }
 
     @PutMapping("/{id}")
-    public PassengerResponse updateProduct(@PathVariable UUID id, @RequestBody PassengerRequest passengerRequest) {
+    public PassengerResponse updatePassenger(@PathVariable UUID id, @RequestBody PassengerRequest passengerRequest) {
         return passengerService.update(id, passengerRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable UUID id) {
+    public void deletePassenger(@PathVariable UUID id) {
         passengerService.delete(id);
     }
 
     @GetMapping
-    public PageResponse<PassengerResponse> findAllProducts(@RequestParam(defaultValue = "0") @Min(0) int page,
+    public PageResponse<PassengerResponse> findAllPassengers(@RequestParam(defaultValue = "0") @Min(0) int page,
                                                            @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
                                                            @RequestParam(defaultValue = "ID_ASC") SortList sort,
                                                            @RequestParam(required = false) Gender gender,
@@ -50,7 +52,7 @@ public class PassengerController {
     }
 
     @GetMapping("/{id}")
-    public PassengerResponse findProductById(@PathVariable UUID id) {
-        return passengerService.findOne(id);
+    public PassengerResponse findPassengerById(@PathVariable UUID id) {
+        return passengerService.findById(id);
     }
 }
