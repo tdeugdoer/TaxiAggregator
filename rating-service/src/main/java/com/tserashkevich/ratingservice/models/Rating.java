@@ -17,7 +17,7 @@ import java.util.UUID;
 public class Rating {
     @PrimaryKey
     private UUID id;
-    private UUID source;
-    private UUID target;
+    private UUID sourceId;
+    private UUID targetId;
     private String comment;
 }
