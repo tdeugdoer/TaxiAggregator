@@ -1,0 +1,9 @@
+spring:
+  application.name: rating-service
+astra:
+  database-id: 894e8fc5-c69e-4076-9262-ced3f050ca0b
+  application-token: AstraCS:pKzyerbiYqxfusKaOaarLWNN:ad3541017427111e729a3693bbbbd11acbdb4e013ce23eb339f60b3c26b4ee8c
+  client-secret: -r40Md4OZkF+6dPfw2EIyNoX4NQv7awCOqhW_TGJvIEHRnbF-uarqujZeQbIBHbP-zP8MJQ.ZdEgloF+72kp00eOaBtY.PC4W,Uy.dQjgfMARpPwukn_Z0qjKN2kYmsz
+  client-id:
+
+
