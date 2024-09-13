@@ -1,6 +1,9 @@
 package com.tserashkevich.rideservice.services;
 
-import com.tserashkevich.rideservice.dtos.*;
+import com.tserashkevich.rideservice.dtos.CreateRideRequest;
+import com.tserashkevich.rideservice.dtos.CreateRideResponse;
+import com.tserashkevich.rideservice.dtos.PageResponse;
+import com.tserashkevich.rideservice.dtos.RideResponse;
 import com.tserashkevich.rideservice.models.enums.Status;
 import org.springframework.data.domain.Sort;
 
@@ -16,7 +19,7 @@ public interface RideService {
                                        Integer minDistance, Integer maxDistance,
                                        Status status, Long carId);
     RideResponse findById(String rideId);
-    RideResponse changeStatus(String rideId, StatusRequest statusRequest);
-    RideResponse changeDriver(String rideId, DriverIdRequest driverIdRequest);
-    RideResponse changeCar(String rideId, CarIdRequest carIdRequest);
+    RideResponse changeStatus(String rideId, String status);
+    RideResponse changeDriver(String rideId, String driverId);
+    RideResponse changeCar(String rideId, Long carId);
 }

@@ -1,6 +1,9 @@
 package com.tserashkevich.rideservice.services.impl;
 
-import com.tserashkevich.rideservice.dtos.*;
+import com.tserashkevich.rideservice.dtos.CreateRideRequest;
+import com.tserashkevich.rideservice.dtos.CreateRideResponse;
+import com.tserashkevich.rideservice.dtos.PageResponse;
+import com.tserashkevich.rideservice.dtos.RideResponse;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
 import com.tserashkevich.rideservice.mappers.RideMapper;
 import com.tserashkevich.rideservice.models.Ride;
@@ -91,9 +94,9 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public RideResponse changeStatus(String rideId, StatusRequest statusRequest) {
+    public RideResponse changeStatus(String rideId, String status) {
         Ride ride = getOrThrow(rideId);
-        ride.setStatus(Status.valueOf(statusRequest.getStatus()));
+        ride.setStatus(Status.valueOf(status));
         if (ride.getStatus().equals(Status.FINISHED)) {
             ride.getTime().setEndTime(LocalDateTime.now());
         }
@@ -102,17 +105,17 @@ public class RideServiceImpl implements RideService {
     }
 
     @Override
-    public RideResponse changeDriver(String rideId, DriverIdRequest driverIdRequest) {
+    public RideResponse changeDriver(String rideId, String driverId) {
         Ride ride = getOrThrow(rideId);
-        ride.setDriverId(UUID.fromString(driverIdRequest.getDriverId()));
+        ride.setDriverId(UUID.fromString(driverId));
         rideRepository.save(ride);
         return rideMapper.toRideResponse(ride);
     }
 
     @Override
-    public RideResponse changeCar(String rideId, CarIdRequest carIdRequest) {
+    public RideResponse changeCar(String rideId, Long carId) {
         Ride ride = getOrThrow(rideId);
-        ride.setCarId(carIdRequest.getCarId());
+        ride.setCarId(carId);
         rideRepository.save(ride);
         return rideMapper.toRideResponse(ride);
     }
