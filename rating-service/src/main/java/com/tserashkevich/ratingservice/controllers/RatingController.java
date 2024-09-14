@@ -9,13 +9,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.ByteBuffer;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +29,7 @@ public class RatingController {
     }
 
     @PutMapping("/{ratingId}")
-    public RatingResponse updateRating(@PathVariable UUID ratingId, @RequestBody RatingRequest ratingRequest) {
+    public RatingResponse updateRating(@PathVariable UUID ratingId, @Valid @RequestBody RatingRequest ratingRequest) {
         return ratingService.update(ratingId, ratingRequest);
     }
 
