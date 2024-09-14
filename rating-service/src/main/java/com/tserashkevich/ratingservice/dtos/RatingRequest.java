@@ -8,5 +8,6 @@ import lombok.RequiredArgsConstructor;
 public class RatingRequest {
     private final String sourceId;
     private final String targetId;
+    private final Integer rating;
     private final String comment;
 }

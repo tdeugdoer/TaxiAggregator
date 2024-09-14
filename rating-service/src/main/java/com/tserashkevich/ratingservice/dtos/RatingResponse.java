@@ -11,5 +11,6 @@ public class RatingResponse {
     private final UUID id;
     private final UUID sourceId;
     private final UUID targetId;
+    private final Integer rating;
     private final String comment;
 }

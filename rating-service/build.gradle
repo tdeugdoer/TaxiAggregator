@@ -10,7 +10,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-cassandra'
-    implementation "com.datastax.astra:astra-spring-boot-starter:${datastaxAstraVersion}"
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
