@@ -31,7 +31,7 @@ public class PassengerController {
     }
 
     @PutMapping("/{id}")
-    public PassengerResponse updatePassenger(@PathVariable UUID id, @RequestBody PassengerRequest passengerRequest) {
+    public PassengerResponse updatePassenger(@PathVariable UUID id, @Valid @RequestBody PassengerRequest passengerRequest) {
         return passengerService.update(id, passengerRequest);
     }
 
@@ -43,11 +43,11 @@ public class PassengerController {
 
     @GetMapping
     public PageResponse<PassengerResponse> findAllPassengers(@RequestParam(defaultValue = "0") @Min(0) int page,
-                                                           @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
-                                                           @RequestParam(defaultValue = "ID_ASC") SortList sort,
-                                                           @RequestParam(required = false) Gender gender,
-                                                           @RequestParam(required = false) LocalDate birthDateStart,
-                                                           @RequestParam(required = false) LocalDate birthDateEnd) {
+                                                             @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
+                                                             @RequestParam(defaultValue = "ID_ASC") SortList sort,
+                                                             @RequestParam(required = false) Gender gender,
+                                                             @RequestParam(required = false) LocalDate birthDateStart,
+                                                             @RequestParam(required = false) LocalDate birthDateEnd) {
         return passengerService.findAll(page, limit, sort.getValue(), gender, birthDateStart, birthDateEnd);
     }
 
