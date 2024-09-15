@@ -1,7 +1,5 @@
 package com.tserashkevich.ratingservice.service.impl;
 
-import com.datastax.oss.driver.api.core.cql.PagingState;
-import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
 import com.tserashkevich.ratingservice.dtos.PageResponse;
 import com.tserashkevich.ratingservice.dtos.RatingRequest;
 import com.tserashkevich.ratingservice.dtos.RatingResponse;
@@ -17,18 +15,14 @@ import com.tserashkevich.ratingservice.utils.RatingSorter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.cassandra.core.CassandraTemplate;
-import org.springframework.data.cassandra.core.query.CassandraPageRequest;
-import org.springframework.data.cassandra.core.query.CassandraScrollPosition;
 import org.springframework.data.cassandra.core.query.Criteria;
 import org.springframework.data.cassandra.core.query.Query;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.ByteBuffer;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

@@ -1,9 +1,7 @@
 package com.tserashkevich.ratingservice.utils;
 
-import com.datastax.oss.driver.api.querybuilder.QueryBuilder;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.query.CassandraPageRequest;
 import org.springframework.data.cassandra.core.query.CriteriaDefinition;
 import org.springframework.data.cassandra.core.query.Query;
 import org.springframework.data.domain.Pageable;
