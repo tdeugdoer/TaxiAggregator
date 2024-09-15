@@ -3,6 +3,7 @@ package com.tserashkevich.driverservice.dtos;
 import com.tserashkevich.driverservice.utils.PatternList;
 import com.tserashkevich.driverservice.utils.ValidationList;
 import com.tserashkevich.driverservice.validators.validAnnotations.ValidCarNumber;
+import com.tserashkevich.driverservice.validators.validAnnotations.ValidDriver;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -28,4 +29,9 @@ public class CarRequest {
     @NotBlank(message = ValidationList.CAR_COLOR_REQUIRED)
     @Pattern(regexp = PatternList.COLOR_PATTERN, message = ValidationList.WRONG_COLOR)
     private final String color;
+
+    @ValidDriver(message = ValidationList.DRIVER_NOT_EXSIST)
+    @NotBlank(message = ValidationList.DRIVER_ID_REQUIRED)
+    @Pattern(regexp = PatternList.UUID_PATTERN, message = ValidationList.WRONG_UUID_FORMAT)
+    private final String driver;
 }

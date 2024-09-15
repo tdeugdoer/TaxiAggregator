@@ -30,4 +30,8 @@ public class Car {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Color color;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
 }
