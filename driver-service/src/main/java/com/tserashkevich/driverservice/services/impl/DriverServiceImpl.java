@@ -1,14 +1,11 @@
 package com.tserashkevich.driverservice.services.impl;
 
 import com.querydsl.core.types.Predicate;
-import com.tserashkevich.driverservice.dtos.CarRequest;
 import com.tserashkevich.driverservice.dtos.DriverRequest;
 import com.tserashkevich.driverservice.dtos.DriverResponse;
 import com.tserashkevich.driverservice.dtos.PageResponse;
 import com.tserashkevich.driverservice.exceptions.DriverNotFoundException;
-import com.tserashkevich.driverservice.mappers.CarMapper;
 import com.tserashkevich.driverservice.mappers.DriverMapper;
-import com.tserashkevich.driverservice.models.Car;
 import com.tserashkevich.driverservice.models.Driver;
 import com.tserashkevich.driverservice.models.QDriver;
 import com.tserashkevich.driverservice.models.enums.Gender;
@@ -36,7 +33,6 @@ import java.util.UUID;
 public class DriverServiceImpl implements DriverService {
     private final DriverRepository driverRepository;
     private final DriverMapper driverMapper;
-    private final CarMapper carMapper;
 
     @Override
     public DriverResponse create(DriverRequest driverRequest) {
@@ -92,15 +88,6 @@ public class DriverServiceImpl implements DriverService {
         return driverMapper.toResponse(driver);
     }
 
-    @Override
-    public DriverResponse addCar(UUID driverId, CarRequest carRequest) {
-        Driver driver = getOrThrow(driverId);
-        Car car = carMapper.toModel(carRequest);
-        driver.getCar().add(car);
-        driverRepository.save(driver);
-        return driverMapper.toResponse(driver);
-    }
-
     @Transactional(readOnly = true)
     @Override
     public Boolean existByPhoneNumber(String phoneNumber) {
@@ -108,9 +95,14 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public DriverResponse changeAvailableStatus(UUID driverId, Boolean available) {
+    public Boolean existById(UUID driverId) {
+        return driverRepository.existsById(driverId);
+    }
+
+    @Override
+    public DriverResponse changeAvailableStatus(UUID driverId) {
         Driver driver = getOrThrow(driverId);
-        driver.setAvailable(available);
+        driver.setAvailable(!driver.getAvailable());
         driverRepository.save(driver);
         return driverMapper.toResponse(driver);
     }
