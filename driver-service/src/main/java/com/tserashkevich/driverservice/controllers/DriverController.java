@@ -2,6 +2,7 @@ package com.tserashkevich.driverservice.controllers;
 
 import com.tserashkevich.driverservice.dtos.DriverRequest;
 import com.tserashkevich.driverservice.dtos.DriverResponse;
+import com.tserashkevich.driverservice.dtos.DriverUpdateRequest;
 import com.tserashkevich.driverservice.dtos.PageResponse;
 import com.tserashkevich.driverservice.models.enums.Gender;
 import com.tserashkevich.driverservice.services.DriverService;
@@ -31,8 +32,8 @@ public class DriverController {
     }
 
     @PutMapping("/{driverId}")
-    public DriverResponse updateDriver(@PathVariable UUID driverId, @Valid @RequestBody DriverRequest driverRequest) {
-        return driverService.update(driverId, driverRequest);
+    public DriverResponse updateDriver(@PathVariable UUID driverId, @Valid @RequestBody DriverUpdateRequest driverUpdateRequest) {
+        return driverService.update(driverId, driverUpdateRequest);
     }
 
     @DeleteMapping("/{driverId}")
