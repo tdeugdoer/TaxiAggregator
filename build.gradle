@@ -13,6 +13,7 @@ allprojects {
 		querydslVersion = '5.1.0'
 		ewerkVersion = '1.0.10'
 		jakartaPersistenceApiVersion = '3.1.0'
+		datastaxAstraVersion = '0.1.13'
 	}
 
 	repositories {
