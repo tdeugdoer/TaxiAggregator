@@ -34,6 +34,7 @@ public class DriverServiceImpl implements DriverService {
     private final CarService carService;
     private final DriverMapper driverMapper;
 
+    @Transactional
     @Override
     public DriverResponse create(DriverRequest driverRequest) {
         Driver driver = driverMapper.toModel(driverRequest);
@@ -47,6 +48,7 @@ public class DriverServiceImpl implements DriverService {
         return driverMapper.toResponse(driver);
     }
 
+    @Transactional
     @Override
     public DriverResponse update(UUID driverId, DriverUpdateRequest driverUpdateRequest) {
         Driver driver = getOrThrow(driverId);
