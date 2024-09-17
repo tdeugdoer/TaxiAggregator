@@ -93,6 +93,7 @@ public class RideServiceImpl implements RideService {
         return rideMapper.toRideResponse(ride);
     }
 
+    @Transactional
     @Override
     public RideResponse changeStatus(String rideId, String status) {
         Ride ride = getOrThrow(rideId);
@@ -104,6 +105,7 @@ public class RideServiceImpl implements RideService {
         return rideMapper.toRideResponse(ride);
     }
 
+    @Transactional
     @Override
     public RideResponse changeDriver(String rideId, String driverId) {
         Ride ride = getOrThrow(rideId);
@@ -112,6 +114,7 @@ public class RideServiceImpl implements RideService {
         return rideMapper.toRideResponse(ride);
     }
 
+    @Transactional
     @Override
     public RideResponse changeCar(String rideId, Long carId) {
         Ride ride = getOrThrow(rideId);

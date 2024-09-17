@@ -58,27 +58,27 @@ public class RideController {
         return rideService.findById(rideId);
     }
 
-    @PutMapping("/changeStatus/{rideId}")
+    @PatchMapping("/changeStatus/{rideId}/{status}")
     public RideResponse changeStatus(@PathVariable String rideId,
                                      @NotBlank(message = ValidationList.STATUS_REQUIRED)
                                      @Pattern(regexp = PatternList.STATUS_PATTERN, message = ValidationList.WRONG_STATUS)
-                                     @RequestParam String status) {
+                                     @PathVariable String status) {
         return rideService.changeStatus(rideId, status);
     }
 
-    @PutMapping("/changeDriver/{rideId}")
+    @PatchMapping("/changeDriver/{rideId}/{driverId}")
     public RideResponse changeDriver(@PathVariable String rideId,
                                      @NotBlank(message = ValidationList.DRIVER_ID_REQUIRED)
                                      @Pattern(regexp = PatternList.UUID_PATTERN, message = ValidationList.WRONG_UUID_FORMAT)
-                                     @RequestParam String driverId) {
+                                     @PathVariable String driverId) {
         return rideService.changeDriver(rideId, driverId);
     }
 
-    @PutMapping("/changeCar/{rideId}")
+    @PatchMapping("/changeCar/{rideId}/{carId}")
     public RideResponse changeCar(@PathVariable String rideId,
                                   @NotNull(message = ValidationList.CAR_ID_REQUIRED)
                                   @Min(value = 1, message = ValidationList.NEGATIVE_VALUE)
-                                  Long carId) {
+                                  @PathVariable Long carId) {
         return rideService.changeCar(rideId, carId);
     }
 }
