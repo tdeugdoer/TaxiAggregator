@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,7 +37,6 @@ public class Driver {
 
     private Boolean available;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id")
-    private List<Car> car;
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private List<Car> cars = new ArrayList<>();
 }
