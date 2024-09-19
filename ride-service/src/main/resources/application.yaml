@@ -1,0 +1,9 @@
+spring:
+  application.name: ride-service
+  data:
+    mongodb:
+      uri: mongodb://localhost/27017
+      database: local
+geoapify:
+  apiKey: ea1ca0da5eae49128b9e311d225b61ac
+
