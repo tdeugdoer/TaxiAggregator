@@ -3,10 +3,12 @@ package com.tserashkevich.driverservice.services.impl;
 import com.querydsl.core.types.Predicate;
 import com.tserashkevich.driverservice.dtos.CarRequest;
 import com.tserashkevich.driverservice.dtos.CarResponse;
+import com.tserashkevich.driverservice.dtos.CarWithoutDriverRequest;
 import com.tserashkevich.driverservice.dtos.PageResponse;
 import com.tserashkevich.driverservice.exceptions.CarNotFoundException;
 import com.tserashkevich.driverservice.mappers.CarMapper;
 import com.tserashkevich.driverservice.models.Car;
+import com.tserashkevich.driverservice.models.Driver;
 import com.tserashkevich.driverservice.models.QCar;
 import com.tserashkevich.driverservice.models.enums.Color;
 import com.tserashkevich.driverservice.repositories.CarRepository;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +41,18 @@ public class CarServiceImpl implements CarService {
         carRepository.save(car);
         log.info(LogList.CREATE_CAR, car.getId());
         return carMapper.toResponse(car);
+    }
+
+    @Override
+    public List<Car> create(Driver driver, List<CarWithoutDriverRequest> carRequests) {
+        List<Car> cars = carMapper.toModel(carRequests);
+        cars.forEach(car -> car.setDriver(driver));
+        carRepository.saveAll(cars);
+        log.info(LogList.CREATE_CARS, cars.stream()
+                .map(Car::getId)
+                .map(String::valueOf)
+                .collect(Collectors.joining(", ")));
+        return cars;
     }
 
     @Override

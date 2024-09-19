@@ -3,7 +3,6 @@ package com.tserashkevich.driverservice.dtos;
 import com.tserashkevich.driverservice.utils.PatternList;
 import com.tserashkevich.driverservice.utils.ValidationList;
 import com.tserashkevich.driverservice.validators.validAnnotations.ValidDriverPhoneNumber;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
@@ -12,11 +11,10 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @RequiredArgsConstructor
-public class DriverRequest {
+public class DriverUpdateRequest {
     @NotBlank(message = ValidationList.USERNAME_REQUIRED)
     @Size(max = 50, message = ValidationList.WRONG_MAX_USERNAME_LENGTH)
     private final String name;
@@ -32,7 +30,4 @@ public class DriverRequest {
 
     @Past(message = ValidationList.WRONG_BIRTH_DATE)
     private final LocalDate birthDate;
-
-    @Valid
-    private final List<CarWithoutDriverRequest> cars;
 }

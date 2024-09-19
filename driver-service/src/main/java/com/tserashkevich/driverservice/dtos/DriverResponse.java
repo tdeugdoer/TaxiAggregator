@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -14,4 +15,6 @@ public class DriverResponse {
     private final String gender;
     private final String phoneNumber;
     private final LocalDate birthDate;
+    private final Boolean available;
+    private final List<CarWithoutDriverResponse> cars;
 }

@@ -1,8 +1,8 @@
 package com.tserashkevich.driverservice.controllers;
 
-import com.tserashkevich.driverservice.dtos.CarRequest;
 import com.tserashkevich.driverservice.dtos.DriverRequest;
 import com.tserashkevich.driverservice.dtos.DriverResponse;
+import com.tserashkevich.driverservice.dtos.DriverUpdateRequest;
 import com.tserashkevich.driverservice.dtos.PageResponse;
 import com.tserashkevich.driverservice.models.enums.Gender;
 import com.tserashkevich.driverservice.services.DriverService;
@@ -32,8 +32,8 @@ public class DriverController {
     }
 
     @PutMapping("/{driverId}")
-    public DriverResponse updateDriver(@PathVariable UUID driverId, @RequestBody DriverRequest driverRequest) {
-        return driverService.update(driverId, driverRequest);
+    public DriverResponse updateDriver(@PathVariable UUID driverId, @Valid @RequestBody DriverUpdateRequest driverUpdateRequest) {
+        return driverService.update(driverId, driverUpdateRequest);
     }
 
     @DeleteMapping("/{driverId}")
@@ -44,12 +44,12 @@ public class DriverController {
 
     @GetMapping
     public PageResponse<DriverResponse> findAllDrivers(@RequestParam(defaultValue = "0") @Min(0) int page,
-                                                        @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
-                                                        @RequestParam(defaultValue = "ID_ASC") DriverSortList sort,
-                                                        @RequestParam(required = false) Gender gender,
-                                                        @RequestParam(required = false) LocalDate birthDateStart,
-                                                        @RequestParam(required = false) LocalDate birthDateEnd,
-                                                        @RequestParam(required = false) Boolean available) {
+                                                       @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
+                                                       @RequestParam(defaultValue = "ID_ASC") DriverSortList sort,
+                                                       @RequestParam(required = false) Gender gender,
+                                                       @RequestParam(required = false) LocalDate birthDateStart,
+                                                       @RequestParam(required = false) LocalDate birthDateEnd,
+                                                       @RequestParam(required = false) Boolean available) {
         return driverService.findAll(page, limit, sort.getValue(), gender, birthDateStart, birthDateEnd, available);
     }
 
@@ -58,13 +58,8 @@ public class DriverController {
         return driverService.findById(driverId);
     }
 
-    @PutMapping("/addCar/{driverId}")
-    public DriverResponse addCar(@PathVariable UUID driverId, @RequestBody CarRequest carRequest) {
-        return driverService.addCar(driverId, carRequest);
-    }
-
     @PutMapping("/changeStatus/{driverId}")
-    public DriverResponse changeAvailableStatus(@PathVariable UUID driverId, @RequestParam Boolean available) {
-        return driverService.changeAvailableStatus(driverId, available);
+    public DriverResponse changeAvailableStatus(@PathVariable UUID driverId) {
+        return driverService.changeAvailableStatus(driverId);
     }
 }
