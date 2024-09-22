@@ -1,8 +1,6 @@
 package com.tserashkevich.ratingservice.controllers;
 
-import com.tserashkevich.ratingservice.dtos.PageResponse;
-import com.tserashkevich.ratingservice.dtos.RatingRequest;
-import com.tserashkevich.ratingservice.dtos.RatingResponse;
+import com.tserashkevich.ratingservice.dtos.*;
 import com.tserashkevich.ratingservice.service.RatingService;
 import com.tserashkevich.ratingservice.utils.RatingSortList;
 import jakarta.validation.Valid;
@@ -45,11 +43,28 @@ public class RatingController {
                                                        @RequestParam(required = false) UUID sourceId,
                                                        @RequestParam(required = false) UUID targetId,
                                                        @RequestParam(required = false) Integer rating) {
-        return ratingService.findAll(limit, sort, sourceId, targetId, rating);
+        FindAllParams findAllParams = FindAllParams.builder()
+                .limit(limit)
+                .sort(sort)
+                .sourceId(sourceId)
+                .targetId(targetId)
+                .rating(rating)
+                .build();
+        return ratingService.findAll(findAllParams);
     }
 
     @GetMapping("/{ratingId}")
     public RatingResponse findRatingById(@PathVariable UUID ratingId) {
         return ratingService.findById(ratingId);
+    }
+
+    @GetMapping("/avg/{targetId}")
+    public AvgRatingsResponse findTargetAvgRating(@PathVariable UUID targetId) {
+        return ratingService.findAvgRating(targetId);
+    }
+
+    @GetMapping("/feedbacks/{targetId}")
+    public FeedbackResponse findFeedbacks(@PathVariable UUID targetId) {
+        return ratingService.findFeedbacks(targetId);
     }
 }

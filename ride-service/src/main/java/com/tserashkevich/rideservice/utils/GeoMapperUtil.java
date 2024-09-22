@@ -1,20 +1,14 @@
 package com.tserashkevich.rideservice.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tserashkevich.rideservice.configs.GeoapifyProperties;
 import com.tserashkevich.rideservice.dtos.CreateRideRequest;
-import com.tserashkevich.rideservice.exceptions.GeoapifyException;
-import com.tserashkevich.rideservice.exceptions.JsonReadException;
+import com.tserashkevich.rideservice.feing.GeoapifyFeignClient;
+import com.tserashkevich.rideservice.feing.feignDtos.GeocodeReverseResponse;
+import com.tserashkevich.rideservice.feing.feignDtos.RoutingResponse;
 import com.tserashkevich.rideservice.models.Address;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
 
 import java.util.List;
 
@@ -22,61 +16,29 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class GeoMapperUtil {
-    private final ObjectMapper objectMapper = new ObjectMapper();
-    private final RestTemplateBuilder restTemplateBuilder;
+    private final GeoapifyFeignClient geoapifyFeignClient;
     private final GeoapifyProperties geoapifyProperties;
 
     @Named("mapGeoPointToAddress")
     public Address mapGeoPointToAddress(String geoPoint) {
-        try {
-            List<String> coordinates = List.of(geoPoint.split(","));
-            String url = String.format("https://api.geoapify.com/v1/geocode/reverse?lat=%s&lon=%s&apiKey=%s",
-                    coordinates.get(0),
-                    coordinates.get(1),
-                    geoapifyProperties.getApiKey());
-            ResponseEntity<String> response = restTemplateBuilder.build()
-                    .exchange(url,
-                            HttpMethod.GET,
-                            null,
-                            String.class);
-            checkResponse(response);
-            JsonNode rootNode = objectMapper.readTree(response.getBody());
-            String address = rootNode.path("features").path(0).path("properties").path("formatted").asText();
-            return Address.builder()
-                    .geoPoint(coordinates.get(0) + "|" + coordinates.get(1))
-                    .name(address)
-                    .build();
-
-        } catch (JsonProcessingException jsonProcessingException) {
-            throw new JsonReadException();
-        } catch (RestClientException e) {
-            throw new GeoapifyException(e.getMessage());
-        }
+        List<String> coordinates = List.of(geoPoint.split(","));
+        GeocodeReverseResponse geocodeReverseResponse = geoapifyFeignClient.getCeocodeReverse(coordinates.get(0),
+                coordinates.get(1),
+                "json",
+                geoapifyProperties.getApiKey());
+        return Address.builder()
+                .geoPoint(geocodeReverseResponse.getResults().get(0).getLat() + "|" + geocodeReverseResponse.getResults().get(0).getLon())
+                .name(geocodeReverseResponse.getResults().get(0).getFormatted())
+                .build();
     }
 
     @Named("countDistance")
     public Integer countDistance(CreateRideRequest createRideRequest) {
-        try {
-            String url = String.format("https://api.geoapify.com/v1/routing?waypoints=%s&mode=%s&apiKey=%s",
-                    createRideRequest.getStartGeoPoint() + "|" + createRideRequest.getEndGeoPoint(),
-                    "drive",
-                    geoapifyProperties.getApiKey());
-            ResponseEntity<String> response = restTemplateBuilder.build()
-                    .exchange(url,
-                            HttpMethod.GET,
-                            null,
-                            String.class);
-            checkResponse(response);
-            JsonNode rootNode = objectMapper.readTree(response.getBody());
-            return rootNode.path("features").path(0).path("properties").path("distance").intValue();
-        } catch (JsonProcessingException jsonProcessingException) {
-            throw new JsonReadException();
-        }
-    }
-
-    private static void checkResponse(ResponseEntity<String> response) {
-        if (response.getStatusCode().isError()) {
-            throw new GeoapifyException();
-        }
+        RoutingResponse routingResponse = geoapifyFeignClient.getRouting(
+                createRideRequest.getStartGeoPoint() + "|" + createRideRequest.getEndGeoPoint(),
+                "drive",
+                geoapifyProperties.getApiKey()
+        );
+        return routingResponse.getFeatures().get(0).getProperties().getDistance();
     }
 }

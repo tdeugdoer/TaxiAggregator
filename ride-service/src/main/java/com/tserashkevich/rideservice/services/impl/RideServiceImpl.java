@@ -1,9 +1,6 @@
 package com.tserashkevich.rideservice.services.impl;
 
-import com.tserashkevich.rideservice.dtos.CreateRideRequest;
-import com.tserashkevich.rideservice.dtos.CreateRideResponse;
-import com.tserashkevich.rideservice.dtos.PageResponse;
-import com.tserashkevich.rideservice.dtos.RideResponse;
+import com.tserashkevich.rideservice.dtos.*;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
 import com.tserashkevich.rideservice.mappers.RideMapper;
 import com.tserashkevich.rideservice.models.Ride;
@@ -17,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -55,21 +51,17 @@ public class RideServiceImpl implements RideService {
 
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<RideResponse> findAll(int page, int limit, Sort sort,
-                                              UUID driverId, UUID passengerId,
-                                              LocalDateTime startTime, LocalDateTime endTime,
-                                              Integer minDistance, Integer maxDistance,
-                                              Status status, Long carId) {
-        Pageable pageable = PageRequest.of(page, limit, sort);
+    public PageResponse<RideResponse> findAll(FindAllParams findAllParams) {
+        Pageable pageable = PageRequest.of(findAllParams.getPage(), findAllParams.getLimit(), findAllParams.getSort());
         Query query = QueryPredicate.builder()
-                .add(driverId, Criteria.where("driverId").is(driverId))
-                .add(passengerId, Criteria.where("passengerId").is(passengerId))
-                .add(startTime, Criteria.where("time.startTime").gte(startTime))
-                .add(endTime, Criteria.where("time.endTime").lte(endTime))
-                .add(minDistance, Criteria.where("distance").gte(minDistance))
-                .add(maxDistance, Criteria.where("distance").lte(maxDistance))
-                .add(status, Criteria.where("time.startTime").gte(startTime))
-                .add(carId, Criteria.where("carId").is(carId))
+                .add(findAllParams.getCarId(), Criteria.where("driverId").is(findAllParams.getDriverId()))
+                .add(findAllParams.getPassengerId(), Criteria.where("passengerId").is(findAllParams.getPassengerId()))
+                .add(findAllParams.getStartTime(), Criteria.where("time.startTime").gte(findAllParams.getStartTime()))
+                .add(findAllParams.getEndTime(), Criteria.where("time.endTime").lte(findAllParams.getEndTime()))
+                .add(findAllParams.getMinDistance(), Criteria.where("distance").gte(findAllParams.getMinDistance()))
+                .add(findAllParams.getMaxDistance(), Criteria.where("distance").lte(findAllParams.getMaxDistance()))
+                .add(findAllParams.getStatus(), Criteria.where("status").gte(findAllParams.getStatus()))
+                .add(findAllParams.getCarId(), Criteria.where("carId").is(findAllParams.getCarId()))
                 .with(pageable)
                 .build();
         Page<Ride> ridePage = PageableExecutionUtils.getPage(mongoTemplate.find(query, Ride.class),

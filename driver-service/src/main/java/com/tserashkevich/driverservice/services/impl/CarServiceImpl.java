@@ -1,16 +1,12 @@
 package com.tserashkevich.driverservice.services.impl;
 
 import com.querydsl.core.types.Predicate;
-import com.tserashkevich.driverservice.dtos.CarRequest;
-import com.tserashkevich.driverservice.dtos.CarResponse;
-import com.tserashkevich.driverservice.dtos.CarWithoutDriverRequest;
-import com.tserashkevich.driverservice.dtos.PageResponse;
+import com.tserashkevich.driverservice.dtos.*;
 import com.tserashkevich.driverservice.exceptions.CarNotFoundException;
 import com.tserashkevich.driverservice.mappers.CarMapper;
 import com.tserashkevich.driverservice.models.Car;
 import com.tserashkevich.driverservice.models.Driver;
 import com.tserashkevich.driverservice.models.QCar;
-import com.tserashkevich.driverservice.models.enums.Color;
 import com.tserashkevich.driverservice.repositories.CarRepository;
 import com.tserashkevich.driverservice.services.CarService;
 import com.tserashkevich.driverservice.utils.LogList;
@@ -20,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,18 +67,14 @@ public class CarServiceImpl implements CarService {
 
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<CarResponse> findAll(int page, int limit, Sort sort,
-                                             String number, String brand, String model, Color color) {
-        Pageable pageable = PageRequest.of(page, limit, sort);
+    public PageResponse<CarResponse> findAll(CarFindAllParams carFindAllParams) {
+        Pageable pageable = PageRequest.of(carFindAllParams.getPage(), carFindAllParams.getLimit(), carFindAllParams.getSort());
         Predicate predicate = QPredicates.builder()
-                .add(number, QCar.car.number::like)
-                .add(brand, QCar.car.brand::like)
-                .add(model, QCar.car.model::like)
-                .add(color, QCar.car.color::eq)
+                .add(carFindAllParams.getNumber(), QCar.car.number::like)
+                .add(carFindAllParams.getBrand(), QCar.car.brand::like)
+                .add(carFindAllParams.getModel(), QCar.car.model::like)
+                .add(carFindAllParams.getColor(), QCar.car.color::eq)
                 .build();
-        if (predicate == null) {
-            predicate = QCar.car.id.isNotNull();
-        }
         Page<Car> carPage = carRepository.findAll(predicate, pageable);
         List<CarResponse> carResponses = carMapper.toResponses(carPage.getContent());
         log.info(LogList.FIND_ALL_CARS);
@@ -100,6 +91,11 @@ public class CarServiceImpl implements CarService {
         Car car = getOrThrow(carId);
         log.info(LogList.FIND_CAR, carId);
         return carMapper.toResponse(car);
+    }
+
+    @Override
+    public CarExistResponse existById(Long carId) {
+        return new CarExistResponse(carRepository.existsById(carId));
     }
 
     @Transactional(readOnly = true)

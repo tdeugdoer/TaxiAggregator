@@ -3,6 +3,7 @@ package com.tserashkevich.driverservice.utils;
 import com.tserashkevich.driverservice.dtos.ExceptionResponse;
 import com.tserashkevich.driverservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.driverservice.dtos.Violation;
+import com.tserashkevich.driverservice.exceptions.BadRequestToOtherServiceException;
 import com.tserashkevich.driverservice.exceptions.CarNotFoundException;
 import com.tserashkevich.driverservice.exceptions.DriverNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -52,5 +53,13 @@ public class RestExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse("Wrong request parameter: " + ex.getName()));
+    }
+
+    @ExceptionHandler(BadRequestToOtherServiceException.class)
+    public ResponseEntity<ExceptionResponse> handleBadRequestToOtherServiceException(RuntimeException ex) {
+        log.error(LogList.BAD_REQUEST_TO_OTHER_SERVICE, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse("Wrong request parameter: " + ex.getMessage()));
     }
 }

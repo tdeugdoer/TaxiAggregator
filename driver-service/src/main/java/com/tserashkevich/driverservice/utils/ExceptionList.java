@@ -11,7 +11,8 @@ import java.util.Locale;
 @AllArgsConstructor
 public enum ExceptionList {
     DRIVER_NOT_FOUND("driver.not.found"),
-    CAR_NOT_FOUND("car.not.found");
+    CAR_NOT_FOUND("car.not.found"),
+    BAD_REQUEST_TO_OTHER_SERVICE("bad.request.to.other.service");
 
     private final String key;
     private static MessageSource messageSource;

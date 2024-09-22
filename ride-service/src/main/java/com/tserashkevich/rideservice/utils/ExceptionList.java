@@ -11,10 +11,7 @@ import java.util.Locale;
 @AllArgsConstructor
 public enum ExceptionList {
     RIDE_NOT_FOUND("ride.not.found"),
-    GEOAPIFY_EXCEPTION("geoapify.exception"),
-    JSON_READ_EXCEPTION("json.read.exception"),
-    READ_RESPONSE_EXCEPTION("read.response.exception"),
-    GEO_POINT_FORMAT("geo.point.format");
+    BAD_REQUEST_TO_OTHER_SERVICE("bad.request.to.other.service");
 
     private final String key;
     private static MessageSource messageSource;

@@ -3,8 +3,7 @@ package com.tserashkevich.rideservice.utils;
 import com.tserashkevich.rideservice.dtos.ExceptionResponse;
 import com.tserashkevich.rideservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.rideservice.dtos.Violation;
-import com.tserashkevich.rideservice.exceptions.GeoapifyException;
-import com.tserashkevich.rideservice.exceptions.JsonReadException;
+import com.tserashkevich.rideservice.exceptions.BadRequestToOtherServiceException;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -55,20 +54,11 @@ public class RestExceptionHandler {
                 .body(new ExceptionResponse("Wrong request parameter: " + ex.getName()));
     }
 
-    @ExceptionHandler(GeoapifyException.class)
-    public ResponseEntity<ExceptionResponse> handleGeoapifyException(GeoapifyException ex) {
-        log.error(LogList.GEOAPI_ERROR, ex.getMessage());
+    @ExceptionHandler(BadRequestToOtherServiceException.class)
+    public ResponseEntity<ExceptionResponse> handleBadRequestToOtherServiceException(RuntimeException ex) {
+        log.error(LogList.BAD_REQUEST_TO_OTHER_SERVICE, ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse("Geoapify exception: " + ex.getMessage()));
-
-    }
-
-    @ExceptionHandler(JsonReadException.class)
-    public ResponseEntity<ExceptionResponse> handleJsonReadException(JsonReadException ex) {
-        log.error(LogList.JSON_READ_ERROR, ex.getMessage());
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse(ExceptionList.JSON_READ_EXCEPTION.getValue()));
+                .body(new ExceptionResponse("Wrong request parameter: " + ex.getMessage()));
     }
 }

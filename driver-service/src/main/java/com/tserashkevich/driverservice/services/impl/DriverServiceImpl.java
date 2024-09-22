@@ -6,7 +6,6 @@ import com.tserashkevich.driverservice.exceptions.DriverNotFoundException;
 import com.tserashkevich.driverservice.mappers.DriverMapper;
 import com.tserashkevich.driverservice.models.Driver;
 import com.tserashkevich.driverservice.models.QDriver;
-import com.tserashkevich.driverservice.models.enums.Gender;
 import com.tserashkevich.driverservice.repositories.DriverRepository;
 import com.tserashkevich.driverservice.services.CarService;
 import com.tserashkevich.driverservice.services.DriverService;
@@ -17,11 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -66,17 +63,14 @@ public class DriverServiceImpl implements DriverService {
 
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<DriverResponse> findAll(int page, int limit, Sort sort, Gender gender, LocalDate birthDateStart, LocalDate birthDateEnd, Boolean available) {
-        Pageable pageable = PageRequest.of(page, limit, sort);
+    public PageResponse<DriverResponse> findAll(DriverFindAllParams driverFindAllParams) {
+        Pageable pageable = PageRequest.of(driverFindAllParams.getPage(), driverFindAllParams.getLimit(), driverFindAllParams.getSort());
         Predicate predicate = QPredicates.builder()
-                .add(gender, QDriver.driver.gender::eq)
-                .add(birthDateEnd, QDriver.driver.birthDate::before)
-                .add(birthDateStart, QDriver.driver.birthDate::after)
-                .add(available, QDriver.driver.available::eq)
+                .add(driverFindAllParams.getGender(), QDriver.driver.gender::eq)
+                .add(driverFindAllParams.getBirthDateStart(), QDriver.driver.birthDate::before)
+                .add(driverFindAllParams.getBirthDateEnd(), QDriver.driver.birthDate::after)
+                .add(driverFindAllParams.getAvaulable(), QDriver.driver.available::eq)
                 .build();
-        if (predicate == null) {
-            predicate = QDriver.driver.id.isNotNull();
-        }
         Page<Driver> driverPage = driverRepository.findAll(predicate, pageable);
         List<DriverResponse> driverResponses = driverMapper.toResponses(driverPage.getContent());
         log.info(LogList.FIND_ALL_DRIVERS);
@@ -102,8 +96,8 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public Boolean existById(UUID driverId) {
-        return driverRepository.existsById(driverId);
+    public DriverExistResponse existById(UUID driverId) {
+        return new DriverExistResponse(driverRepository.existsById(driverId));
     }
 
     @Override

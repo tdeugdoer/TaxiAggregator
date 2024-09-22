@@ -1,14 +1,13 @@
 package com.tserashkevich.rideservice.controllers;
 
-import com.tserashkevich.rideservice.dtos.CreateRideRequest;
-import com.tserashkevich.rideservice.dtos.CreateRideResponse;
-import com.tserashkevich.rideservice.dtos.PageResponse;
-import com.tserashkevich.rideservice.dtos.RideResponse;
+import com.tserashkevich.rideservice.dtos.*;
 import com.tserashkevich.rideservice.models.enums.Status;
 import com.tserashkevich.rideservice.services.RideService;
 import com.tserashkevich.rideservice.utils.PatternList;
 import com.tserashkevich.rideservice.utils.RideSortList;
 import com.tserashkevich.rideservice.utils.ValidationList;
+import com.tserashkevich.rideservice.validators.validAnnotations.CarExist;
+import com.tserashkevich.rideservice.validators.validAnnotations.DriverExist;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +49,20 @@ public class RideController {
                                                    @RequestParam(required = false) Integer minDistance,
                                                    @RequestParam(required = false) Integer maxDistance,
                                                    @RequestParam(required = false) Status status) {
-        return rideService.findAll(page, limit, sort.getValue(), driverId, passengerId, startTime, endTime, minDistance, maxDistance, status, carId);
+        FindAllParams findAllParams = FindAllParams.builder()
+                .page(page)
+                .limit(limit)
+                .sort(sort.getValue())
+                .driverId(driverId)
+                .passengerId(passengerId)
+                .carId(carId)
+                .startTime(startTime)
+                .endTime(endTime)
+                .minDistance(minDistance)
+                .maxDistance(maxDistance)
+                .status(status)
+                .build();
+        return rideService.findAll(findAllParams);
     }
 
     @GetMapping("/{rideId}")
@@ -68,14 +80,15 @@ public class RideController {
 
     @PatchMapping("/changeDriver/{rideId}/{driverId}")
     public RideResponse changeDriver(@PathVariable String rideId,
+                                     @DriverExist(message = ValidationList.DRIVER_NOT_EXIST)
                                      @NotBlank(message = ValidationList.DRIVER_ID_REQUIRED)
                                      @Pattern(regexp = PatternList.UUID_PATTERN, message = ValidationList.WRONG_UUID_FORMAT)
                                      @PathVariable String driverId) {
         return rideService.changeDriver(rideId, driverId);
     }
-
     @PatchMapping("/changeCar/{rideId}/{carId}")
     public RideResponse changeCar(@PathVariable String rideId,
+                                  @CarExist(message = ValidationList.CAR_NOT_EXIST)
                                   @NotNull(message = ValidationList.CAR_ID_REQUIRED)
                                   @Min(value = 1, message = ValidationList.NEGATIVE_VALUE)
                                   @PathVariable Long carId) {

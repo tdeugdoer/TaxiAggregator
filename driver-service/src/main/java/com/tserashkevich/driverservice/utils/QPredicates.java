@@ -2,6 +2,7 @@ package com.tserashkevich.driverservice.utils;
 
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.Expressions;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -25,10 +26,9 @@ public class QPredicates {
     }
 
     public Predicate build() {
-        return ExpressionUtils.allOf(predicates);
-    }
-
-    public Predicate buildOr() {
-        return ExpressionUtils.anyOf(predicates);
+        if(predicates.isEmpty()){
+            return ExpressionUtils.allOf(Expressions.TRUE);
+        }
+        else return ExpressionUtils.allOf(predicates);
     }
 }

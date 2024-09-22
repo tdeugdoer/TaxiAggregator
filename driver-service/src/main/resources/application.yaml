@@ -12,3 +12,32 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
     enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          ratings:
+            url: http://localhost:8083/api/v1/ratings
+            connect-timeout: 3000
+            read-timeout: 5000
+resilience4j:
+  retry:
+    instances:
+      ratings-retry:
+        max-attempts: 3
+        wait-duration: 3s
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+  circuitbreaker:
+    instances:
+      ratings-breaker:
+        sliding-window-type: count_based
+        sliding-window-size: 5
+        failure-rate-threshold: 75
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 20s
+        max-wait-duration-in-half-open-state: 5s
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 2
+server:
+  port: 8080

@@ -10,7 +10,8 @@ import java.util.Locale;
 
 @AllArgsConstructor
 public enum ExceptionList {
-    PASSENGER_NOT_FOUND("passenger.not.found");
+    PASSENGER_NOT_FOUND("passenger.not.found"),
+    BAD_REQUEST_TO_OTHER_SERVICE("bad.request.to.other.service");
 
     private final String key;
     private static MessageSource messageSource;

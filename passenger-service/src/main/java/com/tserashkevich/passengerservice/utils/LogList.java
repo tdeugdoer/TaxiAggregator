@@ -12,4 +12,6 @@ public class LogList {
     public static final String DELETE_PASSENGER = "Passenger deleted with ID: {}";
     public static final String FIND_ALL_PASSENGER = "Found all passengers";
     public static final String FIND_PASSENGER = "Found Passenger with ID: {}";
+    public static final String DECODE_ERROR = "Error decoding response body: {}";
+    public static final String BAD_REQUEST_TO_OTHER_SERVICE = "Bad request to other service: {}";
 }

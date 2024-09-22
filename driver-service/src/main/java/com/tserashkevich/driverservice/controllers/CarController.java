@@ -1,8 +1,6 @@
 package com.tserashkevich.driverservice.controllers;
 
-import com.tserashkevich.driverservice.dtos.CarRequest;
-import com.tserashkevich.driverservice.dtos.CarResponse;
-import com.tserashkevich.driverservice.dtos.PageResponse;
+import com.tserashkevich.driverservice.dtos.*;
 import com.tserashkevich.driverservice.models.enums.Color;
 import com.tserashkevich.driverservice.services.CarService;
 import com.tserashkevich.driverservice.utils.CarSortList;
@@ -46,11 +44,25 @@ public class CarController {
                                                         @RequestParam(required = false) String brand,
                                                         @RequestParam(required = false) String model,
                                                         @RequestParam(required = false) Color color) {
-        return carService.findAll(page, limit, sort.getValue(), number, brand, model, color);
+        CarFindAllParams carFindAllParams = CarFindAllParams.builder()
+                .page(page)
+                .limit(limit)
+                .sort(sort.getValue())
+                .number(number)
+                .brand(brand)
+                .model(model)
+                .color(color)
+                .build();
+        return carService.findAll(carFindAllParams);
     }
 
     @GetMapping("/{carId}")
     public CarResponse findCarById(@PathVariable Long carId) {
         return carService.findById(carId);
+    }
+
+    @GetMapping("/exist/{carId}")
+    public CarExistResponse existCar(@PathVariable Long carId) {
+        return carService.existById(carId);
     }
 }

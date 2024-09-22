@@ -3,6 +3,7 @@ package com.tserashkevich.passengerservice.utils;
 import com.tserashkevich.passengerservice.dtos.ExceptionResponse;
 import com.tserashkevich.passengerservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.passengerservice.dtos.Violation;
+import com.tserashkevich.passengerservice.exceptions.BadRequestToOtherServiceException;
 import com.tserashkevich.passengerservice.exceptions.PassengerNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -51,5 +52,13 @@ public class RestExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse("Wrong request parameter: " + ex.getName()));
+    }
+
+    @ExceptionHandler(BadRequestToOtherServiceException.class)
+    public ResponseEntity<ExceptionResponse> handleBadRequestToOtherServiceException(RuntimeException ex) {
+        log.error(LogList.BAD_REQUEST_TO_OTHER_SERVICE, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse("Wrong request parameter: " + ex.getMessage()));
     }
 }
