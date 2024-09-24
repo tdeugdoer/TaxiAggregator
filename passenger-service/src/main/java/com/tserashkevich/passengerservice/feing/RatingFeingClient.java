@@ -1,7 +1,6 @@
 package com.tserashkevich.passengerservice.feing;
 
 import com.tserashkevich.passengerservice.configs.feign.FeignConfig;
-import com.tserashkevich.passengerservice.feing.feingDtos.AvgRatingsResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -16,5 +15,5 @@ import java.util.UUID;
 @FeignClient(name = "ratings", configuration = FeignConfig.class)
 public interface RatingFeingClient {
     @GetMapping("/avg/{targetId}")
-    AvgRatingsResponse findTargetAvgRating(@PathVariable UUID targetId);
+    Double findTargetAvgRating(@PathVariable UUID targetId);
 }

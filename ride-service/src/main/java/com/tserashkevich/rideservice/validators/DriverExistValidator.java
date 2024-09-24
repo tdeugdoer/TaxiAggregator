@@ -13,6 +13,6 @@ public class DriverExistValidator implements ConstraintValidator<DriverExist, St
     private final DriverFeignClient driverFeignClient;
     @Override
     public boolean isValid(String driverId, ConstraintValidatorContext context) {
-        return driverFeignClient.getExistDriver(UUID.fromString(driverId)).getExist();
+        return driverFeignClient.getExistDriver(UUID.fromString(driverId));
     }
 }

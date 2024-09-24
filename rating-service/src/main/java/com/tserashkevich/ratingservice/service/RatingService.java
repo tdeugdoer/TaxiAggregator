@@ -2,6 +2,7 @@ package com.tserashkevich.ratingservice.service;
 
 import com.tserashkevich.ratingservice.dtos.*;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface RatingService {
@@ -10,6 +11,6 @@ public interface RatingService {
     void delete(UUID ratingId);
     PageResponse<RatingResponse> findAll(FindAllParams findAllParams);
     RatingResponse findById(UUID ratingId);
-    AvgRatingsResponse findAvgRating(UUID targetId);
-    FeedbackResponse findFeedbacks(UUID targetId);
+    Double findAvgRating(UUID targetId);
+    List<Feedback> findFeedbacks(UUID targetId);
 }

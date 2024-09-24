@@ -11,6 +11,6 @@ public interface DriverService {
     PageResponse<DriverResponse> findAll(DriverFindAllParams driverFindAllParams);
     DriverResponse findById(UUID driverId);
     Boolean existByPhoneNumber(String phoneNumber);
-    DriverExistResponse existById(UUID driverId);
+    Boolean existById(UUID driverId);
     DriverResponse changeAvailableStatus(UUID driverId);
 }

@@ -1,6 +1,9 @@
 package com.tserashkevich.driverservice.controllers;
 
-import com.tserashkevich.driverservice.dtos.*;
+import com.tserashkevich.driverservice.dtos.CarFindAllParams;
+import com.tserashkevich.driverservice.dtos.CarRequest;
+import com.tserashkevich.driverservice.dtos.CarResponse;
+import com.tserashkevich.driverservice.dtos.PageResponse;
 import com.tserashkevich.driverservice.models.enums.Color;
 import com.tserashkevich.driverservice.services.CarService;
 import com.tserashkevich.driverservice.utils.CarSortList;
@@ -62,7 +65,7 @@ public class CarController {
     }
 
     @GetMapping("/exist/{carId}")
-    public CarExistResponse existCar(@PathVariable Long carId) {
+    public Boolean existCar(@PathVariable Long carId) {
         return carService.existById(carId);
     }
 }

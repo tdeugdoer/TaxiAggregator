@@ -1,6 +1,5 @@
 package com.tserashkevich.rideservice.feing;
 
-import com.tserashkevich.rideservice.feing.feignDtos.PassengerExistResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,5 +13,5 @@ import java.util.UUID;
 @FeignClient(name = "passenger", configuration = FeignClient.class)
 public interface PassengerFeignClient {
     @GetMapping("/exist/{passengerId}")
-    PassengerExistResponse getExistPassenger(@PathVariable UUID passengerId);
+    Boolean getExistPassenger(@PathVariable UUID passengerId);
 }

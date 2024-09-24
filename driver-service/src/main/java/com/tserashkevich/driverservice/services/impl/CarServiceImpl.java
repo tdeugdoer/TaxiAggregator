@@ -94,8 +94,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public CarExistResponse existById(Long carId) {
-        return new CarExistResponse(carRepository.existsById(carId));
+    public Boolean existById(Long carId) {
+        return carRepository.existsById(carId);
     }
 
     @Transactional(readOnly = true)

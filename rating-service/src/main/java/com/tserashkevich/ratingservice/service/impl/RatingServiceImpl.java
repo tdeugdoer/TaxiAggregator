@@ -85,17 +85,17 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public AvgRatingsResponse findAvgRating(UUID targetId) {
+    public Double findAvgRating(UUID targetId) {
         Double avgRating = ratingRepository.countTargetIdAvgRating(targetId);
         log.info(LogList.COUNT_AVG_RATING, targetId);
-        return new AvgRatingsResponse(avgRating);
+        return avgRating;
     }
 
     @Override
-    public FeedbackResponse findFeedbacks(UUID targetId) {
+    public List<Feedback> findFeedbacks(UUID targetId) {
         List<Rating> ratings = ratingRepository.findAllByTargetId(targetId);
         log.info(LogList.FIND_FEEDBACKS, targetId);
-        return new FeedbackResponse(ratingMapper.toFeedbacks(ratings));
+        return ratingMapper.toFeedbacks(ratings);
     }
 
     public Rating getOrThrow(UUID ratingId) {

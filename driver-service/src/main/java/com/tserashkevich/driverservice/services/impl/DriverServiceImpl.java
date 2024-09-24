@@ -96,8 +96,8 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public DriverExistResponse existById(UUID driverId) {
-        return new DriverExistResponse(driverRepository.existsById(driverId));
+    public Boolean existById(UUID driverId) {
+        return driverRepository.existsById(driverId);
     }
 
     @Override

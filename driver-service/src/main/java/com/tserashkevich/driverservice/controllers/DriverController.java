@@ -70,7 +70,7 @@ public class DriverController {
     }
 
     @GetMapping("/exist/{driverId}")
-    public DriverExistResponse existDriver(@PathVariable UUID driverId) {
+    public Boolean existDriver(@PathVariable UUID driverId) {
         return driverService.existById(driverId);
     }
 }

@@ -13,6 +13,6 @@ public class PassengerExistValidator implements ConstraintValidator<PassengerExi
     private final PassengerFeignClient passengerFeignClient;
     @Override
     public boolean isValid(String passengerId, ConstraintValidatorContext context) {
-        return passengerFeignClient.getExistPassenger(UUID.fromString(passengerId)).getExist();
+        return passengerFeignClient.getExistPassenger(UUID.fromString(passengerId));
     }
 }

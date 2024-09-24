@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -59,12 +60,12 @@ public class RatingController {
     }
 
     @GetMapping("/avg/{targetId}")
-    public AvgRatingsResponse findTargetAvgRating(@PathVariable UUID targetId) {
+    public Double findTargetAvgRating(@PathVariable UUID targetId) {
         return ratingService.findAvgRating(targetId);
     }
 
     @GetMapping("/feedbacks/{targetId}")
-    public FeedbackResponse findFeedbacks(@PathVariable UUID targetId) {
+    public List<Feedback> findFeedbacks(@PathVariable UUID targetId) {
         return ratingService.findFeedbacks(targetId);
     }
 }

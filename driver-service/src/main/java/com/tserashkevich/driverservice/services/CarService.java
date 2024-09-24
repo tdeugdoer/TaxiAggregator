@@ -13,6 +13,6 @@ public interface CarService {
     void delete(Long carId);
     PageResponse<CarResponse> findAll(CarFindAllParams carFindAllParams);
     CarResponse findById(Long carId);
-    CarExistResponse existById(Long carId);
+    Boolean existById(Long carId);
     Boolean existByCarNumber(String carNumber);
 }

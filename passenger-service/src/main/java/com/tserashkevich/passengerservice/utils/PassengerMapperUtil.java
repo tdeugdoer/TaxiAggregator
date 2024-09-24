@@ -17,7 +17,6 @@ public class PassengerMapperUtil {
     @Named("getAvgRating")
     public Double getAvgRating(UUID passengerId) {
         return ratingFeingClient
-                .findTargetAvgRating(passengerId)
-                .getAvgRating();
+                .findTargetAvgRating(passengerId);
     }
 }
