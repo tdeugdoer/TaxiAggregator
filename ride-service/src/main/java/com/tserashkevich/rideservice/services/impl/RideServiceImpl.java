@@ -67,7 +67,7 @@ public class RideServiceImpl implements RideService {
         Page<Ride> ridePage = PageableExecutionUtils.getPage(mongoTemplate.find(query, Ride.class),
                 pageable,
                 () -> mongoTemplate.count(Query.of(query).limit(-1).skip(-1),
-                Ride.class));
+                        Ride.class));
         List<RideResponse> rideResponses = rideMapper.toRideResponses(ridePage.getContent());
         log.info(LogList.FIND_ALL_RIDES);
         return PageResponse.<RideResponse>builder()
@@ -94,6 +94,7 @@ public class RideServiceImpl implements RideService {
             ride.getTime().setEndTime(LocalDateTime.now());
         }
         rideRepository.save(ride);
+        log.info(LogList.CHANGE_STATUS, rideId);
         return rideMapper.toRideResponse(ride);
     }
 
@@ -103,6 +104,7 @@ public class RideServiceImpl implements RideService {
         Ride ride = getOrThrow(rideId);
         ride.setDriverId(UUID.fromString(driverId));
         rideRepository.save(ride);
+        log.info(LogList.CHANGE_DRIVER, rideId);
         return rideMapper.toRideResponse(ride);
     }
 
@@ -112,6 +114,7 @@ public class RideServiceImpl implements RideService {
         Ride ride = getOrThrow(rideId);
         ride.setCarId(carId);
         rideRepository.save(ride);
+        log.info(LogList.CHANGE_CAR, rideId);
         return rideMapper.toRideResponse(ride);
     }
 

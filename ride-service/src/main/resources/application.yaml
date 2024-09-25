@@ -29,9 +29,7 @@ resilience4j:
     instances:
       retry-conf:
         max-attempts: 3
-        wait-duration: 3s
-        enable-exponential-backoff: true
-        exponential-backoff-multiplier: 2
+        wait-duration: 1s
   circuitbreaker:
     instances:
       circuitbreaker-conf:

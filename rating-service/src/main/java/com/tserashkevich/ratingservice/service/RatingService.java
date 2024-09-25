@@ -7,10 +7,16 @@ import java.util.UUID;
 
 public interface RatingService {
     RatingResponse create(RatingRequest ratingRequest);
+
     RatingResponse update(UUID ratingId, RatingRequest ratingRequest);
+
     void delete(UUID ratingId);
+
     PageResponse<RatingResponse> findAll(FindAllParams findAllParams);
+
     RatingResponse findById(UUID ratingId);
+
     Double findAvgRating(UUID targetId);
+
     List<Feedback> findFeedbacks(UUID targetId);
 }

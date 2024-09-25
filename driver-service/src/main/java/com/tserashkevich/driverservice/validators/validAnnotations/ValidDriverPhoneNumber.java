@@ -14,6 +14,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidDriverPhoneNumber {
     String message() default "Driver phone number already exist";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

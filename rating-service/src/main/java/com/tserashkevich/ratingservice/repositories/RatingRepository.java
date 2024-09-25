@@ -11,6 +11,7 @@ import java.util.UUID;
 @Repository
 public interface RatingRepository extends CassandraRepository<Rating, UUID> {
     List<Rating> findAllByTargetId(UUID targetId);
+
     @Query("SELECT AVG(rating) FROM ratings WHERE target_id = :targetId")
     Double countTargetIdAvgRating(UUID targetId);
 }

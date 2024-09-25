@@ -86,6 +86,7 @@ public class RideController {
                                      @PathVariable String driverId) {
         return rideService.changeDriver(rideId, driverId);
     }
+
     @PatchMapping("/changeCar/{rideId}/{carId}")
     public RideResponse changeCar(@PathVariable String rideId,
                                   @CarExist(message = ValidationList.CAR_NOT_EXIST)

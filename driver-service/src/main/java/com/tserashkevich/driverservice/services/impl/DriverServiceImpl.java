@@ -92,11 +92,13 @@ public class DriverServiceImpl implements DriverService {
     @Transactional(readOnly = true)
     @Override
     public Boolean existByPhoneNumber(String phoneNumber) {
+        log.info(LogList.EXIST_DRIVER_BY_PHONE_NUMBER, phoneNumber);
         return driverRepository.existsByPhoneNumber(phoneNumber);
     }
 
     @Override
     public Boolean existById(UUID driverId) {
+        log.info(LogList.EXIST_DRIVER_BY_ID, driverId);
         return driverRepository.existsById(driverId);
     }
 
@@ -105,6 +107,7 @@ public class DriverServiceImpl implements DriverService {
         Driver driver = getOrThrow(driverId);
         driver.setAvailable(!driver.getAvailable());
         driverRepository.save(driver);
+        log.info(LogList.CHANGE_DRIVER_STATUS, driverId);
         return driverMapper.toResponse(driver);
     }
 

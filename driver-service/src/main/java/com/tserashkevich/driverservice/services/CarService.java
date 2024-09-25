@@ -8,11 +8,18 @@ import java.util.List;
 
 public interface CarService {
     CarResponse create(CarRequest carRequest);
+
     List<Car> create(Driver driverId, List<CarWithoutDriverRequest> carRequests);
+
     CarResponse update(Long carId, CarRequest carRequest);
+
     void delete(Long carId);
+
     PageResponse<CarResponse> findAll(CarFindAllParams carFindAllParams);
+
     CarResponse findById(Long carId);
+
     Boolean existById(Long carId);
+
     Boolean existByCarNumber(String carNumber);
 }

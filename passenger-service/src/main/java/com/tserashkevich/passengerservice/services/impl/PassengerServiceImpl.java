@@ -74,25 +74,27 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Transactional(readOnly = true)
     @Override
-    public PassengerResponse findById(UUID id) {
-        Passenger passenger = getOrThrow(id);
-        log.info(LogList.FIND_PASSENGER, id);
+    public PassengerResponse findById(UUID passengerId) {
+        Passenger passenger = getOrThrow(passengerId);
+        log.info(LogList.FIND_PASSENGER, passengerId);
         return passengerMapper.toResponse(passenger);
     }
 
     @Override
-    public PassengerExistResponse existById(UUID id) {
-        return new PassengerExistResponse(passengerRepository.existsById(id));
+    public PassengerExistResponse existById(UUID passengerId) {
+        log.info(LogList.EXIST_PASSENGER_BY_ID, passengerId);
+        return new PassengerExistResponse(passengerRepository.existsById(passengerId));
     }
 
     @Transactional(readOnly = true)
     @Override
     public Boolean existByPhoneNumber(String phoneNumber) {
+        log.info(LogList.EXIST_PASSENGER_BY_PHONE_NUMBER, phoneNumber);
         return passengerRepository.existsByPhoneNumber(phoneNumber);
     }
 
-    public Passenger getOrThrow(UUID id) {
-        Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
+    public Passenger getOrThrow(UUID passengerId) {
+        Optional<Passenger> optionalPassenger = passengerRepository.findById(passengerId);
         return optionalPassenger.orElseThrow(PassengerNotFoundException::new);
     }
 }

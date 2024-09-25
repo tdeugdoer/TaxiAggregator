@@ -19,9 +19,12 @@ public interface DriverMapper {
     @Mapping(target = "available", ignore = true)
     @Mapping(target = "cars", ignore = true)
     Driver toModel(DriverRequest userRequest);
+
     @Mapping(target = "avgRating", qualifiedByName = "getAvgRating", source = "id")
     DriverResponse toResponse(Driver driver);
+
     List<DriverResponse> toResponses(List<Driver> drivers);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "available", ignore = true)
     @Mapping(target = "cars", ignore = true)

@@ -12,9 +12,11 @@ import java.util.Locale;
 public enum ExceptionList {
     DRIVER_NOT_FOUND("driver.not.found"),
     CAR_NOT_FOUND("car.not.found"),
-    BAD_REQUEST_TO_OTHER_SERVICE("bad.request.to.other.service");
+    BAD_REQUEST_OTHER_SERVICE("bad.request.other.service"),
+    NOT_FOUND_OTHER_SERVICE("not.found.other.service"),
+    SERVER_OTHER_SERVICE("server.other.service"),
+    EXTERNAL_SERVICE("external.service");
 
-    private final String key;
     private static MessageSource messageSource;
 
     static {
@@ -24,6 +26,8 @@ public enum ExceptionList {
         messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
         ExceptionList.messageSource = messageSource;
     }
+
+    private final String key;
 
     public String getValue() {
         Locale locale = LocaleContextHolder.getLocale();

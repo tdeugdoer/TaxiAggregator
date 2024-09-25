@@ -3,8 +3,11 @@ package com.tserashkevich.rideservice.utils;
 import com.tserashkevich.rideservice.dtos.ExceptionResponse;
 import com.tserashkevich.rideservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.rideservice.dtos.Violation;
-import com.tserashkevich.rideservice.exceptions.BadRequestToOtherServiceException;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
+import com.tserashkevich.rideservice.exceptions.feign.OtherServiceBadRequestException;
+import com.tserashkevich.rideservice.exceptions.feign.OtherServiceNotFoundException;
+import com.tserashkevich.rideservice.exceptions.feign.OtherServiceServerException;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -54,11 +57,32 @@ public class RestExceptionHandler {
                 .body(new ExceptionResponse("Wrong request parameter: " + ex.getName()));
     }
 
-    @ExceptionHandler(BadRequestToOtherServiceException.class)
-    public ResponseEntity<ExceptionResponse> handleBadRequestToOtherServiceException(RuntimeException ex) {
-        log.error(LogList.BAD_REQUEST_TO_OTHER_SERVICE, ex.getMessage());
+    @ExceptionHandler(OtherServiceBadRequestException.class)
+    public ResponseEntity<ExceptionResponse> handleOtherServiceBadRequestException(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse("Wrong request parameter: " + ex.getMessage()));
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(OtherServiceNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleOtherServiceNotFoundException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(OtherServiceServerException.class)
+    public ResponseEntity<ExceptionResponse> handleOtherServiceServerException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(CallNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleCallNotPermittedException(RuntimeException ex) {
+        log.info(LogList.CIRCUITBREAKER_OPEN, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ExceptionList.EXTERNAL_SERVICE.getValue()));
     }
 }

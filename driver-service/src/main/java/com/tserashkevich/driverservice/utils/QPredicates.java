@@ -26,9 +26,8 @@ public class QPredicates {
     }
 
     public Predicate build() {
-        if(predicates.isEmpty()){
+        if (predicates.isEmpty()) {
             return ExpressionUtils.allOf(Expressions.TRUE);
-        }
-        else return ExpressionUtils.allOf(predicates);
+        } else return ExpressionUtils.allOf(predicates);
     }
 }

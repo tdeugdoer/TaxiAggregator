@@ -18,6 +18,13 @@ public class LogList {
     public static final String DELETE_CAR = "Car deleted with ID: {}";
     public static final String FIND_ALL_CARS = "Found all cars";
     public static final String FIND_CAR = "Found Car with ID: {}";
-    public static final String DECODE_ERROR = "Error decoding response body: {}";
-    public static final String BAD_REQUEST_TO_OTHER_SERVICE = "Bad request to other service: {}";
+    public static final String BAD_REQUEST_OTHER_SERVICE = "Bad request, other service: {}";
+    public static final String NOT_FOUND_OTHER_SERVICE = "Not found, other service: {}";
+    public static final String SERVER_OTHER_SERVICE = "Server, other service: {}";
+    public static final String EXIST_CAR_BY_ID = "Exist car by id: {}";
+    public static final String EXIST_CAR_BY_NUMBER = "Exist car by number: {}";
+    public static final String CHANGE_DRIVER_STATUS = "Change driver available status: {}";
+    public static final String EXIST_DRIVER_BY_ID = "Exist driver by id: {}";
+    public static final String EXIST_DRIVER_BY_PHONE_NUMBER = "Exist driver by phone number: {}";
+    public static final String CIRCUITBREAKER_OPEN = "CircuitBreaker is open: {}";
 }

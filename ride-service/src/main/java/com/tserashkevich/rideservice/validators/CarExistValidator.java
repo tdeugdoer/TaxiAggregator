@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CarExistValidator implements ConstraintValidator<CarExist, String> {
     private final CarFeignClient carFeignClient;
+
     @Override
     public boolean isValid(String carId, ConstraintValidatorContext context) {
         return carFeignClient.getExistCar(Long.parseLong(carId));

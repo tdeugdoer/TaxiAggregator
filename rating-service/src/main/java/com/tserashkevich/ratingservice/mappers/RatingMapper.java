@@ -16,9 +16,13 @@ public interface RatingMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationTime", ignore = true)
     Rating toModel(RatingRequest ratingRequest);
+
     RatingResponse toRatingResponse(Rating rating);
+
     List<RatingResponse> toRatingResponses(List<Rating> ratings);
+
     List<Feedback> toFeedbacks(List<Rating> ratings);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationTime", ignore = true)
     void updateModel(@MappingTarget Rating rating, RatingRequest ratingRequest);

@@ -95,12 +95,14 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Boolean existById(Long carId) {
+        log.info(LogList.EXIST_CAR_BY_ID, carId);
         return carRepository.existsById(carId);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Boolean existByCarNumber(String carNumber) {
+        log.info(LogList.EXIST_CAR_BY_NUMBER, carNumber);
         return carRepository.existsByNumber(carNumber);
     }
 

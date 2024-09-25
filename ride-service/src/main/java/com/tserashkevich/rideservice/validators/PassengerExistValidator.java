@@ -11,6 +11,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PassengerExistValidator implements ConstraintValidator<PassengerExist, String> {
     private final PassengerFeignClient passengerFeignClient;
+
     @Override
     public boolean isValid(String passengerId, ConstraintValidatorContext context) {
         return passengerFeignClient.getExistPassenger(UUID.fromString(passengerId));

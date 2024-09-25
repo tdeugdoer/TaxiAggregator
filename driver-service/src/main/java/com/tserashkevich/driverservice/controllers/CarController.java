@@ -41,12 +41,12 @@ public class CarController {
 
     @GetMapping
     public PageResponse<CarResponse> findAllCars(@RequestParam(defaultValue = "0") @Min(0) int page,
-                                                        @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
-                                                        @RequestParam(defaultValue = "ID_ASC") CarSortList sort,
-                                                        @RequestParam(required = false) String number,
-                                                        @RequestParam(required = false) String brand,
-                                                        @RequestParam(required = false) String model,
-                                                        @RequestParam(required = false) Color color) {
+                                                 @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
+                                                 @RequestParam(defaultValue = "ID_ASC") CarSortList sort,
+                                                 @RequestParam(required = false) String number,
+                                                 @RequestParam(required = false) String brand,
+                                                 @RequestParam(required = false) String model,
+                                                 @RequestParam(required = false) Color color) {
         CarFindAllParams carFindAllParams = CarFindAllParams.builder()
                 .page(page)
                 .limit(limit)
