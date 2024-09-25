@@ -1,9 +1,6 @@
 package com.tserashkevich.driverservice.controllers;
 
-import com.tserashkevich.driverservice.dtos.DriverRequest;
-import com.tserashkevich.driverservice.dtos.DriverResponse;
-import com.tserashkevich.driverservice.dtos.DriverUpdateRequest;
-import com.tserashkevich.driverservice.dtos.PageResponse;
+import com.tserashkevich.driverservice.dtos.*;
 import com.tserashkevich.driverservice.models.enums.Gender;
 import com.tserashkevich.driverservice.services.DriverService;
 import com.tserashkevich.driverservice.utils.DriverSortList;
@@ -50,7 +47,16 @@ public class DriverController {
                                                        @RequestParam(required = false) LocalDate birthDateStart,
                                                        @RequestParam(required = false) LocalDate birthDateEnd,
                                                        @RequestParam(required = false) Boolean available) {
-        return driverService.findAll(page, limit, sort.getValue(), gender, birthDateStart, birthDateEnd, available);
+        DriverFindAllParams driverFindAllParams = DriverFindAllParams.builder()
+                .page(page)
+                .limit(limit)
+                .sort(sort.getValue())
+                .gender(gender)
+                .birthDateStart(birthDateStart)
+                .birthDateEnd(birthDateEnd)
+                .avaulable(available)
+                .build();
+        return driverService.findAll(driverFindAllParams);
     }
 
     @GetMapping("/{driverId}")
@@ -61,5 +67,10 @@ public class DriverController {
     @PutMapping("/changeStatus/{driverId}")
     public DriverResponse changeAvailableStatus(@PathVariable UUID driverId) {
         return driverService.changeAvailableStatus(driverId);
+    }
+
+    @GetMapping("/exist/{driverId}")
+    public Boolean existDriver(@PathVariable UUID driverId) {
+        return driverService.existById(driverId);
     }
 }

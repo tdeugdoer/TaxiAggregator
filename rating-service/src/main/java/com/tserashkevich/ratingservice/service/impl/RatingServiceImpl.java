@@ -1,8 +1,6 @@
 package com.tserashkevich.ratingservice.service.impl;
 
-import com.tserashkevich.ratingservice.dtos.PageResponse;
-import com.tserashkevich.ratingservice.dtos.RatingRequest;
-import com.tserashkevich.ratingservice.dtos.RatingResponse;
+import com.tserashkevich.ratingservice.dtos.*;
 import com.tserashkevich.ratingservice.exceptions.RatingNotFoundException;
 import com.tserashkevich.ratingservice.mappers.RatingMapper;
 import com.tserashkevich.ratingservice.models.Rating;
@@ -10,7 +8,6 @@ import com.tserashkevich.ratingservice.repositories.RatingRepository;
 import com.tserashkevich.ratingservice.service.RatingService;
 import com.tserashkevich.ratingservice.utils.LogList;
 import com.tserashkevich.ratingservice.utils.QueryPredicate;
-import com.tserashkevich.ratingservice.utils.RatingSortList;
 import com.tserashkevich.ratingservice.utils.RatingSorter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +40,7 @@ public class RatingServiceImpl implements RatingService {
         rating.setCreationTime(LocalDateTime.now());
         ratingRepository.save(rating);
         log.info(LogList.CREATE_RATING, rating.getId());
-        return ratingMapper.toResponse(rating);
+        return ratingMapper.toRatingResponse(rating);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class RatingServiceImpl implements RatingService {
         ratingMapper.updateModel(rating, ratingRequest);
         ratingRepository.save(rating);
         log.info(LogList.EDIT_RATING, ratingId);
-        return ratingMapper.toResponse(rating);
+        return ratingMapper.toRatingResponse(rating);
     }
 
     @Override
@@ -63,16 +60,16 @@ public class RatingServiceImpl implements RatingService {
 
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<RatingResponse> findAll(int limit, RatingSortList sort, UUID sourceId, UUID targetId, Integer rating) {
-        Pageable pageable = PageRequest.ofSize(limit);
+    public PageResponse<RatingResponse> findAll(FindAllParams findAllParams) {
+        Pageable pageable = PageRequest.ofSize(findAllParams.getLimit());
         Query query = QueryPredicate.builder()
-                .add(sourceId, Criteria.where("source_id").is(sourceId))
-                .add(targetId, Criteria.where("target_id").is(targetId))
-                .add(rating, Criteria.where("rating").is(rating))
+                .add(findAllParams.getSourceId(), Criteria.where("source_id").is(findAllParams.getSourceId()))
+                .add(findAllParams.getTargetId(), Criteria.where("target_id").is(findAllParams.getTargetId()))
+                .add(findAllParams.getRating(), Criteria.where("rating").is(findAllParams.getRating()))
                 .with(pageable)
                 .build();
         Slice<Rating> sliceRatings = cassandraTemplate.slice(query, Rating.class);
-        List<RatingResponse> ratingResponses = ratingMapper.toResponses(RatingSorter.sortRating(sliceRatings.getContent(), sort));
+        List<RatingResponse> ratingResponses = ratingMapper.toRatingResponses(RatingSorter.sortRating(sliceRatings.getContent(), findAllParams.getSort()));
         log.info(LogList.FIND_ALL_RATINGS);
         return PageResponse.<RatingResponse>builder()
                 .objectList(ratingResponses)
@@ -84,7 +81,21 @@ public class RatingServiceImpl implements RatingService {
     public RatingResponse findById(UUID ratingId) {
         Rating rating = getOrThrow(ratingId);
         log.info(LogList.FIND_RATING, ratingId);
-        return ratingMapper.toResponse(rating);
+        return ratingMapper.toRatingResponse(rating);
+    }
+
+    @Override
+    public Double findAvgRating(UUID targetId) {
+        Double avgRating = ratingRepository.countTargetIdAvgRating(targetId);
+        log.info(LogList.COUNT_AVG_RATING, targetId);
+        return avgRating;
+    }
+
+    @Override
+    public List<Feedback> findFeedbacks(UUID targetId) {
+        List<Rating> ratings = ratingRepository.findAllByTargetId(targetId);
+        log.info(LogList.FIND_FEEDBACKS, targetId);
+        return ratingMapper.toFeedbacks(ratings);
     }
 
     public Rating getOrThrow(UUID ratingId) {

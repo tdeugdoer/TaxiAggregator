@@ -12,7 +12,6 @@ import java.util.Locale;
 public enum ExceptionList {
     RATING_NOT_FOUND("rating.not.found");
 
-    private final String key;
     private static MessageSource messageSource;
 
     static {
@@ -22,6 +21,8 @@ public enum ExceptionList {
         messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
         ExceptionList.messageSource = messageSource;
     }
+
+    private final String key;
 
     public String getValue() {
         Locale locale = LocaleContextHolder.getLocale();

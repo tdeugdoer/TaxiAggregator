@@ -3,9 +3,11 @@ package com.tserashkevich.rideservice.utils;
 import com.tserashkevich.rideservice.dtos.ExceptionResponse;
 import com.tserashkevich.rideservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.rideservice.dtos.Violation;
-import com.tserashkevich.rideservice.exceptions.GeoapifyException;
-import com.tserashkevich.rideservice.exceptions.JsonReadException;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
+import com.tserashkevich.rideservice.exceptions.feign.OtherServiceBadRequestException;
+import com.tserashkevich.rideservice.exceptions.feign.OtherServiceNotFoundException;
+import com.tserashkevich.rideservice.exceptions.feign.OtherServiceServerException;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -55,20 +57,32 @@ public class RestExceptionHandler {
                 .body(new ExceptionResponse("Wrong request parameter: " + ex.getName()));
     }
 
-    @ExceptionHandler(GeoapifyException.class)
-    public ResponseEntity<ExceptionResponse> handleGeoapifyException(GeoapifyException ex) {
-        log.error(LogList.GEOAPI_ERROR, ex.getMessage());
+    @ExceptionHandler(OtherServiceBadRequestException.class)
+    public ResponseEntity<ExceptionResponse> handleOtherServiceBadRequestException(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse("Geoapify exception: " + ex.getMessage()));
-
+                .body(new ExceptionResponse(ex.getMessage()));
     }
 
-    @ExceptionHandler(JsonReadException.class)
-    public ResponseEntity<ExceptionResponse> handleJsonReadException(JsonReadException ex) {
-        log.error(LogList.JSON_READ_ERROR, ex.getMessage());
+    @ExceptionHandler(OtherServiceNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleOtherServiceNotFoundException(RuntimeException ex) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(new ExceptionResponse(ExceptionList.JSON_READ_EXCEPTION.getValue()));
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(OtherServiceServerException.class)
+    public ResponseEntity<ExceptionResponse> handleOtherServiceServerException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(CallNotPermittedException.class)
+    public ResponseEntity<ExceptionResponse> handleCallNotPermittedException(RuntimeException ex) {
+        log.info(LogList.CIRCUITBREAKER_OPEN, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ExceptionList.EXTERNAL_SERVICE.getValue()));
     }
 }

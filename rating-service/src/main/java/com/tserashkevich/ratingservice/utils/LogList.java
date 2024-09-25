@@ -12,4 +12,6 @@ public class LogList {
     public static final String DELETE_RATING = "Rating deleted with ID: {}";
     public static final String FIND_ALL_RATINGS = "Found all ratings";
     public static final String FIND_RATING = "Found Rating with ID: {}";
+    public static final String COUNT_AVG_RATING = "Count avg rating by targetId: {}";
+    public static final String FIND_FEEDBACKS = "Find feedbacks by targetId: {}";
 }

@@ -1,8 +1,6 @@
 package com.tserashkevich.passengerservice.controllers;
 
-import com.tserashkevich.passengerservice.dtos.PageResponse;
-import com.tserashkevich.passengerservice.dtos.PassengerRequest;
-import com.tserashkevich.passengerservice.dtos.PassengerResponse;
+import com.tserashkevich.passengerservice.dtos.*;
 import com.tserashkevich.passengerservice.models.enums.Gender;
 import com.tserashkevich.passengerservice.services.PassengerService;
 import com.tserashkevich.passengerservice.utils.SortList;
@@ -48,11 +46,24 @@ public class PassengerController {
                                                              @RequestParam(required = false) Gender gender,
                                                              @RequestParam(required = false) LocalDate birthDateStart,
                                                              @RequestParam(required = false) LocalDate birthDateEnd) {
-        return passengerService.findAll(page, limit, sort.getValue(), gender, birthDateStart, birthDateEnd);
+        FindAllParams findAllParams = FindAllParams.builder()
+                .page(page)
+                .limit(limit)
+                .sort(sort.getValue())
+                .gender(gender)
+                .birthDateStart(birthDateStart)
+                .birthDateEnd(birthDateEnd)
+                .build();
+        return passengerService.findAll(findAllParams);
     }
 
     @GetMapping("/{id}")
     public PassengerResponse findPassengerById(@PathVariable UUID id) {
         return passengerService.findById(id);
+    }
+
+    @GetMapping("/exist/{passengerId}")
+    public PassengerExistResponse existPassenger(@PathVariable UUID passengerId) {
+        return passengerService.existById(passengerId);
     }
 }

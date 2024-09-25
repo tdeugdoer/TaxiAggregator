@@ -1,5 +1,6 @@
 package com.tserashkevich.driverservice.controllers;
 
+import com.tserashkevich.driverservice.dtos.CarFindAllParams;
 import com.tserashkevich.driverservice.dtos.CarRequest;
 import com.tserashkevich.driverservice.dtos.CarResponse;
 import com.tserashkevich.driverservice.dtos.PageResponse;
@@ -40,17 +41,31 @@ public class CarController {
 
     @GetMapping
     public PageResponse<CarResponse> findAllCars(@RequestParam(defaultValue = "0") @Min(0) int page,
-                                                        @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
-                                                        @RequestParam(defaultValue = "ID_ASC") CarSortList sort,
-                                                        @RequestParam(required = false) String number,
-                                                        @RequestParam(required = false) String brand,
-                                                        @RequestParam(required = false) String model,
-                                                        @RequestParam(required = false) Color color) {
-        return carService.findAll(page, limit, sort.getValue(), number, brand, model, color);
+                                                 @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
+                                                 @RequestParam(defaultValue = "ID_ASC") CarSortList sort,
+                                                 @RequestParam(required = false) String number,
+                                                 @RequestParam(required = false) String brand,
+                                                 @RequestParam(required = false) String model,
+                                                 @RequestParam(required = false) Color color) {
+        CarFindAllParams carFindAllParams = CarFindAllParams.builder()
+                .page(page)
+                .limit(limit)
+                .sort(sort.getValue())
+                .number(number)
+                .brand(brand)
+                .model(model)
+                .color(color)
+                .build();
+        return carService.findAll(carFindAllParams);
     }
 
     @GetMapping("/{carId}")
     public CarResponse findCarById(@PathVariable Long carId) {
         return carService.findById(carId);
+    }
+
+    @GetMapping("/exist/{carId}")
+    public Boolean existCar(@PathVariable Long carId) {
+        return carService.existById(carId);
     }
 }

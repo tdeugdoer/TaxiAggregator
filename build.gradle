@@ -1,28 +1,30 @@
 plugins {
-	id 'java'
+    id 'java'
 }
 
 allprojects {
-	group = 'com.tereshkevich'
-	version = '0.0.1-SNAPSHOT'
+    group = 'com.tereshkevich'
+    version = '0.0.1-SNAPSHOT'
 
-	ext {
-		springBootVersion = '3.3.3'
-		springDependencyManagementVersion = '1.1.6'
-		mapstructVersion = '1.5.5.Final'
-		querydslVersion = '5.1.0'
-		ewerkVersion = '1.0.10'
-		jakartaPersistenceApiVersion = '3.1.0'
-	}
+    ext {
+        springBootVersion = '3.3.3'
+        springDependencyManagementVersion = '1.1.6'
+        mapstructVersion = '1.5.5.Final'
+        querydslVersion = '5.1.0'
+        ewerkVersion = '1.0.10'
+        jakartaPersistenceApiVersion = '3.1.0'
+        openfeignVersion = '4.1.3'
+        springCloudVersion = '2023.0.3'
+    }
 
-	repositories {
-		mavenCentral()
-	}
+    repositories {
+        mavenCentral()
+    }
 
-	java {
-		toolchain {
-			languageVersion.set(JavaLanguageVersion.of(21))
-		}
-	}
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
 }
 

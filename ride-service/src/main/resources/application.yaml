@@ -4,6 +4,44 @@ spring:
     mongodb:
       uri: mongodb://localhost/27017
       database: local
+  cloud:
+    openfeign:
+      client:
+        config:
+          geoapify:
+            url: https://api.geoapify.com/v1
+            connect-timeout: 3000
+            read-timeout: 5000
+          driver:
+            url: http://localhost:8080/api/v1/drivers
+            connect-timeout: 3000
+            read-timeout: 5000
+          car:
+            url: http://localhost:8080/api/v1/cars
+            connect-timeout: 3000
+            read-timeout: 5000
+          passenger:
+            url: http://localhost:8081/api/v1/passengers
+            connect-timeout: 3000
+            read-timeout: 5000
+resilience4j:
+  retry:
+    instances:
+      retry-conf:
+        max-attempts: 3
+        wait-duration: 1s
+  circuitbreaker:
+    instances:
+      circuitbreaker-conf:
+        sliding-window-type: count_based
+        sliding-window-size: 5
+        failure-rate-threshold: 75
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 20s
+        max-wait-duration-in-half-open-state: 5s
+        automatic-transition-from-open-to-half-open-enabled: true
+        permitted-number-of-calls-in-half-open-state: 2
 geoapify:
   apiKey: ea1ca0da5eae49128b9e311d225b61ac
-
+server:
+  port: 8082

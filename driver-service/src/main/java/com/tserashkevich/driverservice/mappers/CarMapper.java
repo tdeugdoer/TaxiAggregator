@@ -17,14 +17,18 @@ public interface CarMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver.id", source = "driver")
     Car toModel(CarRequest carRequest);
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "driver", ignore = true)
+
     List<Car> toModel(List<CarWithoutDriverRequest> carRequests);
+
     @Mapping(target = "driver", source = "driver.id")
     CarResponse toResponse(Car car);
+
     CarWithoutDriverResponse toWithoutDriverResponse(Car car);
+
     List<CarResponse> toResponses(List<Car> cars);
+
     List<CarWithoutDriverResponse> toWithoutDriverResponses(List<Car> car);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "driver", ignore = true)
     void updateModel(@MappingTarget Car car, CarRequest carRequest);

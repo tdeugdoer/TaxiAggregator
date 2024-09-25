@@ -16,5 +16,6 @@ public class DriverResponse {
     private final String phoneNumber;
     private final LocalDate birthDate;
     private final Boolean available;
+    private final Double avgRating;
     private final List<CarWithoutDriverResponse> cars;
 }

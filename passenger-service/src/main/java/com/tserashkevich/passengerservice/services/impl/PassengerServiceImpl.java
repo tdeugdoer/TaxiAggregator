@@ -2,14 +2,11 @@ package com.tserashkevich.passengerservice.services.impl;
 
 
 import com.querydsl.core.types.Predicate;
-import com.tserashkevich.passengerservice.dtos.PageResponse;
-import com.tserashkevich.passengerservice.dtos.PassengerRequest;
-import com.tserashkevich.passengerservice.dtos.PassengerResponse;
+import com.tserashkevich.passengerservice.dtos.*;
 import com.tserashkevich.passengerservice.exceptions.PassengerNotFoundException;
 import com.tserashkevich.passengerservice.mappers.PassengerMapper;
 import com.tserashkevich.passengerservice.models.Passenger;
 import com.tserashkevich.passengerservice.models.QPassenger;
-import com.tserashkevich.passengerservice.models.enums.Gender;
 import com.tserashkevich.passengerservice.repositories.PassengerRepository;
 import com.tserashkevich.passengerservice.services.PassengerService;
 import com.tserashkevich.passengerservice.utils.LogList;
@@ -19,11 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -60,16 +55,13 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Transactional(readOnly = true)
     @Override
-    public PageResponse<PassengerResponse> findAll(int page, int limit, Sort sort, Gender gender, LocalDate birthDateStart, LocalDate birthDateEnd) {
-        Pageable pageable = PageRequest.of(page, limit, sort);
+    public PageResponse<PassengerResponse> findAll(FindAllParams findAllParams) {
+        Pageable pageable = PageRequest.of(findAllParams.getPage(), findAllParams.getLimit(), findAllParams.getSort());
         Predicate predicate = QPredicates.builder()
-                .add(gender, QPassenger.passenger.gender::eq)
-                .add(birthDateEnd, QPassenger.passenger.birthDate::before)
-                .add(birthDateStart, QPassenger.passenger.birthDate::after)
+                .add(findAllParams.getGender(), QPassenger.passenger.gender::eq)
+                .add(findAllParams.getBirthDateEnd(), QPassenger.passenger.birthDate::before)
+                .add(findAllParams.getBirthDateStart(), QPassenger.passenger.birthDate::after)
                 .build();
-        if (predicate == null) {
-            predicate = QPassenger.passenger.id.isNotNull();
-        }
         Page<Passenger> passengerPage = passengerRepository.findAll(predicate, pageable);
         List<PassengerResponse> passengerResponses = passengerMapper.toResponses(passengerPage.getContent());
         log.info(LogList.FIND_ALL_PASSENGER);
@@ -82,20 +74,27 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Transactional(readOnly = true)
     @Override
-    public PassengerResponse findById(UUID id) {
-        Passenger passenger = getOrThrow(id);
-        log.info(LogList.FIND_PASSENGER, id);
+    public PassengerResponse findById(UUID passengerId) {
+        Passenger passenger = getOrThrow(passengerId);
+        log.info(LogList.FIND_PASSENGER, passengerId);
         return passengerMapper.toResponse(passenger);
+    }
+
+    @Override
+    public PassengerExistResponse existById(UUID passengerId) {
+        log.info(LogList.EXIST_PASSENGER_BY_ID, passengerId);
+        return new PassengerExistResponse(passengerRepository.existsById(passengerId));
     }
 
     @Transactional(readOnly = true)
     @Override
     public Boolean existByPhoneNumber(String phoneNumber) {
+        log.info(LogList.EXIST_PASSENGER_BY_PHONE_NUMBER, phoneNumber);
         return passengerRepository.existsByPhoneNumber(phoneNumber);
     }
 
-    public Passenger getOrThrow(UUID id) {
-        Optional<Passenger> optionalPassenger = passengerRepository.findById(id);
+    public Passenger getOrThrow(UUID passengerId) {
+        Optional<Passenger> optionalPassenger = passengerRepository.findById(passengerId);
         return optionalPassenger.orElseThrow(PassengerNotFoundException::new);
     }
 }
