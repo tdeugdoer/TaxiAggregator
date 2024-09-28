@@ -3,6 +3,7 @@ package com.tserashkevich.ratingservice.mappers;
 import com.tserashkevich.ratingservice.dtos.Feedback;
 import com.tserashkevich.ratingservice.dtos.RatingRequest;
 import com.tserashkevich.ratingservice.dtos.RatingResponse;
+import com.tserashkevich.ratingservice.kafka.kafkaDtos.RatingCreateEvent;
 import com.tserashkevich.ratingservice.models.Rating;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +17,10 @@ public interface RatingMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationTime", ignore = true)
     Rating toModel(RatingRequest ratingRequest);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "creationTime", ignore = true)
+    Rating toModel(RatingCreateEvent ratingCreateEvent);
 
     RatingResponse toRatingResponse(Rating rating);
 

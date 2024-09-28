@@ -3,6 +3,7 @@ package com.tserashkevich.ratingservice.utils;
 import com.tserashkevich.ratingservice.dtos.ExceptionResponse;
 import com.tserashkevich.ratingservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.ratingservice.dtos.Violation;
+import com.tserashkevich.ratingservice.exceptions.RatingExistException;
 import com.tserashkevich.ratingservice.exceptions.RatingNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,14 @@ public class RestExceptionHandler {
         log.error(LogList.NOT_FOUND_ERROR, ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(RatingExistException.class)
+    public ResponseEntity<ExceptionResponse> handleRatingExistException(RuntimeException ex) {
+        log.error(LogList.RATING_EXIST);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(ex.getMessage()));
     }
 

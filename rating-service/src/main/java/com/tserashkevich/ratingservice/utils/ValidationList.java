@@ -10,4 +10,5 @@ public class ValidationList {
     public static final String RATING_REQUIRED = "{rating.required}";
     public static final String LESS_ZERO = "{less.zero}";
     public static final String MORE_TEN = "{more.ten}";
+    public static final String RIDE_ID_REQUIRED = "{ride.id.required}";
 }

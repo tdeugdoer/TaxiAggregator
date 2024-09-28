@@ -4,6 +4,18 @@ spring:
     contact-points: lucid_archimedes
     port: 9042
     keyspace-name: mykeyspace
-    schema-action: create_if_not_exists
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json:
+          trusted.packages: '*'
+          add.type:
+            mapping: SimpleEvent:com.tserashkevich.ratingservice.kafka.kafkaDtos.SimpleEvent
+      group-id: create-rating-group
+      create-rating-topic:
+        name: create-rating-topic
 server:
   port: 8083

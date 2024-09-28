@@ -2,6 +2,8 @@ package com.tserashkevich.rideservice.services.impl;
 
 import com.tserashkevich.rideservice.dtos.*;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
+import com.tserashkevich.rideservice.kafka.CreateRatingProducer;
+import com.tserashkevich.rideservice.kafka.kafkaDtos.RatingCreateEvent;
 import com.tserashkevich.rideservice.mappers.RideMapper;
 import com.tserashkevich.rideservice.models.Ride;
 import com.tserashkevich.rideservice.models.enums.Status;
@@ -34,6 +36,7 @@ public class RideServiceImpl implements RideService {
     private final RideRepository rideRepository;
     private final RideMapper rideMapper;
     private final MongoTemplate mongoTemplate;
+    private final CreateRatingProducer createRatingProducer;
 
     @Override
     public CreateRideResponse create(CreateRideRequest createRideRequest) {
@@ -116,6 +119,32 @@ public class RideServiceImpl implements RideService {
         rideRepository.save(ride);
         log.info(LogList.CHANGE_CAR, rideId);
         return rideMapper.toRideResponse(ride);
+    }
+
+    @Override
+    public void createDriverComment(CreateRatingRequest createRatingRequest) {
+        Ride ride = getOrThrow(createRatingRequest.getRideId());
+        RatingCreateEvent ratingCreateEvent = RatingCreateEvent.builder()
+                .rideId(ride.getId())
+                .sourceId(ride.getDriverId())
+                .targetId(ride.getPassengerId())
+                .rating(createRatingRequest.getRating())
+                .comment(createRatingRequest.getComment())
+                .build();
+        createRatingProducer.sendRatingCreateEvent(ratingCreateEvent);
+    }
+
+    @Override
+    public void createPassengerComment(CreateRatingRequest createRatingRequest) {
+        Ride ride = getOrThrow(createRatingRequest.getRideId());
+        RatingCreateEvent ratingCreateEvent = RatingCreateEvent.builder()
+                .rideId(ride.getId())
+                .sourceId(ride.getPassengerId())
+                .targetId(ride.getDriverId())
+                .rating(createRatingRequest.getRating())
+                .comment(createRatingRequest.getComment())
+                .build();
+        createRatingProducer.sendRatingCreateEvent(ratingCreateEvent);
     }
 
     public Ride getOrThrow(String rideId) {

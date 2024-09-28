@@ -14,4 +14,6 @@ public class LogList {
     public static final String FIND_RATING = "Found Rating with ID: {}";
     public static final String COUNT_AVG_RATING = "Count avg rating by targetId: {}";
     public static final String FIND_FEEDBACKS = "Find feedbacks by targetId: {}";
+    public static final String RATING_EXIST = "User has already rated the ride";
+    public static final String RECEIVED_EVENT = "Received event: {}";
 }

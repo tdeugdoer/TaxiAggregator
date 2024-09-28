@@ -1,6 +1,6 @@
 package com.tserashkevich.passengerservice.utils;
 
-import com.tserashkevich.passengerservice.feing.RatingFeingClient;
+import com.tserashkevich.passengerservice.feing.RatingFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
@@ -12,11 +12,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Component
 public class PassengerMapperUtil {
-    private final RatingFeingClient ratingFeingClient;
+    private final RatingFeignClient ratingFeignClient;
 
     @Named("getAvgRating")
     public Double getAvgRating(UUID passengerId) {
-        return ratingFeingClient
+        return ratingFeignClient
                 .findTargetAvgRating(passengerId);
     }
 }

@@ -10,6 +10,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RatingResponse {
     private final UUID id;
+    private final String rideId;
     private final UUID sourceId;
     private final UUID targetId;
     private final Integer rating;

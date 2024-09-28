@@ -95,4 +95,16 @@ public class RideController {
                                   @PathVariable Long carId) {
         return rideService.changeCar(rideId, carId);
     }
+
+    @PostMapping("/driverComment")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void createDriverComment(@Valid @RequestBody CreateRatingRequest createRatingRequest) {
+        rideService.createDriverComment(createRatingRequest);
+    }
+
+    @PostMapping("/passengerComment")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void createPassengerComment(@Valid @RequestBody CreateRatingRequest createRatingRequest) {
+        rideService.createPassengerComment(createRatingRequest);
+    }
 }
