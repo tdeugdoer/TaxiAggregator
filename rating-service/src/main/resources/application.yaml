@@ -12,9 +12,8 @@ spring:
       properties:
         spring.json:
           trusted.packages: '*'
-          add.type:
-            mapping: SimpleEvent:com.tserashkevich.ratingservice.kafka.kafkaDtos.SimpleEvent
-      group-id: create-rating-group
+          type.mapping: RatingCreateEvent:com.tserashkevich.ratingservice.kafka.kafkaDtos.RatingCreateEvent
+      group-id: group-1
       create-rating-topic:
         name: create-rating-topic
 server:

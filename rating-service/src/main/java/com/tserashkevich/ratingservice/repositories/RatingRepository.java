@@ -12,7 +12,8 @@ import java.util.UUID;
 public interface RatingRepository extends CassandraRepository<Rating, UUID> {
     List<Rating> findAllByTargetId(UUID targetId);
 
-    Boolean existsByRideIdAndSourceId(String rideId, UUID sourceId);
+    @Query("SELECT COUNT(*) FROM ratings WHERE ride_id = :rideId AND source_id = :sourceId ALLOW FILTERING")
+    Integer existByRideIdAndSourceId(String rideId, UUID sourceId);
 
     @Query("SELECT AVG(rating) FROM ratings WHERE target_id = :targetId")
     Double countTargetIdAvgRating(UUID targetId);

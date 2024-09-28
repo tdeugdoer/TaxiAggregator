@@ -1,6 +1,6 @@
 package com.tserashkevich.ratingservice.kafka;
 
-import com.tserashkevich.ratingservice.kafka.kafkaDtos.SimpleEvent;
+import com.tserashkevich.ratingservice.kafka.kafkaDtos.RatingCreateEvent;
 import com.tserashkevich.ratingservice.service.RatingService;
 import com.tserashkevich.ratingservice.utils.LogList;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ public class CreateRatingConsumer {
 
     @KafkaListener(topics = "${spring.kafka.consumer.create-rating-topic.name}",
             groupId = "${spring.kafka.consumer.group-id}")
-    public void handle(SimpleEvent simpleEvent){
-        log.info(LogList.RECEIVED_EVENT, simpleEvent);
-//        ratingService.create(ratingCreateEvent);
+    public void handle(RatingCreateEvent ratingCreateEvent){
+        log.info(LogList.RECEIVED_EVENT, ratingCreateEvent);
+        ratingService.create(ratingCreateEvent);
     }
 }

@@ -51,13 +51,13 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public void create(RatingCreateEvent ratingCreateEvent) {
         Rating rating = ratingMapper.toModel(ratingCreateEvent);
-        checkRatingExist(rating.getRideId(), rating.getSourceId());
-
-        rating.setId(UUID.randomUUID());
-        rating.setCreationTime(LocalDateTime.now());
-
-        ratingRepository.save(rating);
-        log.info(LogList.CREATE_RATING, rating.getId());
+        if (ratingRepository.existByRideIdAndSourceId(rating.getRideId(), rating.getSourceId()) == 0){
+            rating.setId(UUID.randomUUID());
+            rating.setCreationTime(LocalDateTime.now());
+            ratingRepository.save(rating);
+            log.info(LogList.CREATE_RATING, rating.getId());
+        }
+        else log.info(LogList.RATING_EXIST);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     public void checkRatingExist(String rideId, UUID sourceId) {
-        if (ratingRepository.existsByRideIdAndSourceId(rideId, sourceId))
+        if (ratingRepository.existByRideIdAndSourceId(rideId, sourceId) != 0)
             throw new RatingExistException();
     }
 }
