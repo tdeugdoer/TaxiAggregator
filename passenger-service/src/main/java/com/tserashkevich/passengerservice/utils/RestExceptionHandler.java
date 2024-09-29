@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.net.ConnectException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -71,7 +72,7 @@ public class RestExceptionHandler {
                 .body(new ExceptionResponse(ex.getMessage()));
     }
 
-    @ExceptionHandler(OtherServiceServerException.class)
+    @ExceptionHandler({OtherServiceServerException.class, ConnectException.class})
     public ResponseEntity<ExceptionResponse> handleOtherServiceServerException(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

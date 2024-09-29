@@ -16,7 +16,7 @@ public class CreateRatingConsumer {
 
     @KafkaListener(topics = "${spring.kafka.consumer.create-rating-topic.name}",
             groupId = "${spring.kafka.consumer.group-id}")
-    public void handle(RatingCreateEvent ratingCreateEvent){
+    public void handle(RatingCreateEvent ratingCreateEvent) {
         log.info(LogList.RECEIVED_EVENT, ratingCreateEvent);
         ratingService.create(ratingCreateEvent);
     }

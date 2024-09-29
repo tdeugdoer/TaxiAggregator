@@ -1,6 +1,7 @@
 package com.tserashkevich.rideservice.services.impl;
 
 import com.tserashkevich.rideservice.dtos.*;
+import com.tserashkevich.rideservice.exceptions.RideNotFinishedException;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
 import com.tserashkevich.rideservice.kafka.CreateRatingProducer;
 import com.tserashkevich.rideservice.kafka.kafkaDtos.RatingCreateEvent;
@@ -124,6 +125,9 @@ public class RideServiceImpl implements RideService {
     @Override
     public void createDriverComment(CreateRatingRequest createRatingRequest) {
         Ride ride = getOrThrow(createRatingRequest.getRideId());
+        if (ride.getStatus() != Status.FINISHED) {
+            throw new RideNotFinishedException();
+        }
         RatingCreateEvent ratingCreateEvent = RatingCreateEvent.builder()
                 .rideId(ride.getId())
                 .sourceId(ride.getDriverId())
@@ -137,6 +141,9 @@ public class RideServiceImpl implements RideService {
     @Override
     public void createPassengerComment(CreateRatingRequest createRatingRequest) {
         Ride ride = getOrThrow(createRatingRequest.getRideId());
+        if (ride.getStatus() != Status.FINISHED) {
+            throw new RideNotFinishedException();
+        }
         RatingCreateEvent ratingCreateEvent = RatingCreateEvent.builder()
                 .rideId(ride.getId())
                 .sourceId(ride.getPassengerId())
