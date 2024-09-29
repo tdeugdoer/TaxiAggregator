@@ -73,11 +73,19 @@ public class RestExceptionHandler {
                 .body(new ExceptionResponse(ex.getMessage()));
     }
 
-    @ExceptionHandler({OtherServiceServerException.class, ConnectException.class})
+    @ExceptionHandler(OtherServiceServerException.class)
     public ResponseEntity<ExceptionResponse> handleOtherServiceServerException(RuntimeException ex) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<ExceptionResponse> handleConnectionException(RuntimeException ex) {
+        log.info(LogList.CONNECTION_ERROR, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ExceptionList.EXTERNAL_SERVICE.getValue()));
     }
 
     @ExceptionHandler(CallNotPermittedException.class)

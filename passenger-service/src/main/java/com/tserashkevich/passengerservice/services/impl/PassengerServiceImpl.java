@@ -81,9 +81,9 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public PassengerExistResponse existById(UUID passengerId) {
+    public Boolean existById(UUID passengerId) {
         log.info(LogList.EXIST_PASSENGER_BY_ID, passengerId);
-        return new PassengerExistResponse(passengerRepository.existsById(passengerId));
+        return passengerRepository.existsById(passengerId);
     }
 
     @Transactional(readOnly = true)

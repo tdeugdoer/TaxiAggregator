@@ -63,7 +63,7 @@ public class PassengerController {
     }
 
     @GetMapping("/exist/{passengerId}")
-    public PassengerExistResponse existPassenger(@PathVariable UUID passengerId) {
+    public Boolean existPassenger(@PathVariable UUID passengerId) {
         return passengerService.existById(passengerId);
     }
 }

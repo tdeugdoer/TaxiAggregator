@@ -15,7 +15,7 @@ public interface PassengerService {
 
     PassengerResponse findById(UUID passengerId);
 
-    PassengerExistResponse existById(UUID passengerId);
+    Boolean existById(UUID passengerId);
 
     Boolean existByPhoneNumber(String phoneNumber);
 }
