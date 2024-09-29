@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class CreateRatingProducer {
+    private final KafkaTemplate<String, RatingCreateEvent> kafkaTemplate;
     @Value("${spring.kafka.producer.create-rating-topic.name}")
     private String topic;
-    private final KafkaTemplate<String, RatingCreateEvent> kafkaTemplate;
 
     public void sendRatingCreateEvent(RatingCreateEvent event) {
         log.info(LogList.LOG_KAFKA_SEND_MESSAGE, event);

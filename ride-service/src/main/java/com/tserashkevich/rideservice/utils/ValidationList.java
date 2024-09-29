@@ -17,4 +17,7 @@ public class ValidationList {
     public static final String PASSENGER_NOT_EXIST = "{passenger.not.exist}";
     public static final String DRIVER_NOT_EXIST = "{driver.not.exist}";
     public static final String CAR_NOT_EXIST = "{car.not.exist}";
+    public static final String RATING_REQUIRED = "{rating.required}";
+    public static final String LESS_ZERO = "{less.zero}";
+    public static final String MORE_TEN = "{more.ten}";
 }
