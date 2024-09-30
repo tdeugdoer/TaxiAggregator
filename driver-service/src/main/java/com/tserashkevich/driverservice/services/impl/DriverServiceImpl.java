@@ -103,9 +103,9 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public DriverResponse changeAvailableStatus(UUID driverId) {
+    public DriverResponse changeAvailableStatus(UUID driverId, Boolean available) {
         Driver driver = getOrThrow(driverId);
-        driver.setAvailable(!driver.getAvailable());
+        driver.setAvailable(available);
         driverRepository.save(driver);
         log.info(LogList.CHANGE_DRIVER_STATUS, driverId);
         return driverMapper.toResponse(driver);

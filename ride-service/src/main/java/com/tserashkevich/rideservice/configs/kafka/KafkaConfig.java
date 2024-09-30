@@ -10,11 +10,20 @@ import org.springframework.kafka.config.TopicBuilder;
 public class KafkaConfig {
     @Value("${spring.kafka.producer.create-rating-topic.name}")
     private String ratingProducerTopic;
+    @Value("${spring.kafka.producer.change-driver-status-topic.name}")
+    private String driverProducerTopic;
 
     @Bean
     public NewTopic createRatingProducerTopic() {
         return TopicBuilder
                 .name(ratingProducerTopic)
+                .build();
+    }
+
+    @Bean
+    public NewTopic createDriverProducerTopic() {
+        return TopicBuilder
+                .name(driverProducerTopic)
                 .build();
     }
 }

@@ -3,7 +3,9 @@ package com.tserashkevich.rideservice.services.impl;
 import com.tserashkevich.rideservice.dtos.*;
 import com.tserashkevich.rideservice.exceptions.RideNotFinishedException;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
+import com.tserashkevich.rideservice.kafka.ChangeDriverStatusProducer;
 import com.tserashkevich.rideservice.kafka.CreateRatingProducer;
+import com.tserashkevich.rideservice.kafka.kafkaDtos.ChangeDriverStatusEvent;
 import com.tserashkevich.rideservice.kafka.kafkaDtos.RatingCreateEvent;
 import com.tserashkevich.rideservice.mappers.RideMapper;
 import com.tserashkevich.rideservice.models.Ride;
@@ -38,6 +40,7 @@ public class RideServiceImpl implements RideService {
     private final RideMapper rideMapper;
     private final MongoTemplate mongoTemplate;
     private final CreateRatingProducer createRatingProducer;
+    private final ChangeDriverStatusProducer changeDriverStatusProducer;
 
     @Override
     public CreateRideResponse create(CreateRideRequest createRideRequest) {
@@ -96,6 +99,11 @@ public class RideServiceImpl implements RideService {
         ride.setStatus(Status.valueOf(status));
         if (ride.getStatus().equals(Status.FINISHED)) {
             ride.getTime().setEndTime(LocalDateTime.now());
+            ChangeDriverStatusEvent changeDriverStatusEvent = ChangeDriverStatusEvent.builder()
+                    .driverId(ride.getDriverId())
+                    .available(true)
+                    .build();
+            changeDriverStatusProducer.sendChangeStatusEvent(changeDriverStatusEvent);
         }
         rideRepository.save(ride);
         log.info(LogList.CHANGE_STATUS, rideId);
@@ -108,6 +116,11 @@ public class RideServiceImpl implements RideService {
         Ride ride = getOrThrow(rideId);
         ride.setDriverId(UUID.fromString(driverId));
         rideRepository.save(ride);
+        ChangeDriverStatusEvent changeDriverStatusEvent = ChangeDriverStatusEvent.builder()
+                .driverId(ride.getDriverId())
+                .available(false)
+                .build();
+        changeDriverStatusProducer.sendChangeStatusEvent(changeDriverStatusEvent);
         log.info(LogList.CHANGE_DRIVER, rideId);
         return rideMapper.toRideResponse(ride);
     }

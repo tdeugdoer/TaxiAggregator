@@ -30,9 +30,11 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: RatingCreateEvent:com.tserashkevich.rideservice.kafka.kafkaDtos.RatingCreateEvent
+        spring.json.type.mapping: RatingCreateEvent:com.tserashkevich.rideservice.kafka.kafkaDtos.RatingCreateEvent, ChangeDriverStatusEvent:com.tserashkevich.rideservice.kafka.kafkaDtos.ChangeDriverStatusEvent
       create-rating-topic:
         name: create-rating-topic
+      change-driver-status-topic:
+        name: change-driver-status-topic
 
 resilience4j:
   retry:

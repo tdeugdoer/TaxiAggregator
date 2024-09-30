@@ -64,9 +64,9 @@ public class DriverController {
         return driverService.findById(driverId);
     }
 
-    @PutMapping("/changeStatus/{driverId}")
-    public DriverResponse changeAvailableStatus(@PathVariable UUID driverId) {
-        return driverService.changeAvailableStatus(driverId);
+    @PatchMapping("/changeStatus/{driverId}/{available}")
+    public DriverResponse changeAvailableStatus(@PathVariable UUID driverId, @PathVariable Boolean available) {
+        return driverService.changeAvailableStatus(driverId, available);
     }
 
     @GetMapping("/exist/{driverId}")

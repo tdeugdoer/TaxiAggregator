@@ -2,7 +2,10 @@ package com.tserashkevich.passengerservice.services.impl;
 
 
 import com.querydsl.core.types.Predicate;
-import com.tserashkevich.passengerservice.dtos.*;
+import com.tserashkevich.passengerservice.dtos.FindAllParams;
+import com.tserashkevich.passengerservice.dtos.PageResponse;
+import com.tserashkevich.passengerservice.dtos.PassengerRequest;
+import com.tserashkevich.passengerservice.dtos.PassengerResponse;
 import com.tserashkevich.passengerservice.exceptions.PassengerNotFoundException;
 import com.tserashkevich.passengerservice.mappers.PassengerMapper;
 import com.tserashkevich.passengerservice.models.Passenger;

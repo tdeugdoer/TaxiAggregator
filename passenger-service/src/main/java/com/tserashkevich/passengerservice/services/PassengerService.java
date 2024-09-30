@@ -1,6 +1,9 @@
 package com.tserashkevich.passengerservice.services;
 
-import com.tserashkevich.passengerservice.dtos.*;
+import com.tserashkevich.passengerservice.dtos.FindAllParams;
+import com.tserashkevich.passengerservice.dtos.PageResponse;
+import com.tserashkevich.passengerservice.dtos.PassengerRequest;
+import com.tserashkevich.passengerservice.dtos.PassengerResponse;
 
 import java.util.UUID;
 
