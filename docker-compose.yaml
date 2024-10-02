@@ -1,0 +1,87 @@
+services:
+  postgredb:
+    image: postgres:latest
+    container_name: postgredb
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - PG_DATA=/var/lib/postgresql/data
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgres/sql/postgresql.conf
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-data:/data/db
+    restart: always
+
+  cassandradb:
+    image: cassandra:latest
+    container_name: cassandradb
+    ports:
+      - "9042:9042"
+    volumes:
+      - ~/apps/cassandra:/var/lib/cassandra
+
+  kafka:
+    image: bitnami/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_KRAFT_CLUSTER_ID=PVjHlx7ESeesq55jeB6Efw
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9091
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9090,CONTROLLER://:9091,EXTERNAL://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-1:9090,EXTERNAL://localhost:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+    volumes:
+      - ./kafka/temp/server-1/:/bitnami/kafka
+
+  rating-service:
+    image: rating-service:latest
+    container_name: rating-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - cassandradb
+      - kafka
+    restart: always
+
+  passenger-service:
+    image: passenger-service:latest
+    container_name: passenger-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgredb
+      - kafka
+    restart: always
+
+  driver-service:
+    image: driver-service:latest
+    container_name: driver-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgredb
+      - kafka
+    restart: always
+
+  ride-service:
+    image: ride-service:latest
+    container_name: ride-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mongodb
+      - kafka
+    restart: always
