@@ -1,7 +1,7 @@
 spring:
   application.name: rating-service
   cassandra:
-    contact-points: lucid_archimedes
+    contact-points: cassandrabd
     port: 9042
     keyspace-name: mykeyspace
   kafka:
