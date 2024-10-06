@@ -1,10 +1,12 @@
 package com.tserashkevich.passengerservice.dtos;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@RequiredArgsConstructor
 public class ExceptionResponse {
     private final String message;
     private final LocalDateTime timestamp;

@@ -1,5 +1,6 @@
 package com.tserashkevich.passengerservice.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class PassengerResponse {
     private final UUID id;
     private final String name;

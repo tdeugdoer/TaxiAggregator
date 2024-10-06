@@ -29,6 +29,10 @@ dependencies {
     implementation "com.querydsl:querydsl-jpa:${querydslVersion}:jakarta"
     annotationProcessor "com.querydsl:querydsl-apt:${querydslVersion}:jakarta"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceApiVersion}"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 dependencyManagement {
@@ -46,4 +50,8 @@ querydsl {
 compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
     options.failOnError = false
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
