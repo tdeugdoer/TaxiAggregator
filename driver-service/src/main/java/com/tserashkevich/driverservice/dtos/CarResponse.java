@@ -1,12 +1,12 @@
 package com.tserashkevich.driverservice.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class CarResponse {
     private final Long id;
     private final String number;

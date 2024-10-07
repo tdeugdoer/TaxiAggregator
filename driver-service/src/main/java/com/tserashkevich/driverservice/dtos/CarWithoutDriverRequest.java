@@ -6,13 +6,11 @@ import com.tserashkevich.driverservice.validators.validAnnotations.ValidCarNumbe
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@RequiredArgsConstructor
+@Builder
 public class CarWithoutDriverRequest {
     @ValidCarNumber(message = ValidationList.CAR_NUMBER_NUMBER_ALREADY_EXIST)
     @NotBlank(message = ValidationList.CAR_NUMBER_REQUIRED)

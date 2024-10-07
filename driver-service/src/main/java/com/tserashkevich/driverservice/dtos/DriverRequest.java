@@ -8,14 +8,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class DriverRequest {
     @NotBlank(message = ValidationList.USERNAME_REQUIRED)
     @Size(max = 50, message = ValidationList.WRONG_MAX_USERNAME_LENGTH)
