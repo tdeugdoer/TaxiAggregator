@@ -27,4 +27,6 @@ public class LogList {
     public static final String EXIST_DRIVER_BY_ID = "Exist driver by id: {}";
     public static final String EXIST_DRIVER_BY_PHONE_NUMBER = "Exist driver by phone number: {}";
     public static final String CIRCUITBREAKER_OPEN = "CircuitBreaker is open: {}";
+    public static final String CONNECTION_ERROR = "Connection error: {}";
+    public static final String RECEIVED_EVENT = "Received event: {}";
 }

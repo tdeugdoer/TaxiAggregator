@@ -1,6 +1,5 @@
 package com.tserashkevich.rideservice.utils;
 
-import com.tserashkevich.rideservice.configs.GeoapifyProperties;
 import com.tserashkevich.rideservice.dtos.CreateRideRequest;
 import com.tserashkevich.rideservice.feing.GeoapifyFeignClient;
 import com.tserashkevich.rideservice.feing.feignDtos.GeocodeReverseResponse;
@@ -8,6 +7,7 @@ import com.tserashkevich.rideservice.feing.feignDtos.RoutingResponse;
 import com.tserashkevich.rideservice.models.Address;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +17,8 @@ import java.util.List;
 @Component
 public class GeoMapperUtil {
     private final GeoapifyFeignClient geoapifyFeignClient;
-    private final GeoapifyProperties geoapifyProperties;
+    @Value("${geoapify.apiKey}")
+    private String apiKey;
 
     @Named("mapGeoPointToAddress")
     public Address mapGeoPointToAddress(String geoPoint) {
@@ -25,7 +26,8 @@ public class GeoMapperUtil {
         GeocodeReverseResponse geocodeReverseResponse = geoapifyFeignClient.getCeocodeReverse(coordinates.get(0),
                 coordinates.get(1),
                 "json",
-                geoapifyProperties.getApiKey());
+                apiKey
+        );
         return Address.builder()
                 .geoPoint(geocodeReverseResponse.getResults().get(0).getLat() + "|" + geocodeReverseResponse.getResults().get(0).getLon())
                 .name(geocodeReverseResponse.getResults().get(0).getFormatted())
@@ -37,7 +39,7 @@ public class GeoMapperUtil {
         RoutingResponse routingResponse = geoapifyFeignClient.getRouting(
                 createRideRequest.getStartGeoPoint() + "|" + createRideRequest.getEndGeoPoint(),
                 "drive",
-                geoapifyProperties.getApiKey()
+                apiKey
         );
         return routingResponse.getFeatures().get(0).getProperties().getDistance();
     }

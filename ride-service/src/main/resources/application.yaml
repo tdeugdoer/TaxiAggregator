@@ -24,6 +24,18 @@ spring:
             url: http://localhost:8081/api/v1/passengers
             connect-timeout: 3000
             read-timeout: 5000
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: RatingCreateEvent:com.tserashkevich.rideservice.kafka.kafkaDtos.RatingCreateEvent, ChangeDriverStatusEvent:com.tserashkevich.rideservice.kafka.kafkaDtos.ChangeDriverStatusEvent
+      create-rating-topic:
+        name: create-rating-topic
+      change-driver-status-topic:
+        name: change-driver-status-topic
+
 resilience4j:
   retry:
     instances:
@@ -41,7 +53,9 @@ resilience4j:
         max-wait-duration-in-half-open-state: 5s
         automatic-transition-from-open-to-half-open-enabled: true
         permitted-number-of-calls-in-half-open-state: 2
+
 geoapify:
   apiKey: ea1ca0da5eae49128b9e311d225b61ac
+
 server:
   port: 8082

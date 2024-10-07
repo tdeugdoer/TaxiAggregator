@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.net.ConnectException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -77,6 +78,14 @@ public class RestExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<ExceptionResponse> handleConnectionException(RuntimeException ex) {
+        log.info(LogList.CONNECTION_ERROR, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ExceptionList.EXTERNAL_SERVICE.getValue()));
     }
 
     @ExceptionHandler(CallNotPermittedException.class)

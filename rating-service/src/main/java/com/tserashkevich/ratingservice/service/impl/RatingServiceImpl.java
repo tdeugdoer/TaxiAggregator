@@ -1,7 +1,9 @@
 package com.tserashkevich.ratingservice.service.impl;
 
 import com.tserashkevich.ratingservice.dtos.*;
+import com.tserashkevich.ratingservice.exceptions.RatingExistException;
 import com.tserashkevich.ratingservice.exceptions.RatingNotFoundException;
+import com.tserashkevich.ratingservice.kafka.kafkaDtos.RatingCreateEvent;
 import com.tserashkevich.ratingservice.mappers.RatingMapper;
 import com.tserashkevich.ratingservice.models.Rating;
 import com.tserashkevich.ratingservice.repositories.RatingRepository;
@@ -36,11 +38,25 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public RatingResponse create(RatingRequest ratingRequest) {
         Rating rating = ratingMapper.toModel(ratingRequest);
+        checkRatingExist(rating.getRideId(), rating.getSourceId());
+
         rating.setId(UUID.randomUUID());
         rating.setCreationTime(LocalDateTime.now());
+
         ratingRepository.save(rating);
         log.info(LogList.CREATE_RATING, rating.getId());
         return ratingMapper.toRatingResponse(rating);
+    }
+
+    @Override
+    public void create(RatingCreateEvent ratingCreateEvent) {
+        Rating rating = ratingMapper.toModel(ratingCreateEvent);
+        if (ratingRepository.existByRideIdAndSourceId(rating.getRideId(), rating.getSourceId()) == 0) {
+            rating.setId(UUID.randomUUID());
+            rating.setCreationTime(LocalDateTime.now());
+            ratingRepository.save(rating);
+            log.info(LogList.CREATE_RATING, rating.getId());
+        } else log.info(LogList.RATING_EXIST);
     }
 
     @Override
@@ -98,8 +114,13 @@ public class RatingServiceImpl implements RatingService {
         return ratingMapper.toFeedbacks(ratings);
     }
 
-    public Rating getOrThrow(UUID ratingId) {
+    private Rating getOrThrow(UUID ratingId) {
         Optional<Rating> optionalRating = ratingRepository.findById(ratingId);
         return optionalRating.orElseThrow(RatingNotFoundException::new);
+    }
+
+    public void checkRatingExist(String rideId, UUID sourceId) {
+        if (ratingRepository.existByRideIdAndSourceId(rideId, sourceId) != 0)
+            throw new RatingExistException();
     }
 }

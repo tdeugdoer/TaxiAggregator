@@ -10,7 +10,8 @@ import java.util.Locale;
 
 @AllArgsConstructor
 public enum ExceptionList {
-    RATING_NOT_FOUND("rating.not.found");
+    RATING_NOT_FOUND("rating.not.found"),
+    RATING_EXIST("rating.exist");
 
     private static MessageSource messageSource;
 

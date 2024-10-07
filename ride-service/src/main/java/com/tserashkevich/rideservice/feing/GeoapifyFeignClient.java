@@ -1,5 +1,6 @@
 package com.tserashkevich.rideservice.feing;
 
+import com.tserashkevich.rideservice.configs.feign.FeignConfig;
 import com.tserashkevich.rideservice.feing.feignDtos.GeocodeReverseResponse;
 import com.tserashkevich.rideservice.feing.feignDtos.RoutingResponse;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Retry(name = "retry-conf")
 @CircuitBreaker(name = "circuitbreaker-conf")
-@FeignClient(name = "geoapify", configuration = FeignClient.class)
+@FeignClient(name = "geoapify", configuration = FeignConfig.class)
 public interface GeoapifyFeignClient {
     @GetMapping("/geocode/reverse")
     GeocodeReverseResponse getCeocodeReverse(@RequestParam String lat,

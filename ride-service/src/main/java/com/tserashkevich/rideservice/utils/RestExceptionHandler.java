@@ -3,6 +3,7 @@ package com.tserashkevich.rideservice.utils;
 import com.tserashkevich.rideservice.dtos.ExceptionResponse;
 import com.tserashkevich.rideservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.rideservice.dtos.Violation;
+import com.tserashkevich.rideservice.exceptions.RideNotFinishedException;
 import com.tserashkevich.rideservice.exceptions.RideNotFoundException;
 import com.tserashkevich.rideservice.exceptions.feign.OtherServiceBadRequestException;
 import com.tserashkevich.rideservice.exceptions.feign.OtherServiceNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.net.ConnectException;
 import java.util.List;
 
 @RestControllerAdvice
@@ -27,6 +29,14 @@ public class RestExceptionHandler {
         log.error(LogList.NOT_FOUND_ERROR, ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(RideNotFinishedException.class)
+    public ResponseEntity<ExceptionResponse> handleRideNotFinishedException(RuntimeException ex) {
+        log.error(LogList.NOT_FINISHED_ERROR, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(ex.getMessage()));
     }
 
@@ -76,6 +86,14 @@ public class RestExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<ExceptionResponse> handleConnectionException(RuntimeException ex) {
+        log.info(LogList.CONNECTION_ERROR, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ExceptionResponse(ExceptionList.EXTERNAL_SERVICE.getValue()));
     }
 
     @ExceptionHandler(CallNotPermittedException.class)

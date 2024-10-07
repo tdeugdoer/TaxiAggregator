@@ -1,6 +1,9 @@
 package com.tserashkevich.passengerservice.controllers;
 
-import com.tserashkevich.passengerservice.dtos.*;
+import com.tserashkevich.passengerservice.dtos.FindAllParams;
+import com.tserashkevich.passengerservice.dtos.PageResponse;
+import com.tserashkevich.passengerservice.dtos.PassengerRequest;
+import com.tserashkevich.passengerservice.dtos.PassengerResponse;
 import com.tserashkevich.passengerservice.models.enums.Gender;
 import com.tserashkevich.passengerservice.services.PassengerService;
 import com.tserashkevich.passengerservice.utils.SortList;
@@ -63,7 +66,7 @@ public class PassengerController {
     }
 
     @GetMapping("/exist/{passengerId}")
-    public PassengerExistResponse existPassenger(@PathVariable UUID passengerId) {
+    public Boolean existPassenger(@PathVariable UUID passengerId) {
         return passengerService.existById(passengerId);
     }
 }

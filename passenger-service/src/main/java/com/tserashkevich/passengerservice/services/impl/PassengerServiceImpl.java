@@ -2,7 +2,10 @@ package com.tserashkevich.passengerservice.services.impl;
 
 
 import com.querydsl.core.types.Predicate;
-import com.tserashkevich.passengerservice.dtos.*;
+import com.tserashkevich.passengerservice.dtos.FindAllParams;
+import com.tserashkevich.passengerservice.dtos.PageResponse;
+import com.tserashkevich.passengerservice.dtos.PassengerRequest;
+import com.tserashkevich.passengerservice.dtos.PassengerResponse;
 import com.tserashkevich.passengerservice.exceptions.PassengerNotFoundException;
 import com.tserashkevich.passengerservice.mappers.PassengerMapper;
 import com.tserashkevich.passengerservice.models.Passenger;
@@ -81,9 +84,9 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public PassengerExistResponse existById(UUID passengerId) {
+    public Boolean existById(UUID passengerId) {
         log.info(LogList.EXIST_PASSENGER_BY_ID, passengerId);
-        return new PassengerExistResponse(passengerRepository.existsById(passengerId));
+        return passengerRepository.existsById(passengerId);
     }
 
     @Transactional(readOnly = true)

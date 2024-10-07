@@ -13,7 +13,7 @@ import java.util.UUID;
 @Retry(name = "ratings-retry")
 @CircuitBreaker(name = "ratings-breaker")
 @FeignClient(name = "ratings", configuration = FeignConfig.class)
-public interface RatingFeingClient {
+public interface RatingFeignClient {
     @GetMapping("/avg/{targetId}")
     Double findTargetAvgRating(@PathVariable UUID targetId);
 }

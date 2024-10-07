@@ -16,4 +16,8 @@ public interface RideService {
     RideResponse changeDriver(String rideId, String driverId);
 
     RideResponse changeCar(String rideId, Long carId);
+
+    void createDriverComment(CreateRatingRequest createRatingRequest);
+
+    void createPassengerComment(CreateRatingRequest createRatingRequest);
 }

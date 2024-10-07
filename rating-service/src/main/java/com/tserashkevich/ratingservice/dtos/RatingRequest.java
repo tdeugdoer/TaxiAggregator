@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class RatingRequest {
+    @NotBlank(message = ValidationList.RIDE_ID_REQUIRED)
+    private final String rideId;
+
     @NotBlank(message = ValidationList.SOURCE_ID_REQUIRED)
     @Pattern(regexp = PatternList.UUID_PATTERN, message = ValidationList.WRONG_UUID_FORMAT)
     private final String sourceId;

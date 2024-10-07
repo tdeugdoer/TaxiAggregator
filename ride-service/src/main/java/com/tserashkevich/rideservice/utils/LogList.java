@@ -18,4 +18,7 @@ public class LogList {
     public static final String CHANGE_DRIVER = "Change driver. Ride id: {}";
     public static final String CHANGE_CAR = "Change car. Ride id: {}";
     public static final String CIRCUITBREAKER_OPEN = "CircuitBreaker is open: {}";
+    public static final String LOG_KAFKA_SEND_MESSAGE = "Kafka send message: {}";
+    public static final String NOT_FINISHED_ERROR = "Ride not finished";
+    public static final String CONNECTION_ERROR = "Connection error: {}";
 }

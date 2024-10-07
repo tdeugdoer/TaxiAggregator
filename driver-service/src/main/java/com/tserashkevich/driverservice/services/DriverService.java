@@ -19,5 +19,5 @@ public interface DriverService {
 
     Boolean existById(UUID driverId);
 
-    DriverResponse changeAvailableStatus(UUID driverId);
+    DriverResponse changeAvailableStatus(UUID driverId, Boolean available);
 }

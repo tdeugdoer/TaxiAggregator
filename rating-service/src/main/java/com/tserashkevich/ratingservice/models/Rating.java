@@ -23,6 +23,8 @@ public class Rating {
     private UUID sourceId;
     @Column("target_id")
     private UUID targetId;
+    @Column("ride_id")
+    private String rideId;
     private Integer rating;
     private String comment;
     @Column("creation_time")

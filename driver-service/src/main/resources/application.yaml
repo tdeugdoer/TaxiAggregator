@@ -20,6 +20,17 @@ spring:
             url: http://localhost:8083/api/v1/ratings
             connect-timeout: 3000
             read-timeout: 5000
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: group-1
+      properties:
+        spring.json:
+          trusted.packages: '*'
+          type.mapping: ChangeDriverStatusEvent:com.tserashkevich.driverservice.kafka.kafkaDtos.ChangeDriverStatusEvent
+      change-driver-status-topic:
+        name: change-driver-status-topic
+
 resilience4j:
   retry:
     instances:

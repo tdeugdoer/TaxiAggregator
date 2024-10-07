@@ -1,6 +1,9 @@
 package com.tserashkevich.passengerservice.services;
 
-import com.tserashkevich.passengerservice.dtos.*;
+import com.tserashkevich.passengerservice.dtos.FindAllParams;
+import com.tserashkevich.passengerservice.dtos.PageResponse;
+import com.tserashkevich.passengerservice.dtos.PassengerRequest;
+import com.tserashkevich.passengerservice.dtos.PassengerResponse;
 
 import java.util.UUID;
 
@@ -15,7 +18,7 @@ public interface PassengerService {
 
     PassengerResponse findById(UUID passengerId);
 
-    PassengerExistResponse existById(UUID passengerId);
+    Boolean existById(UUID passengerId);
 
     Boolean existByPhoneNumber(String phoneNumber);
 }
