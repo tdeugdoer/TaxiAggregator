@@ -1,12 +1,12 @@
 package com.tserashkevich.rideservice.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class RideResponse {
     private final String id;
     private final UUID driverId;
