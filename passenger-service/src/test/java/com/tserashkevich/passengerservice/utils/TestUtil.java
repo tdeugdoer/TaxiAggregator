@@ -21,50 +21,50 @@ import java.util.UUID;
 
 @UtilityClass
 public class TestUtil {
-    public final UUID DEFAULT_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public final UUID DEFAULT_SECOND_ID = UUID.fromString("22222222-1111-1111-1111-222222222222");
-    public final String DEFAULT_NAME = "USERNAME1";
-    public final String DEFAULT_PHONE = "+375292078876";
-    public final String DEFAULT_SECOND_PHONE = "+375448713245";
-    public final Double DEFAULT_RATING = 5.0;
-    public final Double DEFAULT_SECOND_RATING = 8.0;
-    public final Integer DEFAULT_PAGE = 0;
-    public final Integer DEFAULT_LIMIT = 10;
-    public final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, "id");
-    private static final String DEFAULT_SECOND_NAME = "USERNAME2";
-    private final LocalDate DEFAULT_BIRTH_DATE = LocalDate.of(2000, 1, 1);
-    private final LocalDate DEFAULT_SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
-    private static final Gender DEFAULT_GENDER = Gender.Men;
-    private static final Gender DEFAULT_SECOND_GENDER = Gender.Women;
-    private static final String DEFAULT_GENDER_NAME = Gender.Men.name();
-    private static final String DEFAULT_SECOND_GENDER_NAME = Gender.Women.name();
+    public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    public final UUID SECOND_ID = UUID.fromString("22222222-1111-1111-1111-222222222222");
+    public final String NAME = "USERNAME1";
+    public final String PHONE = "+375292078876";
+    public final String SECOND_PHONE = "+375448713245";
+    public final Double RATING = 5.0;
+    public final Double SECOND_RATING = 8.0;
+    public final Integer PAGE = 0;
+    public final Integer LIMIT = 10;
+    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
+    private static final String SECOND_NAME = "USERNAME2";
+    private final LocalDate BIRTH_DATE = LocalDate.of(2000, 1, 1);
+    private final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
+    private static final Gender GENDER = Gender.Men;
+    private static final Gender SECOND_GENDER = Gender.Women;
+    private static final String GENDER_NAME = Gender.Men.name();
+    private static final String SECOND_GENDER_NAME = Gender.Women.name();
 
     public Passenger getPassenger() {
         return Passenger.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER)
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER)
                 .build();
     }
 
     public Passenger getSecondPassenger() {
         return Passenger.builder()
-                .id(DEFAULT_SECOND_ID)
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER)
+                .id(SECOND_ID)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER)
                 .build();
     }
 
     public Passenger getNonSavedPassenger() {
         return Passenger.builder()
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER)
                 .build();
     }
 
@@ -77,52 +77,52 @@ public class TestUtil {
 
     public PassengerRequest getPassengerRequest() {
         return PassengerRequest.builder()
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER_NAME)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER_NAME)
                 .build();
     }
 
     public PassengerRequest getEditPassengerRequest() {
         return PassengerRequest.builder()
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER_NAME)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER_NAME)
                 .build();
     }
 
     public PassengerResponse getPassengerResponse() {
         return PassengerResponse.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER_NAME)
-                .avgRating(DEFAULT_RATING)
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER_NAME)
+                .avgRating(RATING)
                 .build();
     }
 
     public PassengerResponse getSecondPassengerResponse() {
         return PassengerResponse.builder()
-                .id(DEFAULT_SECOND_ID)
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER_NAME)
-                .avgRating(DEFAULT_SECOND_RATING)
+                .id(SECOND_ID)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER_NAME)
+                .avgRating(SECOND_RATING)
                 .build();
     }
 
     public PassengerResponse getEditPassengerResponse() {
         return PassengerResponse.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER.name())
-                .avgRating(DEFAULT_SECOND_RATING)
+                .id(ID)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER.name())
+                .avgRating(SECOND_RATING)
                 .build();
     }
 
@@ -142,9 +142,9 @@ public class TestUtil {
 
     public FindAllParams getFindAllParams() {
         return FindAllParams.builder()
-                .page(TestUtil.DEFAULT_PAGE)
-                .limit(DEFAULT_LIMIT)
-                .sort(DEFAULT_SORT)
+                .page(TestUtil.PAGE)
+                .limit(LIMIT)
+                .sort(SORT)
                 .build();
     }
 
@@ -153,7 +153,7 @@ public class TestUtil {
     }
 
     public PageRequest getPageRequest() {
-        return PageRequest.of(DEFAULT_PAGE, DEFAULT_LIMIT, DEFAULT_SORT);
+        return PageRequest.of(PAGE, LIMIT, SORT);
     }
 
     public Page<Passenger> getPageOfPassengers() {

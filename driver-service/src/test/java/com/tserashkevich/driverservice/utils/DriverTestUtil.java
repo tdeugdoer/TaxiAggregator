@@ -18,56 +18,56 @@ import java.util.UUID;
 
 @UtilityClass
 public class DriverTestUtil {
-    public final UUID DEFAULT_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public final UUID DEFAULT_SECOND_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
-    public final String DEFAULT_NAME = "USERNAME1";
-    public static final String DEFAULT_SECOND_NAME = "USERNAME2";
-    public final LocalDate DEFAULT_BIRTH_DATE = LocalDate.of(2000, 1, 1);
-    public final LocalDate DEFAULT_SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
-    public final String DEFAULT_PHONE = "+375292078876";
-    public final String DEFAULT_SECOND_PHONE = "+375448713245";
-    public static final Gender DEFAULT_GENDER = Gender.Men;
-    public static final Gender DEFAULT_SECOND_GENDER = Gender.Women;
-    public static final String DEFAULT_GENDER_NAME = Gender.Men.name();
-    public static final String DEFAULT_SECOND_GENDER_NAME = Gender.Women.name();
-    public static final Boolean DEFAULT_AVAILABLE = true;
-    public static final Boolean DEFAULT_SECOND_AVAILABLE = false;
-    public final Double DEFAULT_RATING = 5.0;
-    public final Double DEFAULT_SECOND_RATING = 8.0;
-    public final Integer DEFAULT_PAGE = 0;
-    public final Integer DEFAULT_LIMIT = 10;
-    public final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, "id");
+    public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
+    public final UUID SECOND_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public final String NAME = "USERNAME1";
+    public static final String SECOND_NAME = "USERNAME2";
+    public final LocalDate BIRTH_DATE = LocalDate.of(2000, 1, 1);
+    public final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
+    public final String PHONE = "+375292078876";
+    public final String SECOND_PHONE = "+375448713245";
+    public static final Gender GENDER = Gender.Men;
+    public static final Gender SECOND_GENDER = Gender.Women;
+    public static final String GENDER_NAME = Gender.Men.name();
+    public static final String SECOND_GENDER_NAME = Gender.Women.name();
+    public static final Boolean AVAILABLE = true;
+    public static final Boolean SECOND_AVAILABLE = false;
+    public final Double RATING = 5.0;
+    public final Double SECOND_RATING = 8.0;
+    public final Integer PAGE = 0;
+    public final Integer LIMIT = 10;
+    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
 
     public Driver getDriver() {
         return Driver.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER)
-                .available(DEFAULT_AVAILABLE)
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER)
+                .available(AVAILABLE)
                 .cars(CarTestUtil.getCars())
                 .build();
     }
 
     public Driver getSecondDriver() {
         return Driver.builder()
-                .id(DEFAULT_SECOND_ID)
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER)
-                .available(DEFAULT_SECOND_AVAILABLE)
+                .id(SECOND_ID)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER)
+                .available(SECOND_AVAILABLE)
                 .cars(CarTestUtil.getCars())
                 .build();
     }
 
     public Driver getNonSavedDriver() {
         return Driver.builder()
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER)
                 .build();
     }
 
@@ -80,81 +80,81 @@ public class DriverTestUtil {
 
     public DriverRequest getDriverRequest() {
         return DriverRequest.builder()
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER_NAME)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER_NAME)
                 .cars(CarTestUtil.getCarsWithoutDriverRequest())
                 .build();
     }
 
     public DriverRequest getDriverRequestWithoutCars() {
         return DriverRequest.builder()
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER_NAME)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER_NAME)
                 .build();
     }
 
     public DriverUpdateRequest getDriverUpdateRequest() {
         return DriverUpdateRequest.builder()
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER_NAME)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER_NAME)
                 .build();
     }
 
     public DriverResponse getDriverResponse() {
         return DriverResponse.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER_NAME)
-                .available(DEFAULT_AVAILABLE)
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER_NAME)
+                .available(AVAILABLE)
                 .cars(CarTestUtil.getCarsWithoutDriverResponse())
-                .avgRating(DEFAULT_RATING)
+                .avgRating(RATING)
                 .build();
     }
 
     public DriverResponse getDriverResponseWithChangedAvailableStatus() {
         return DriverResponse.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_NAME)
-                .birthDate(DEFAULT_BIRTH_DATE)
-                .phoneNumber(DEFAULT_PHONE)
-                .gender(DEFAULT_GENDER_NAME)
-                .available(DEFAULT_AVAILABLE)
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER_NAME)
+                .available(AVAILABLE)
                 .cars(CarTestUtil.getCarsWithoutDriverResponse())
-                .avgRating(DEFAULT_RATING)
+                .avgRating(RATING)
                 .build();
     }
 
     public DriverResponse getSecondDriverResponse() {
         return DriverResponse.builder()
-                .id(DEFAULT_SECOND_ID)
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER_NAME)
-                .available(DEFAULT_SECOND_AVAILABLE)
+                .id(SECOND_ID)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER_NAME)
+                .available(SECOND_AVAILABLE)
                 .cars(CarTestUtil.getCarsWithoutDriverResponse())
-                .avgRating(DEFAULT_SECOND_RATING)
+                .avgRating(SECOND_RATING)
                 .build();
     }
 
     public DriverResponse getEditDriverResponse() {
         return DriverResponse.builder()
-                .id(DEFAULT_ID)
-                .name(DEFAULT_SECOND_NAME)
-                .birthDate(DEFAULT_SECOND_BIRTH_DATE)
-                .phoneNumber(DEFAULT_SECOND_PHONE)
-                .gender(DEFAULT_SECOND_GENDER.name())
-                .available(DEFAULT_AVAILABLE)
+                .id(ID)
+                .name(SECOND_NAME)
+                .birthDate(SECOND_BIRTH_DATE)
+                .phoneNumber(SECOND_PHONE)
+                .gender(SECOND_GENDER.name())
+                .available(AVAILABLE)
                 .cars(CarTestUtil.getCarsWithoutDriverResponse())
-                .avgRating(DEFAULT_RATING)
+                .avgRating(RATING)
                 .build();
     }
 
@@ -174,9 +174,9 @@ public class DriverTestUtil {
 
     public DriverFindAllParams getFindAllParams() {
         return DriverFindAllParams.builder()
-                .page(DriverTestUtil.DEFAULT_PAGE)
-                .limit(DEFAULT_LIMIT)
-                .sort(DEFAULT_SORT)
+                .page(DriverTestUtil.PAGE)
+                .limit(LIMIT)
+                .sort(SORT)
                 .build();
     }
 
@@ -185,7 +185,7 @@ public class DriverTestUtil {
     }
 
     public PageRequest getPageRequest() {
-        return PageRequest.of(DEFAULT_PAGE, DEFAULT_LIMIT, DEFAULT_SORT);
+        return PageRequest.of(PAGE, LIMIT, SORT);
     }
 
     public Page<Driver> getPageOfDrivers() {

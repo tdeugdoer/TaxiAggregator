@@ -45,7 +45,7 @@ class PassengerServiceUnitTest {
                 .when(passengerMapper)
                 .toModel(passengerRequest);
         doAnswer(invocation -> {
-            passenger.setId(TestUtil.DEFAULT_ID);
+            passenger.setId(TestUtil.ID);
             return null;
         }).when(passengerRepository).save(passenger);
         doReturn(passengerResponse)
@@ -68,7 +68,7 @@ class PassengerServiceUnitTest {
 
         doReturn(Optional.of(passenger))
                 .when(passengerRepository)
-                .findById(TestUtil.DEFAULT_ID);
+                .findById(TestUtil.ID);
         doAnswer(invocation -> {
             TestUtil.updatePassenger(passenger, passengerRequest);
             return null;
@@ -80,9 +80,9 @@ class PassengerServiceUnitTest {
                 .when(passengerMapper)
                 .toResponse(passenger);
 
-        PassengerResponse result = passengerService.update(TestUtil.DEFAULT_ID, passengerRequest);
+        PassengerResponse result = passengerService.update(TestUtil.ID, passengerRequest);
 
-        verify(passengerRepository).findById(TestUtil.DEFAULT_ID);
+        verify(passengerRepository).findById(TestUtil.ID);
         verify(passengerMapper).updateModel(passenger, passengerRequest);
         verify(passengerRepository).save(passenger);
         verify(passengerMapper).toResponse(passenger);
@@ -95,12 +95,12 @@ class PassengerServiceUnitTest {
 
         doReturn(Optional.empty())
                 .when(passengerRepository)
-                .findById(TestUtil.DEFAULT_ID);
+                .findById(TestUtil.ID);
 
-        assertThatThrownBy(() -> passengerService.update(TestUtil.DEFAULT_ID, passengerRequest))
+        assertThatThrownBy(() -> passengerService.update(TestUtil.ID, passengerRequest))
                 .isInstanceOf(PassengerNotFoundException.class);
 
-        verify(passengerRepository).findById(TestUtil.DEFAULT_ID);
+        verify(passengerRepository).findById(TestUtil.ID);
         verifyNoMoreInteractions(passengerRepository);
     }
 
@@ -125,12 +125,12 @@ class PassengerServiceUnitTest {
     void givenNonExistingPassenger_whenDeletePassenger_thenThrowException() {
         doReturn(Optional.empty())
                 .when(passengerRepository)
-                .findById(TestUtil.DEFAULT_ID);
+                .findById(TestUtil.ID);
 
-        assertThatThrownBy(() -> passengerService.delete(TestUtil.DEFAULT_ID))
+        assertThatThrownBy(() -> passengerService.delete(TestUtil.ID))
                 .isInstanceOf(PassengerNotFoundException.class);
 
-        verify(passengerRepository).findById(TestUtil.DEFAULT_ID);
+        verify(passengerRepository).findById(TestUtil.ID);
         verifyNoMoreInteractions(passengerRepository);
     }
 
@@ -177,12 +177,12 @@ class PassengerServiceUnitTest {
     void givenNonExistingPassenger_whenFindByIdPassenger_thenThrowException() {
         doReturn(Optional.empty())
                 .when(passengerRepository)
-                .findById(TestUtil.DEFAULT_ID);
+                .findById(TestUtil.ID);
 
-        assertThatThrownBy(() -> passengerService.findById(TestUtil.DEFAULT_ID))
+        assertThatThrownBy(() -> passengerService.findById(TestUtil.ID))
                 .isInstanceOf(PassengerNotFoundException.class);
 
-        verify(passengerRepository).findById(TestUtil.DEFAULT_ID);
+        verify(passengerRepository).findById(TestUtil.ID);
         verifyNoMoreInteractions(passengerRepository);
     }
 
@@ -190,11 +190,11 @@ class PassengerServiceUnitTest {
     void givenExistingPassenger_whenExistByIdPassenger_thenTrue() {
         doReturn(true)
                 .when(passengerRepository)
-                .existsById(TestUtil.DEFAULT_ID);
+                .existsById(TestUtil.ID);
 
-        Boolean result = passengerService.existById(TestUtil.DEFAULT_ID);
+        Boolean result = passengerService.existById(TestUtil.ID);
 
-        verify(passengerRepository).existsById(TestUtil.DEFAULT_ID);
+        verify(passengerRepository).existsById(TestUtil.ID);
         verifyNoMoreInteractions(passengerRepository);
         assertThat(result).isEqualTo(true);
     }
@@ -203,11 +203,11 @@ class PassengerServiceUnitTest {
     void givenNonExistingPassenger_whenExistByIdPassenger_thenFalse() {
         doReturn(false)
                 .when(passengerRepository)
-                .existsById(TestUtil.DEFAULT_ID);
+                .existsById(TestUtil.ID);
 
-        Boolean result = passengerService.existById(TestUtil.DEFAULT_ID);
+        Boolean result = passengerService.existById(TestUtil.ID);
 
-        verify(passengerRepository).existsById(TestUtil.DEFAULT_ID);
+        verify(passengerRepository).existsById(TestUtil.ID);
         verifyNoMoreInteractions(passengerRepository);
         assertThat(result).isEqualTo(false);
     }
@@ -216,11 +216,11 @@ class PassengerServiceUnitTest {
     void givenExistingPassenger_whenExistByPhoneNumberPassenger_thenTrue() {
         doReturn(true)
                 .when(passengerRepository)
-                .existsByPhoneNumber(TestUtil.DEFAULT_PHONE);
+                .existsByPhoneNumber(TestUtil.PHONE);
 
-        Boolean result = passengerService.existByPhoneNumber(TestUtil.DEFAULT_PHONE);
+        Boolean result = passengerService.existByPhoneNumber(TestUtil.PHONE);
 
-        verify(passengerRepository).existsByPhoneNumber(TestUtil.DEFAULT_PHONE);
+        verify(passengerRepository).existsByPhoneNumber(TestUtil.PHONE);
         verifyNoMoreInteractions(passengerRepository);
         assertThat(result).isEqualTo(true);
     }
@@ -229,11 +229,11 @@ class PassengerServiceUnitTest {
     void givenNonExistingPassenger_whenExistByPhoneNumberPassenger_thenFalse() {
         doReturn(false)
                 .when(passengerRepository)
-                .existsByPhoneNumber(TestUtil.DEFAULT_PHONE);
+                .existsByPhoneNumber(TestUtil.PHONE);
 
-        Boolean result = passengerService.existByPhoneNumber(TestUtil.DEFAULT_PHONE);
+        Boolean result = passengerService.existByPhoneNumber(TestUtil.PHONE);
 
-        verify(passengerRepository).existsByPhoneNumber(TestUtil.DEFAULT_PHONE);
+        verify(passengerRepository).existsByPhoneNumber(TestUtil.PHONE);
         verifyNoMoreInteractions(passengerRepository);
         assertThat(result).isEqualTo(false);
     }

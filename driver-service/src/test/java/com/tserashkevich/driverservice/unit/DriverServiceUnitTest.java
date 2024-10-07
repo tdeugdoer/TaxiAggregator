@@ -47,7 +47,7 @@ public class DriverServiceUnitTest {
                 .when(driverMapper)
                 .toModel(driverRequest);
         doAnswer(invocation -> {
-            driver.setId(DriverTestUtil.DEFAULT_ID);
+            driver.setId(DriverTestUtil.ID);
             return null;
         }).when(driverRepository).saveAndFlush(driver);
         doReturn(CarTestUtil.getCars())
@@ -76,7 +76,7 @@ public class DriverServiceUnitTest {
                 .when(driverMapper)
                 .toModel(driverRequest);
         doAnswer(invocation -> {
-            driver.setId(DriverTestUtil.DEFAULT_ID);
+            driver.setId(DriverTestUtil.ID);
             return null;
         }).when(driverRepository).saveAndFlush(driver);
         doReturn(driverResponse)
@@ -100,7 +100,7 @@ public class DriverServiceUnitTest {
 
         doReturn(Optional.of(driver))
                 .when(driverRepository)
-                .findById(DriverTestUtil.DEFAULT_ID);
+                .findById(DriverTestUtil.ID);
         doAnswer(invocation -> {
             DriverTestUtil.updateDriver(driver, driverUpdateRequest);
             return null;
@@ -112,9 +112,9 @@ public class DriverServiceUnitTest {
                 .when(driverMapper)
                 .toResponse(driver);
 
-        DriverResponse result = driverService.update(DriverTestUtil.DEFAULT_ID, driverUpdateRequest);
+        DriverResponse result = driverService.update(DriverTestUtil.ID, driverUpdateRequest);
 
-        verify(driverRepository).findById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).findById(DriverTestUtil.ID);
         verify(driverMapper).updateModel(driver, driverUpdateRequest);
         verify(driverRepository).save(driver);
         verify(driverMapper).toResponse(driver);
@@ -127,12 +127,12 @@ public class DriverServiceUnitTest {
 
         doReturn(Optional.empty())
                 .when(driverRepository)
-                .findById(DriverTestUtil.DEFAULT_ID);
+                .findById(DriverTestUtil.ID);
 
-        assertThatThrownBy(() -> driverService.update(DriverTestUtil.DEFAULT_ID, driverUpdateRequest))
+        assertThatThrownBy(() -> driverService.update(DriverTestUtil.ID, driverUpdateRequest))
                 .isInstanceOf(DriverNotFoundException.class);
 
-        verify(driverRepository).findById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).findById(DriverTestUtil.ID);
         verifyNoMoreInteractions(driverRepository);
     }
 
@@ -157,12 +157,12 @@ public class DriverServiceUnitTest {
     void givenNonExistingDriver_whenDeleteDriver_thenThrowException() {
         doReturn(Optional.empty())
                 .when(driverRepository)
-                .findById(DriverTestUtil.DEFAULT_ID);
+                .findById(DriverTestUtil.ID);
 
-        assertThatThrownBy(() -> driverService.delete(DriverTestUtil.DEFAULT_ID))
+        assertThatThrownBy(() -> driverService.delete(DriverTestUtil.ID))
                 .isInstanceOf(DriverNotFoundException.class);
 
-        verify(driverRepository).findById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).findById(DriverTestUtil.ID);
         verifyNoMoreInteractions(driverRepository);
     }
 
@@ -209,12 +209,12 @@ public class DriverServiceUnitTest {
     void givenNonExistingDriver_whenFindByIdDriver_thenThrowException() {
         doReturn(Optional.empty())
                 .when(driverRepository)
-                .findById(DriverTestUtil.DEFAULT_ID);
+                .findById(DriverTestUtil.ID);
 
-        Assertions.assertThatThrownBy(() -> driverService.findById(DriverTestUtil.DEFAULT_ID))
+        Assertions.assertThatThrownBy(() -> driverService.findById(DriverTestUtil.ID))
                 .isInstanceOf(DriverNotFoundException.class);
 
-        verify(driverRepository).findById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).findById(DriverTestUtil.ID);
         verifyNoMoreInteractions(driverRepository);
     }
 
@@ -222,11 +222,11 @@ public class DriverServiceUnitTest {
     void givenExistingDriver_whenExistByPhoneNumberDriver_thenTrue() {
         doReturn(true)
                 .when(driverRepository)
-                .existsByPhoneNumber(DriverTestUtil.DEFAULT_PHONE);
+                .existsByPhoneNumber(DriverTestUtil.PHONE);
 
-        Boolean result = driverService.existByPhoneNumber(DriverTestUtil.DEFAULT_PHONE);
+        Boolean result = driverService.existByPhoneNumber(DriverTestUtil.PHONE);
 
-        verify(driverRepository).existsByPhoneNumber(DriverTestUtil.DEFAULT_PHONE);
+        verify(driverRepository).existsByPhoneNumber(DriverTestUtil.PHONE);
         verifyNoMoreInteractions(driverRepository);
         assertThat(result).isEqualTo(true);
     }
@@ -235,11 +235,11 @@ public class DriverServiceUnitTest {
     void givenNonExistingDriver_whenExistByPhoneNumberDriver_thenFalse() {
         doReturn(false)
                 .when(driverRepository)
-                .existsByPhoneNumber(DriverTestUtil.DEFAULT_PHONE);
+                .existsByPhoneNumber(DriverTestUtil.PHONE);
 
-        Boolean result = driverService.existByPhoneNumber(DriverTestUtil.DEFAULT_PHONE);
+        Boolean result = driverService.existByPhoneNumber(DriverTestUtil.PHONE);
 
-        verify(driverRepository).existsByPhoneNumber(DriverTestUtil.DEFAULT_PHONE);
+        verify(driverRepository).existsByPhoneNumber(DriverTestUtil.PHONE);
         verifyNoMoreInteractions(driverRepository);
         assertThat(result).isEqualTo(false);
     }
@@ -248,11 +248,11 @@ public class DriverServiceUnitTest {
     void givenExistingDriver_whenExistByIdDriver_thenTrue() {
         doReturn(true)
                 .when(driverRepository)
-                .existsById(DriverTestUtil.DEFAULT_ID);
+                .existsById(DriverTestUtil.ID);
 
-        Boolean result = driverService.existById(DriverTestUtil.DEFAULT_ID);
+        Boolean result = driverService.existById(DriverTestUtil.ID);
 
-        verify(driverRepository).existsById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).existsById(DriverTestUtil.ID);
         verifyNoMoreInteractions(driverRepository);
         assertThat(result).isEqualTo(true);
     }
@@ -261,11 +261,11 @@ public class DriverServiceUnitTest {
     void givenNonExistingDriver_whenExistByIdDriver_thenFalse() {
         doReturn(false)
                 .when(driverRepository)
-                .existsById(DriverTestUtil.DEFAULT_ID);
+                .existsById(DriverTestUtil.ID);
 
-        Boolean result = driverService.existById(DriverTestUtil.DEFAULT_ID);
+        Boolean result = driverService.existById(DriverTestUtil.ID);
 
-        verify(driverRepository).existsById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).existsById(DriverTestUtil.ID);
         verifyNoMoreInteractions(driverRepository);
         assertThat(result).isEqualTo(false);
     }
@@ -277,7 +277,7 @@ public class DriverServiceUnitTest {
 
         doReturn(Optional.of(driver))
                 .when(driverRepository)
-                .findById(DriverTestUtil.DEFAULT_ID);
+                .findById(DriverTestUtil.ID);
         doReturn(driver)
                 .when(driverRepository)
                 .save(driver);
@@ -285,9 +285,9 @@ public class DriverServiceUnitTest {
                 .when(driverMapper)
                 .toResponse(driver);
 
-        DriverResponse result = driverService.changeAvailableStatus(DriverTestUtil.DEFAULT_ID, DriverTestUtil.DEFAULT_AVAILABLE);
+        DriverResponse result = driverService.changeAvailableStatus(DriverTestUtil.ID, DriverTestUtil.AVAILABLE);
 
-        verify(driverRepository).findById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).findById(DriverTestUtil.ID);
         verify(driverRepository).save(driver);
         verify(driverMapper).toResponse(driver);
         assertThat(result).isEqualTo(driverResponse);
@@ -297,12 +297,12 @@ public class DriverServiceUnitTest {
     void givenNonExistingDriver_whenChangeAvailableStatus_thenThrowException() {
         doReturn(Optional.empty())
                 .when(driverRepository)
-                .findById(DriverTestUtil.DEFAULT_ID);
+                .findById(DriverTestUtil.ID);
 
-        assertThatThrownBy(() -> driverService.changeAvailableStatus(DriverTestUtil.DEFAULT_ID, DriverTestUtil.DEFAULT_AVAILABLE))
+        assertThatThrownBy(() -> driverService.changeAvailableStatus(DriverTestUtil.ID, DriverTestUtil.AVAILABLE))
                 .isInstanceOf(DriverNotFoundException.class);
 
-        verify(driverRepository).findById(DriverTestUtil.DEFAULT_ID);
+        verify(driverRepository).findById(DriverTestUtil.ID);
         verifyNoMoreInteractions(driverRepository);
     }
 }

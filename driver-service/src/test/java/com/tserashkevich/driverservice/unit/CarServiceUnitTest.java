@@ -45,7 +45,7 @@ public class CarServiceUnitTest {
                 .when(carMapper)
                 .toModel(carRequest);
         doAnswer(invocation -> {
-            car.setId(CarTestUtil.DEFAULT_ID);
+            car.setId(CarTestUtil.ID);
             return null;
         }).when(carRepository).save(car);
         doReturn(carResponse)
@@ -70,8 +70,8 @@ public class CarServiceUnitTest {
                 .when(carMapper)
                 .toModel(carRequest);
         doAnswer(invocation -> {
-            cars.get(0).setId(CarTestUtil.DEFAULT_ID);
-            cars.get(1).setId(CarTestUtil.DEFAULT_SECOND_ID);
+            cars.get(0).setId(CarTestUtil.ID);
+            cars.get(1).setId(CarTestUtil.SECOND_ID);
             return null;
         }).when(carRepository).saveAll(cars);
 
@@ -90,7 +90,7 @@ public class CarServiceUnitTest {
 
         doReturn(Optional.of(car))
                 .when(carRepository)
-                .findById(CarTestUtil.DEFAULT_ID);
+                .findById(CarTestUtil.ID);
         doAnswer(invocation -> {
             CarTestUtil.updateCar(car, carRequest);
             return null;
@@ -102,9 +102,9 @@ public class CarServiceUnitTest {
                 .when(carMapper)
                 .toResponse(car);
 
-        CarResponse result = carService.update(CarTestUtil.DEFAULT_ID, carRequest);
+        CarResponse result = carService.update(CarTestUtil.ID, carRequest);
 
-        verify(carRepository).findById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).findById(CarTestUtil.ID);
         verify(carMapper).updateModel(car, carRequest);
         verify(carRepository).save(car);
         verify(carMapper).toResponse(car);
@@ -117,12 +117,12 @@ public class CarServiceUnitTest {
 
         doReturn(Optional.empty())
                 .when(carRepository)
-                .findById(CarTestUtil.DEFAULT_ID);
+                .findById(CarTestUtil.ID);
 
-        assertThatThrownBy(() -> carService.update(CarTestUtil.DEFAULT_ID, carRequest))
+        assertThatThrownBy(() -> carService.update(CarTestUtil.ID, carRequest))
                 .isInstanceOf(CarNotFoundException.class);
 
-        verify(carRepository).findById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).findById(CarTestUtil.ID);
         verifyNoMoreInteractions(carRepository);
     }
 
@@ -132,14 +132,14 @@ public class CarServiceUnitTest {
 
         doReturn(Optional.of(car))
                 .when(carRepository)
-                .findById(CarTestUtil.DEFAULT_ID);
+                .findById(CarTestUtil.ID);
         doNothing()
                 .when(carRepository)
                 .delete(car);
 
         carService.delete(car.getId());
 
-        verify(carRepository).findById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).findById(CarTestUtil.ID);
         verify(carRepository).delete(car);
     }
 
@@ -147,12 +147,12 @@ public class CarServiceUnitTest {
     void givenNonExistingCar_whenDeleteCar_thenThrowException() {
         doReturn(Optional.empty())
                 .when(carRepository)
-                .findById(CarTestUtil.DEFAULT_ID);
+                .findById(CarTestUtil.ID);
 
-        assertThatThrownBy(() -> carService.delete(CarTestUtil.DEFAULT_ID))
+        assertThatThrownBy(() -> carService.delete(CarTestUtil.ID))
                 .isInstanceOf(CarNotFoundException.class);
 
-        verify(carRepository).findById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).findById(CarTestUtil.ID);
         verifyNoMoreInteractions(carRepository);
     }
 
@@ -185,26 +185,26 @@ public class CarServiceUnitTest {
 
         doReturn(Optional.of(car))
                 .when(carRepository)
-                .findById(CarTestUtil.DEFAULT_ID);
+                .findById(CarTestUtil.ID);
         doReturn(carResponse)
                 .when(carMapper)
                 .toResponse(car);
 
         carService.findById(car.getId());
 
-        verify(carRepository).findById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).findById(CarTestUtil.ID);
     }
 
     @Test
     void givenNonExistingCar_whenFindByIdCar_thenThrowException() {
         doReturn(Optional.empty())
                 .when(carRepository)
-                .findById(CarTestUtil.DEFAULT_ID);
+                .findById(CarTestUtil.ID);
 
-        Assertions.assertThatThrownBy(() -> carService.findById(CarTestUtil.DEFAULT_ID))
+        Assertions.assertThatThrownBy(() -> carService.findById(CarTestUtil.ID))
                 .isInstanceOf(CarNotFoundException.class);
 
-        verify(carRepository).findById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).findById(CarTestUtil.ID);
         verifyNoMoreInteractions(carRepository);
     }
 
@@ -212,11 +212,11 @@ public class CarServiceUnitTest {
     void givenExistingCar_whenExistByIdCar_thenTrue() {
         doReturn(true)
                 .when(carRepository)
-                .existsById(CarTestUtil.DEFAULT_ID);
+                .existsById(CarTestUtil.ID);
 
-        Boolean result = carService.existById(CarTestUtil.DEFAULT_ID);
+        Boolean result = carService.existById(CarTestUtil.ID);
 
-        verify(carRepository).existsById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).existsById(CarTestUtil.ID);
         verifyNoMoreInteractions(carRepository);
         assertThat(result).isEqualTo(true);
     }
@@ -225,11 +225,11 @@ public class CarServiceUnitTest {
     void givenNonExistingCar_whenExistByIdCar_thenFalse() {
         doReturn(false)
                 .when(carRepository)
-                .existsById(CarTestUtil.DEFAULT_ID);
+                .existsById(CarTestUtil.ID);
 
-        Boolean result = carService.existById(CarTestUtil.DEFAULT_ID);
+        Boolean result = carService.existById(CarTestUtil.ID);
 
-        verify(carRepository).existsById(CarTestUtil.DEFAULT_ID);
+        verify(carRepository).existsById(CarTestUtil.ID);
         verifyNoMoreInteractions(carRepository);
         assertThat(result).isEqualTo(false);
     }
@@ -238,11 +238,11 @@ public class CarServiceUnitTest {
     void givenExistingCar_whenExistByCarNumber_thenTrue() {
         doReturn(true)
                 .when(carRepository)
-                .existsByNumber(CarTestUtil.DEFAULT_NUMBER);
+                .existsByNumber(CarTestUtil.NUMBER);
 
-        Boolean result = carService.existByCarNumber(CarTestUtil.DEFAULT_NUMBER);
+        Boolean result = carService.existByCarNumber(CarTestUtil.NUMBER);
 
-        verify(carRepository).existsByNumber(CarTestUtil.DEFAULT_NUMBER);
+        verify(carRepository).existsByNumber(CarTestUtil.NUMBER);
         verifyNoMoreInteractions(carRepository);
         assertThat(result).isEqualTo(true);
     }
@@ -251,11 +251,11 @@ public class CarServiceUnitTest {
     void givenNonExistingCar_whenExistByCarNumber_thenFalse() {
         doReturn(false)
                 .when(carRepository)
-                .existsByNumber(CarTestUtil.DEFAULT_NUMBER);
+                .existsByNumber(CarTestUtil.NUMBER);
 
-        Boolean result = carService.existByCarNumber(CarTestUtil.DEFAULT_NUMBER);
+        Boolean result = carService.existByCarNumber(CarTestUtil.NUMBER);
 
-        verify(carRepository).existsByNumber(CarTestUtil.DEFAULT_NUMBER);
+        verify(carRepository).existsByNumber(CarTestUtil.NUMBER);
         verifyNoMoreInteractions(carRepository);
         assertThat(result).isEqualTo(false);
     }
