@@ -1,0 +1,28 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongodb/27017
+      authentication-database: admin
+      database: local
+  kafka:
+    bootstrap-servers: kafka:9092
+  cloud:
+    openfeign:
+      client:
+        config:
+          geoapify:
+            url: https://api.geoapify.com/v1
+            connect-timeout: 3000
+            read-timeout: 5000
+          driver:
+            url: http://driver-service:8080/api/v1/drivers
+            connect-timeout: 3000
+            read-timeout: 5000
+          car:
+            url: http://driver-service:8080/api/v1/cars
+            connect-timeout: 3000
+            read-timeout: 5000
+          passenger:
+            url: http://passenger-service:8081/api/v1/passengers
+            connect-timeout: 3000
+            read-timeout: 5000

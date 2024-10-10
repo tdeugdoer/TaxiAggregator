@@ -15,6 +15,6 @@ public interface RatingRepository extends CassandraRepository<Rating, UUID> {
     @Query("SELECT COUNT(*) FROM ratings WHERE ride_id = :rideId AND source_id = :sourceId ALLOW FILTERING")
     Integer existByRideIdAndSourceId(String rideId, UUID sourceId);
 
-    @Query("SELECT AVG(rating) FROM ratings WHERE target_id = :targetId")
+    @Query("SELECT AVG(rating) FROM ratings WHERE target_id = :targetId ALLOW FILTERING")
     Double countTargetIdAvgRating(UUID targetId);
 }

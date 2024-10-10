@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgredb:5432/driver_service
+    username: postgres
+    password: postgres
+  kafka:
+    bootstrap-servers: kafka:9092
+  cloud:
+    openfeign:
+      client:
+        config:
+          ratings:
+            url: http://rating-service:8083/api/v1/ratings
+            connect-timeout: 3000
+            read-timeout: 5000

@@ -5,6 +5,14 @@ plugins {
     id "com.ewerk.gradle.plugins.querydsl" version "${ewerkVersion}"
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.tserashkevich.passengerservice.PassengerServiceApplication'
+        )
+    }
+}
+
 configurations {
     querydsl.extendsFrom annotationProcessor, implementation
 }
