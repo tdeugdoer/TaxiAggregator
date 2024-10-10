@@ -1,10 +1,10 @@
 package com.tserashkevich.rideservice.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class AddressResponse {
     private final String geoPoint;
     private final String name;

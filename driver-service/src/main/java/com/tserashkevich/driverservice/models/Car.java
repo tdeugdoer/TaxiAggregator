@@ -2,16 +2,14 @@ package com.tserashkevich.driverservice.models;
 
 import com.tserashkevich.driverservice.models.enums.Color;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Getter
 @Setter
-@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cars")
 public class Car {
     @Id

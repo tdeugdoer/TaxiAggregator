@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 @Getter
 @Builder
-@RequiredArgsConstructor
 public class FindAllParams {
     private final Integer page;
     private final Integer limit;

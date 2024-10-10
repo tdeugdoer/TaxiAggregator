@@ -28,8 +28,8 @@ import java.util.UUID;
 @Service
 public class DriverServiceImpl implements DriverService {
     private final DriverRepository driverRepository;
-    private final CarService carService;
     private final DriverMapper driverMapper;
+    private final CarService carService;
 
     @Transactional
     @Override

@@ -83,6 +83,7 @@ public class PassengerServiceImpl implements PassengerService {
         return passengerMapper.toResponse(passenger);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Boolean existById(UUID passengerId) {
         log.info(LogList.EXIST_PASSENGER_BY_ID, passengerId);

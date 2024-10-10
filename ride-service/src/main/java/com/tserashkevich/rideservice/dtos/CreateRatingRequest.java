@@ -4,11 +4,11 @@ import com.tserashkevich.rideservice.utils.ValidationList;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class CreateRatingRequest {
     private final String rideId;
     private final String comment;

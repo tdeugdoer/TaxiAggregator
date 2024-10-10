@@ -3,11 +3,11 @@ package com.tserashkevich.ratingservice.dtos;
 import com.tserashkevich.ratingservice.utils.PatternList;
 import com.tserashkevich.ratingservice.utils.ValidationList;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class RatingRequest {
     @NotBlank(message = ValidationList.RIDE_ID_REQUIRED)
     private final String rideId;

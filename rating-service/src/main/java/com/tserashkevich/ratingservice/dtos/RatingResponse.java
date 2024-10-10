@@ -1,13 +1,13 @@
 package com.tserashkevich.ratingservice.dtos;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor
+@Builder
 public class RatingResponse {
     private final UUID id;
     private final String rideId;
