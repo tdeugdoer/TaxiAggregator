@@ -141,7 +141,7 @@ class PassengerServiceUnitTest {
         PageRequest pageRequest = TestUtil.getPageRequest();
         Page<Passenger> passengerPage = TestUtil.getPageOfPassengers();
         List<PassengerResponse> passengerResponses = TestUtil.getPassengerResponses();
-        PageResponse<PassengerResponse> passengerPageResponse = TestUtil.getPageResponse(passengerResponses);
+        PageResponse<PassengerResponse> passengerPageResponse = TestUtil.getPageResponse();
 
         doReturn(passengerPage)
                 .when(passengerRepository)
