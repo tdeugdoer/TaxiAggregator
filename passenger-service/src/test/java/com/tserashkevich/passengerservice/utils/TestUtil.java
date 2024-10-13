@@ -47,7 +47,7 @@ public class TestUtil {
     public final String PASSENGER_NOT_FOUND_MESSAGE = "Пассажир не найден";
     public final String DEFAULT_PATH = "/api/v1/passengers";
     public final String AVG_REQUEST = "/avg/";
-    public final String AVG_REQUEST_WITH_UUID = "/avg/" + PatternList.UUID_PATTERN;
+    public final String AVG_REQUEST_WITH_UUID = "/avg/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
 
     public Passenger getPassenger() {
         return Passenger.builder()
