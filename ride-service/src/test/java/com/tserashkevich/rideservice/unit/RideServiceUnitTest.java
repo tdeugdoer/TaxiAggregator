@@ -224,7 +224,7 @@ class RideServiceUnitTest {
 
     @Test
     void givenExistingRide_whenCreateDriverComment_thenNothing() {
-        CreateRatingRequest createRatingRequest = TestUtil.getFinishedRideCreateRatingRequest();
+        CreateRatingRequest createRatingRequest = TestUtil.getSecondFinishedRideCreateRatingRequest();
         Ride ride = TestUtil.getSecondRide();
         RatingCreateEvent ratingCreateEvent = TestUtil.getDriverRatingCreateEvent(createRatingRequest);
 
@@ -275,7 +275,7 @@ class RideServiceUnitTest {
 
     @Test
     void givenExistingRide_whenCreatePassengerComment_thenNothing() {
-        CreateRatingRequest createRatingRequest = TestUtil.getFinishedRideCreateRatingRequest();
+        CreateRatingRequest createRatingRequest = TestUtil.getSecondFinishedRideCreateRatingRequest();
         Ride ride = TestUtil.getSecondRide();
         RatingCreateEvent ratingCreateEvent = TestUtil.getPassengerRatingCreateEvent(createRatingRequest);
 
