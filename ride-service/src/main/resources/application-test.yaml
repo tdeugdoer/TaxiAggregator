@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: rides-db
+      host: localhost
+      port: 27017
+      authentication-database: admin
