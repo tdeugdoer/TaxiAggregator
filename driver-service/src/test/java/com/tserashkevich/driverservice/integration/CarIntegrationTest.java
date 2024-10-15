@@ -4,7 +4,7 @@ import com.tserashkevich.driverservice.dtos.CarRequest;
 import com.tserashkevich.driverservice.dtos.CarResponse;
 import com.tserashkevich.driverservice.dtos.ExceptionResponse;
 import com.tserashkevich.driverservice.dtos.PageResponse;
-import com.tserashkevich.driverservice.integration.config.DriverAndCarIntegrationTestConfig;
+import com.tserashkevich.driverservice.integration.config.CarIntegrationTestConfig;
 import com.tserashkevich.driverservice.utils.CarTestUtil;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -18,7 +18,7 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CarIntegrationTest extends DriverAndCarIntegrationTestConfig {
+public class CarIntegrationTest extends CarIntegrationTestConfig {
     @LocalServerPort
     private Integer port;
 

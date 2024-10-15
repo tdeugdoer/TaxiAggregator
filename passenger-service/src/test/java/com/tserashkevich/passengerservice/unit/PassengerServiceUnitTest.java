@@ -153,7 +153,7 @@ class PassengerServiceUnitTest {
         PageResponse<PassengerResponse> result = passengerService.findAll(findAllParams);
 
         verify(passengerRepository).findAll(predicate, pageRequest);
-        assertThat(result).isEqualTo(passengerPageResponse);
+        assertThat(result).usingRecursiveComparison().isEqualTo(passengerPageResponse);
     }
 
     @Test

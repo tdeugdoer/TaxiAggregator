@@ -2,7 +2,7 @@ package com.tserashkevich.driverservice.integration;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.tserashkevich.driverservice.dtos.*;
-import com.tserashkevich.driverservice.integration.config.DriverAndCarIntegrationTestConfig;
+import com.tserashkevich.driverservice.integration.config.DriverIntegrationTestConfig;
 import com.tserashkevich.driverservice.utils.DriverTestUtil;
 import com.tserashkevich.driverservice.utils.MappingToJsonUtil;
 import io.restassured.http.ContentType;
@@ -19,7 +19,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DriverIntegrationTest extends DriverAndCarIntegrationTestConfig {
+public class DriverIntegrationTest extends DriverIntegrationTestConfig {
     @LocalServerPort
     private Integer port;
 

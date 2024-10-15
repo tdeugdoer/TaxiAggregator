@@ -22,7 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @WireMockTest
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class DriverAndCarIntegrationTestConfig {
+public class DriverIntegrationTestConfig {
     @RegisterExtension
     protected static WireMockExtension wireMockExtension = WireMockExtension.extensionOptions()
             .options(WireMockConfiguration.wireMockConfig().dynamicPort())
