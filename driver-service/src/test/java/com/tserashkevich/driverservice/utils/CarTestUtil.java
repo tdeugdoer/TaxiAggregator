@@ -14,25 +14,29 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @UtilityClass
 public class CarTestUtil {
     public final Long ID = 1L;
     public final Long SECOND_ID = 2L;
+    public final Long THIRD_ID = 5L;
+    public final Long NON_EXISTING_ID = 100L;
     public final String NUMBER = "dsf32241";
     public final String SECOND_NUMBER = "loo98543";
+    public final String NON_EXISTING_NUMBER = "qwer423";
     public final String BRAND = "Audi";
     public final String SECOND_BRAND = "Mercedes";
     public final String MODEL = "a4";
     public final String SECOND_MODEL = "b943";
     public final Color COLOR = Color.Black;
     public final Color SECOND_COLOR = Color.White;
-    public final String COLOR_NAME = Color.Black.name();
-    public final String SECOND_COLOR_NAME = Color.White.name();
-    public final Integer PAGE = 0;    public final Driver DRIVER = DriverTestUtil.getDriver();
-    public final Integer LIMIT = 10;    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
-    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");    public final UUID DRIVER_ID = DriverTestUtil.getDriver().getId();
+    public final Integer PAGE = 0;
+    public final Integer LIMIT = 10;
+    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
+    public final String SORT_NAME = "ID_ASC";    public final Driver DRIVER = DriverTestUtil.getDriver();
+    public final String CAR_NOT_FOUND_MESSAGE = "Машина не найдена";
+    public final String DEFAULT_PATH = "/api/v1/cars";    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
 
     public Car getCar() {
         return Car.builder()
@@ -43,7 +47,7 @@ public class CarTestUtil {
                 .color(COLOR)
                 .driver(DRIVER)
                 .build();
-    }    public final UUID SECOND_DRIVER_ID = DriverTestUtil.getSecondDriver().getId();
+    }
 
     public Car getSecondCar() {
         return Car.builder()
@@ -95,7 +99,17 @@ public class CarTestUtil {
                 .number(NUMBER)
                 .brand(BRAND)
                 .model(MODEL)
-                .color(COLOR_NAME)
+                .color(COLOR.name())
+                .driver(DriverTestUtil.ID.toString())
+                .build();
+    }
+
+    public CarRequest getNonExistingCarRequest() {
+        return CarRequest.builder()
+                .number(NON_EXISTING_NUMBER)
+                .brand(BRAND)
+                .model(MODEL)
+                .color(COLOR.name())
                 .driver(DriverTestUtil.ID.toString())
                 .build();
     }
@@ -105,27 +119,17 @@ public class CarTestUtil {
                 .number(SECOND_NUMBER)
                 .brand(SECOND_BRAND)
                 .model(SECOND_MODEL)
-                .color(SECOND_COLOR_NAME)
+                .color(SECOND_COLOR.name())
                 .driver(DriverTestUtil.SECOND_ID.toString())
                 .build();
     }
-//
-//    public Car getEditCar() {
-//        return Car.builder()
-//                .id(ID)
-//                .name(SECOND_NAME)
-//                .birthDate(SECOND_BIRTH_DATE)
-//                .phoneNumber(SECOND_PHONE)
-//                .gender(SECOND_GENDER)
-//                .build();
-//    }
 
     public CarWithoutDriverRequest getCarWithoutDriverRequest() {
         return CarWithoutDriverRequest.builder()
                 .number(NUMBER)
                 .brand(BRAND)
                 .model(MODEL)
-                .color(COLOR_NAME)
+                .color(COLOR.name())
                 .build();
     }
 
@@ -134,7 +138,16 @@ public class CarTestUtil {
                 .number(NUMBER)
                 .brand(SECOND_BRAND)
                 .model(SECOND_MODEL)
-                .color(SECOND_COLOR_NAME)
+                .color(SECOND_COLOR.name())
+                .build();
+    }
+
+    public CarWithoutDriverRequest getThirdCarWithoutDriverRequest() {
+        return CarWithoutDriverRequest.builder()
+                .number(NON_EXISTING_NUMBER)
+                .brand(SECOND_BRAND)
+                .model(SECOND_MODEL)
+                .color(SECOND_COLOR.name())
                 .build();
     }
 
@@ -151,8 +164,19 @@ public class CarTestUtil {
                 .number(NUMBER)
                 .brand(BRAND)
                 .model(MODEL)
-                .color(COLOR_NAME)
-                .driver(DRIVER_ID)
+                .color(COLOR.name())
+                .driver(DriverTestUtil.ID)
+                .build();
+    }
+
+    public CarResponse getCreatedCarResponse() {
+        return CarResponse.builder()
+                .id(NON_EXISTING_ID)
+                .number(NON_EXISTING_NUMBER)
+                .brand(BRAND)
+                .model(MODEL)
+                .color(COLOR.name())
+                .driver(DriverTestUtil.ID)
                 .build();
     }
 
@@ -162,8 +186,8 @@ public class CarTestUtil {
                 .number(SECOND_NUMBER)
                 .brand(SECOND_BRAND)
                 .model(SECOND_MODEL)
-                .color(SECOND_COLOR_NAME)
-                .driver(SECOND_DRIVER_ID)
+                .color(SECOND_COLOR.name())
+                .driver(DriverTestUtil.SECOND_ID)
                 .build();
     }
 
@@ -173,7 +197,7 @@ public class CarTestUtil {
                 .number(NUMBER)
                 .brand(BRAND)
                 .model(MODEL)
-                .color(COLOR_NAME)
+                .color(COLOR.name())
                 .build();
     }
 
@@ -183,7 +207,17 @@ public class CarTestUtil {
                 .number(SECOND_NUMBER)
                 .brand(SECOND_BRAND)
                 .model(SECOND_MODEL)
-                .color(SECOND_COLOR_NAME)
+                .color(SECOND_COLOR.name())
+                .build();
+    }
+
+    public CarWithoutDriverResponse getThirdCarWithoutDriverResponse() {
+        return CarWithoutDriverResponse.builder()
+                .id(THIRD_ID)
+                .number(NON_EXISTING_NUMBER)
+                .brand(SECOND_BRAND)
+                .model(SECOND_MODEL)
+                .color(SECOND_COLOR.name())
                 .build();
     }
 
@@ -193,7 +227,7 @@ public class CarTestUtil {
                 .number(SECOND_NUMBER)
                 .brand(SECOND_BRAND)
                 .model(SECOND_MODEL)
-                .color(SECOND_COLOR_NAME)
+                .color(SECOND_COLOR.name())
                 .driver(DriverTestUtil.SECOND_ID)
                 .build();
     }
@@ -228,6 +262,14 @@ public class CarTestUtil {
                 .build();
     }
 
+    public Map<String, Object> getFindAllParamsMap() {
+        return Map.of(
+                "page", PAGE,
+                "limit", LIMIT,
+                "sort", SORT_NAME
+        );
+    }
+
     public Predicate getPredicate() {
         return ExpressionUtils.allOf(Expressions.TRUE);
     }
@@ -240,12 +282,18 @@ public class CarTestUtil {
         return new PageImpl<>(getCars());
     }
 
-    public PageResponse<CarResponse> getPageResponse(List<CarResponse> carResponses) {
+    public PageResponse<CarResponse> getPageResponse() {
         Page<Car> driverPage = getPageOfCars();
         return PageResponse.<CarResponse>builder()
-                .objectList(carResponses)
+                .objectList(getCarResponses())
                 .totalElements(driverPage.getTotalElements())
                 .totalPages(driverPage.getTotalPages())
                 .build();
     }
+
+
+
+
+
+
 }
