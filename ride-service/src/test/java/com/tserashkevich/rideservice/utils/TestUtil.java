@@ -30,11 +30,13 @@ public class TestUtil {
     public final String SECOND_RIDE_ID = "507f1f77bcf86cd799439011";
     public final String NON_EXISTING_RIDE_ID = "123f1f77bcf86cd799439999";
     public final UUID PASSENGER_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public final UUID SECOND_PASSENGER_ID = UUID.fromString("22222222-1111-1111-1111-222222222222");
-    public final UUID DRIVER_ID = UUID.fromString("33333333-3333-3333-3333-333333333333");
+    public final UUID SECOND_PASSENGER_ID = UUID.fromString("ce268ddc-6b47-4e0f-86c0-bd0f936160f9");
+    public final UUID DRIVER_ID = UUID.fromString("c86fbf65-7aaf-4f7e-8cb6-e8ddeacabb1f");
     public final UUID SECOND_DRIVER_ID = UUID.fromString("44444444-4444-4444-4444-444444444444");
+    public final UUID NON_EXISTING_DRIVER_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
     public final Long CAR_ID = 1L;
     public final Long SECOND_CAR_ID = 2L;
+    public final Long NON_EXISTING_CAR_ID = 11111111L;
     public final String START_LAT = "52.093865";
     public final String START_LON = "23.706679";
     public final String SECOND_START_LAT = "54.506823";
@@ -66,6 +68,8 @@ public class TestUtil {
     public final String GEO_POINT_REQUEST = "/geocode/reverse";
     public final String DISTANCE_REQUEST = "/routing";
     public final String EXIST_REQUEST = "/exist/";
+    public final String CONTRACT_PASSENGER_EXIST_ID = "ce268ddc-6b47-4e0f-86c0-bd0f936160f9";
+    public final String CONTRACT_PASSENGER_NOT_EXIST_ID = "11111111-1111-1111-1111-111111111111";
 
     public Ride getRide() {
         return Ride.builder()
@@ -138,6 +142,14 @@ public class TestUtil {
     public CreateRideRequest getCreateRideRequest() {
         return CreateRideRequest.builder()
                 .passengerId(PASSENGER_ID.toString())
+                .startGeoPoint(START_LAT + "," + START_LON)
+                .endGeoPoint(END_LAT + "," + END_LON)
+                .build();
+    }
+
+    public CreateRideRequest getSecondCreateRideRequest() {
+        return CreateRideRequest.builder()
+                .passengerId(SECOND_PASSENGER_ID.toString())
                 .startGeoPoint(START_LAT + "," + START_LON)
                 .endGeoPoint(END_LAT + "," + END_LON)
                 .build();
@@ -237,6 +249,27 @@ public class TestUtil {
                 .build();
     }
 
+    public RideResponse getSecondRideWithCarResponse() {
+        return RideResponse.builder()
+                .id(RIDE_ID)
+                .passengerId(PASSENGER_ID)
+                .carId(SECOND_CAR_ID)
+                .startAddress(AddressResponse.builder()
+                        .name(START_GEO_POINT_NAME)
+                        .geoPoint(START_LAT + "|" + START_LON)
+                        .build())
+                .endAddress(AddressResponse.builder()
+                        .name(END_GEO_POINT_NAME)
+                        .geoPoint(END_LAT + "|" + END_LON)
+                        .build())
+                .distance(DISTANCE)
+                .time(TimeResponse.builder()
+                        .startTime(START_TIME)
+                        .build())
+                .status(STATUS_CREATED.name())
+                .build();
+    }
+
     public RideResponse getRideWithFinishedStatusResponse() {
         return RideResponse.builder()
                 .id(RIDE_ID)
@@ -258,7 +291,7 @@ public class TestUtil {
                 .build();
     }
 
-    public RideResponse getSecondRideResponse() {
+    public RideResponse getFullSecondRideResponse() {
         return RideResponse.builder()
                 .id(SECOND_RIDE_ID)
                 .driverId(SECOND_DRIVER_ID)
@@ -299,10 +332,28 @@ public class TestUtil {
                 .build();
     }
 
+    public CreateRideResponse getSecondCreateRideResponse() {
+        return CreateRideResponse.builder()
+                .id(RIDE_ID)
+                .passengerId(SECOND_PASSENGER_ID)
+                .startAddress(AddressResponse.builder()
+                        .name(START_GEO_POINT_NAME)
+                        .geoPoint(START_LAT + "|" + START_LON)
+                        .build())
+                .endAddress(AddressResponse.builder()
+                        .name(END_GEO_POINT_NAME)
+                        .geoPoint(END_LAT + "|" + END_LON)
+                        .build())
+                .distance(DISTANCE)
+                .startTime(START_TIME)
+                .status(STATUS_CREATED.name())
+                .build();
+    }
+
     public List<RideResponse> getRideResponses() {
         return List.of(
                 getRideResponse(),
-                getSecondRideResponse()
+                getFullSecondRideResponse()
         );
     }
 
