@@ -98,6 +98,15 @@ public class DriverTestUtil {
                 .build();
     }
 
+    public DriverRequest getDriverRequest(String name, String phone) {
+        return DriverRequest.builder()
+                .name(name)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(phone)
+                .gender(GENDER.name())
+                .build();
+    }
+
     public DriverRequest getNonExistingDriverRequest() {
         return DriverRequest.builder()
                 .name(NAME)
