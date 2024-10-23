@@ -94,6 +94,15 @@ public class TestUtil {
                 .build();
     }
 
+    public PassengerRequest getPassengerRequest(String username, String phone) {
+        return PassengerRequest.builder()
+                .name(username)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(phone)
+                .gender(GENDER.name())
+                .build();
+    }
+
     public PassengerRequest getNonExistingPassengerRequest() {
         return PassengerRequest.builder()
                 .name(NAME)
