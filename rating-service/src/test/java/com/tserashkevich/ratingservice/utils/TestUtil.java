@@ -103,6 +103,16 @@ public class TestUtil {
                 .build();
     }
 
+    public RatingRequest getRatingRequest(String sourceId, String rideId) {
+        return RatingRequest.builder()
+                .sourceId(sourceId)
+                .targetId(TARGET_ID.toString())
+                .rideId(rideId)
+                .rating(RATING)
+                .comment(COMMENT)
+                .build();
+    }
+
     public RatingRequest getEditRatingRequest() {
         return RatingRequest.builder()
                 .sourceId(SECOND_SOURCE_ID.toString())
