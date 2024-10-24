@@ -17,27 +17,37 @@ import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @UtilityClass
 public class TestUtil {
     public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public final UUID SECOND_ID = UUID.fromString("22222222-1111-1111-1111-222222222222");
-    public final String NAME = "USERNAME1";
-    public final String PHONE = "+375292078876";
-    public final String SECOND_PHONE = "+375448713245";
-    public final Double RATING = 5.0;
-    public final Double SECOND_RATING = 8.0;
+    public final UUID SECOND_ID = UUID.fromString("0ef7de40-7c91-46b7-8ecb-d68f7eb28ed5");
+    public final UUID NON_EXISTING_ID = UUID.fromString("44444444-4444-4444-4444-444444444444");
+    public final String NAME = "John Doe";
+    public final String SECOND_NAME = "Peter Jones";
+    public final String WRONG_NAME = "";
+    public final String PHONE = "+375297435874";
+    public final String SECOND_PHONE = "+375331675879";
+    public final String NON_EXISTING_PHONE = "+375297415874";
+    public final String WRONG_PHONE = "+3752974fsd5874";
+    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
+    public final String SORT_NAME = "ID_ASC";
+    public final LocalDate BIRTH_DATE = LocalDate.of(2000, 1, 1);
+    public final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1980, 10, 20);
+    public final LocalDate WRONG_BIRTH_DATE = LocalDate.of(2999, 5, 23);
+    public final Gender GENDER = Gender.Men;
+    public final Gender SECOND_GENDER = Gender.Women;
+    public final String WRONG_GENDER = "Gender";
+    public final Double RATING = 0.0;
+    public final Double SECOND_RATING = 3.0;
     public final Integer PAGE = 0;
     public final Integer LIMIT = 10;
-    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
-    private static final String SECOND_NAME = "USERNAME2";
-    private final LocalDate BIRTH_DATE = LocalDate.of(2000, 1, 1);
-    private final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
-    private static final Gender GENDER = Gender.Men;
-    private static final Gender SECOND_GENDER = Gender.Women;
-    private static final String GENDER_NAME = Gender.Men.name();
-    private static final String SECOND_GENDER_NAME = Gender.Women.name();
+    public final String PASSENGER_NOT_FOUND_MESSAGE = "Пассажир не найден";
+    public final String DEFAULT_PATH = "/api/v1/passengers";
+    public final String AVG_REQUEST = "/avg/";
+    public final String AVG_REQUEST_WITH_UUID = "/avg/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
 
     public Passenger getPassenger() {
         return Passenger.builder()
@@ -80,7 +90,34 @@ public class TestUtil {
                 .name(NAME)
                 .birthDate(BIRTH_DATE)
                 .phoneNumber(PHONE)
-                .gender(GENDER_NAME)
+                .gender(GENDER.name())
+                .build();
+    }
+
+    public PassengerRequest getPassengerRequest(String username, String phone) {
+        return PassengerRequest.builder()
+                .name(username)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(phone)
+                .gender(GENDER.name())
+                .build();
+    }
+
+    public PassengerRequest getNonExistingPassengerRequest() {
+        return PassengerRequest.builder()
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(NON_EXISTING_PHONE)
+                .gender(GENDER.name())
+                .build();
+    }
+
+    public PassengerRequest getInvalidPassengerRequest() {
+        return PassengerRequest.builder()
+                .name(WRONG_NAME)
+                .birthDate(WRONG_BIRTH_DATE)
+                .phoneNumber(WRONG_PHONE)
+                .gender(WRONG_GENDER)
                 .build();
     }
 
@@ -89,7 +126,7 @@ public class TestUtil {
                 .name(SECOND_NAME)
                 .birthDate(SECOND_BIRTH_DATE)
                 .phoneNumber(SECOND_PHONE)
-                .gender(SECOND_GENDER_NAME)
+                .gender(SECOND_GENDER.name())
                 .build();
     }
 
@@ -99,7 +136,7 @@ public class TestUtil {
                 .name(NAME)
                 .birthDate(BIRTH_DATE)
                 .phoneNumber(PHONE)
-                .gender(GENDER_NAME)
+                .gender(GENDER.name())
                 .avgRating(RATING)
                 .build();
     }
@@ -110,8 +147,19 @@ public class TestUtil {
                 .name(SECOND_NAME)
                 .birthDate(SECOND_BIRTH_DATE)
                 .phoneNumber(SECOND_PHONE)
-                .gender(SECOND_GENDER_NAME)
+                .gender(SECOND_GENDER.name())
                 .avgRating(SECOND_RATING)
+                .build();
+    }
+
+    public PassengerResponse getCreatedPassengerResponse() {
+        return PassengerResponse.builder()
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(NON_EXISTING_PHONE)
+                .gender(GENDER.name())
+                .avgRating(RATING)
                 .build();
     }
 
@@ -128,8 +176,8 @@ public class TestUtil {
 
     public List<PassengerResponse> getPassengerResponses() {
         return List.of(
-                getPassengerResponse(),
-                getSecondPassengerResponse()
+                getSecondPassengerResponse(),
+                getPassengerResponse()
         );
     }
 
@@ -148,6 +196,14 @@ public class TestUtil {
                 .build();
     }
 
+    public Map<String, Object> getFindAllParamsMap() {
+        return Map.of(
+                "page", PAGE,
+                "limit", LIMIT,
+                "sort", SORT_NAME
+        );
+    }
+
     public Predicate getPredicate() {
         return ExpressionUtils.allOf(Expressions.TRUE);
     }
@@ -160,10 +216,10 @@ public class TestUtil {
         return new PageImpl<>(getPassengers());
     }
 
-    public PageResponse<PassengerResponse> getPageResponse(List<PassengerResponse> passengerResponses) {
+    public PageResponse<PassengerResponse> getPageResponse() {
         Page<Passenger> passengerPage = getPageOfPassengers();
         return PageResponse.<PassengerResponse>builder()
-                .objectList(passengerResponses)
+                .objectList(getPassengerResponses())
                 .totalElements(passengerPage.getTotalElements())
                 .totalPages(passengerPage.getTotalPages())
                 .build();

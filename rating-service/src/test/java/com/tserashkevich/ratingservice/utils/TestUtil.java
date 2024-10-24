@@ -12,14 +12,17 @@ import org.springframework.data.domain.SliceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @UtilityClass
 public class TestUtil {
     public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
     public final UUID SECOND_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public final UUID NON_EXISTING_ID = UUID.fromString("33333333-3333-3333-3333-333333333333");
     public final String RIDE_ID = "507f1f77bcf86cd799439011";
     public final String SECOND_RIDE_ID = "6592008029c8c3e4dc76256c";
+    public final String NON_EXISTING_RIDE_ID = "1052008029c8c3e4dc76877m";
     public final UUID SOURCE_ID = UUID.fromString("33333333-3333-3333-3333-333333333333");
     public final UUID SECOND_SOURCE_ID = UUID.fromString("44444444-4444-4444-4444-444444444444");
     public final UUID TARGET_ID = UUID.fromString("55555555-5555-5555-5555-555555555555");
@@ -29,8 +32,13 @@ public class TestUtil {
     public final Double DOUBLE_RATING = 5.0;
     public final String COMMENT = "Комментарий 1";
     public final String SECOND_COMMENT = "Комментарий 2";
+    public final Integer PAGE = 0;
     public final Integer LIMIT = 10;
     public final RatingSortList SORT = RatingSortList.ID_ASC;
+    public final String SORT_NAME = "ID_ASC";
+    public final String RATING_NOT_FOUND_MESSAGE = "Рейтинг не найден";
+    public final String RATING_EXIST_MESSAGE = "Пользователь уже оценил эту поездку";
+    public final String DEFAULT_PATH = "/api/v1/ratings";
     private final LocalDateTime CREATION_TIME = LocalDateTime.of(2024, 1, 1, 13, 34, 34);
     private final LocalDateTime SECOND_CREATION_TIME = LocalDateTime.of(2024, 5, 23, 20, 12, 34);
 
@@ -75,11 +83,31 @@ public class TestUtil {
         );
     }
 
+    public RatingRequest getNonExistingRatingRequest() {
+        return RatingRequest.builder()
+                .sourceId(TARGET_ID.toString())
+                .targetId(SOURCE_ID.toString())
+                .rideId(RIDE_ID)
+                .rating(RATING)
+                .comment(COMMENT)
+                .build();
+    }
+
     public RatingRequest getRatingRequest() {
         return RatingRequest.builder()
                 .sourceId(SOURCE_ID.toString())
                 .targetId(TARGET_ID.toString())
                 .rideId(RIDE_ID)
+                .rating(RATING)
+                .comment(COMMENT)
+                .build();
+    }
+
+    public RatingRequest getRatingRequest(String sourceId, String rideId) {
+        return RatingRequest.builder()
+                .sourceId(sourceId)
+                .targetId(TARGET_ID.toString())
+                .rideId(rideId)
                 .rating(RATING)
                 .comment(COMMENT)
                 .build();
@@ -100,6 +128,18 @@ public class TestUtil {
                 .id(ID)
                 .sourceId(SOURCE_ID)
                 .targetId(TARGET_ID)
+                .rideId(RIDE_ID)
+                .rating(RATING)
+                .comment(COMMENT)
+                .creationTime(CREATION_TIME)
+                .build();
+    }
+
+    public RatingResponse getNonExistingRatingResponse() {
+        return RatingResponse.builder()
+                .id(ID)
+                .sourceId(TARGET_ID)
+                .targetId(SOURCE_ID)
                 .rideId(RIDE_ID)
                 .rating(RATING)
                 .comment(COMMENT)
@@ -135,6 +175,16 @@ public class TestUtil {
         return List.of(
                 getRatingResponse(),
                 getSecondRatingResponse()
+        );
+    }
+
+    public List<Feedback> getOneFeedbacks() {
+        return List.of(
+                Feedback.builder()
+                        .rating(RATING)
+                        .comment(COMMENT)
+                        .creationTime(CREATION_TIME)
+                        .build()
         );
     }
 
@@ -178,6 +228,15 @@ public class TestUtil {
                 .build();
     }
 
+    public Map<String, Object> getFindAllParamsMap() {
+        return Map.of(
+                "page", PAGE,
+                "limit", LIMIT,
+                "sort", SORT_NAME
+        );
+    }
+
+
     public Query getQuery() {
         return Query.query(new ArrayList<>())
                 .pageRequest(getPageRequest())
@@ -190,6 +249,12 @@ public class TestUtil {
 
     public Slice<Rating> getSliceOfRatings() {
         return new SliceImpl<>(getRatings());
+    }
+
+    public PageResponse<RatingResponse> getPageResponse() {
+        return PageResponse.<RatingResponse>builder()
+                .objectList(getRatingResponses())
+                .build();
     }
 
     public PageResponse<RatingResponse> getPageResponse(List<RatingResponse> ratingResponses) {

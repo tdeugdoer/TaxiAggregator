@@ -3,6 +3,8 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${springDependencyManagementVersion}"
     id "com.ewerk.gradle.plugins.querydsl" version "${ewerkVersion}"
+    id 'org.springframework.cloud.contract' version "${springContractVersion}"
+    id 'maven-publish'
 }
 
 jar {
@@ -24,6 +26,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    implementation 'io.projectreactor:reactor-core:3.6.11'
 
     implementation 'org.liquibase:liquibase-core'
     runtimeOnly 'org.postgresql:postgresql'
@@ -39,6 +42,17 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api:${jakartaPersistenceApiVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation "org.springframework.cloud:spring-cloud-contract-spec"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-verifier"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 }
@@ -62,4 +76,24 @@ compileQuerydsl {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+contracts {
+    testFramework = "JUNIT5"
+    baseClassForTests = 'com.tserashkevich.passengerservice.contract.ContractBaseTest'
+    contractsDslDir = file("src/test/resources/contracts")
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            groupId = 'com.tserashkevich'
+            artifactId = 'passenger-service'
+            version = '0.0.1-SNAPSHOT'
+
+            artifact verifierStubsJar
+        }
+    }
 }

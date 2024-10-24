@@ -29,7 +29,7 @@ public class Car {
     @Column(nullable = false)
     private Color color;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
     @JoinColumn(name = "driver_id")
     private Driver driver;
 }

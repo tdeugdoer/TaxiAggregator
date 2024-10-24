@@ -163,7 +163,7 @@ public class CarServiceUnitTest {
         PageRequest pageRequest = CarTestUtil.getPageRequest();
         Page<Car> carPage = CarTestUtil.getPageOfCars();
         List<CarResponse> carResponses = CarTestUtil.getCarResponses();
-        PageResponse<CarResponse> carPageResponse = CarTestUtil.getPageResponse(carResponses);
+        PageResponse<CarResponse> carPageResponse = CarTestUtil.getPageResponse();
 
         doReturn(carPage)
                 .when(carRepository)
@@ -175,7 +175,7 @@ public class CarServiceUnitTest {
         PageResponse<CarResponse> result = carService.findAll(findAllParams);
 
         verify(carRepository).findAll(predicate, pageRequest);
-        assertThat(result).isEqualTo(carPageResponse);
+        assertThat(result).usingRecursiveComparison().isEqualTo(carPageResponse);
     }
 
     @Test
