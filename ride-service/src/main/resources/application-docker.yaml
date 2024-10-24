@@ -5,7 +5,7 @@ spring:
       authentication-database: admin
       database: local
   kafka:
-    bootstrap-servers: kafka:9092
+    bootstrap-servers: kafka:9090
   cloud:
     openfeign:
       client:
