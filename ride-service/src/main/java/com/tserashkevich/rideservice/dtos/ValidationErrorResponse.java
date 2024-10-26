@@ -1,13 +1,15 @@
 package com.tserashkevich.rideservice.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class ValidationErrorResponse {
-    private final List<Violation> violations;
+    private List<Violation> violations;
 }
 

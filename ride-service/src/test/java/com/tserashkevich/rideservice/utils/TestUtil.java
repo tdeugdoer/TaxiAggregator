@@ -147,6 +147,14 @@ public class TestUtil {
                 .build();
     }
 
+    public CreateRideRequest getCreateRideRequest(String passengerId) {
+        return CreateRideRequest.builder()
+                .passengerId(passengerId)
+                .startGeoPoint(START_LAT + "," + START_LON)
+                .endGeoPoint(END_LAT + "," + END_LON)
+                .build();
+    }
+
     public CreateRideRequest getSecondCreateRideRequest() {
         return CreateRideRequest.builder()
                 .passengerId(SECOND_PASSENGER_ID.toString())

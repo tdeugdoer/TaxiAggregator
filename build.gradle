@@ -19,6 +19,7 @@ allprojects {
         restAssuredVersion = '5.5.0'
         springContractVersion = '4.1.4'
         springKafkaTest = '3.2.4'
+        cucumberVersion = '7.20.1'
     }
 
     repositories {

@@ -62,6 +62,7 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public RatingResponse update(UUID ratingId, RatingRequest ratingRequest) {
         Rating rating = getOrThrow(ratingId);
+        checkRatingExist(rating.getRideId(), rating.getSourceId());
         ratingMapper.updateModel(rating, ratingRequest);
         ratingRepository.save(rating);
         log.info(LogList.EDIT_RATING, ratingId);
