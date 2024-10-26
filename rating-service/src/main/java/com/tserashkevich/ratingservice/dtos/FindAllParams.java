@@ -13,5 +13,6 @@ public class FindAllParams {
     private final RatingSortList sort;
     private final UUID sourceId;
     private final UUID targetId;
+    private final String rideId;
     private final Integer rating;
 }

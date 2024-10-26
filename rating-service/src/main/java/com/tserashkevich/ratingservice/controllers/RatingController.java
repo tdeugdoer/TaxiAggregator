@@ -43,12 +43,14 @@ public class RatingController {
                                                        @RequestParam(defaultValue = "ID_ASC") RatingSortList sort,
                                                        @RequestParam(required = false) UUID sourceId,
                                                        @RequestParam(required = false) UUID targetId,
+                                                       @RequestParam(required = false) String rideId,
                                                        @RequestParam(required = false) Integer rating) {
         FindAllParams findAllParams = FindAllParams.builder()
                 .limit(limit)
                 .sort(sort)
                 .sourceId(sourceId)
                 .targetId(targetId)
+                .rideId(rideId)
                 .rating(rating)
                 .build();
         return ratingService.findAll(findAllParams);

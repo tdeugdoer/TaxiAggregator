@@ -82,6 +82,7 @@ public class RatingServiceImpl implements RatingService {
         Query query = QueryPredicate.builder()
                 .add(findAllParams.getSourceId(), Criteria.where("source_id").is(findAllParams.getSourceId()))
                 .add(findAllParams.getTargetId(), Criteria.where("target_id").is(findAllParams.getTargetId()))
+                .add(findAllParams.getRideId(), Criteria.where("ride_id").is(findAllParams.getRideId()))
                 .add(findAllParams.getRating(), Criteria.where("rating").is(findAllParams.getRating()))
                 .with(pageable)
                 .build();
