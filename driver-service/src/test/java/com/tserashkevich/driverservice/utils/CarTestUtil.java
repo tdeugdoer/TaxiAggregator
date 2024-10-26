@@ -33,10 +33,10 @@ public class CarTestUtil {
     public final Color SECOND_COLOR = Color.White;
     public final Integer PAGE = 0;
     public final Integer LIMIT = 10;
-    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");    public final Driver DRIVER = DriverTestUtil.getDriver();
-    public final String SORT_NAME = "ID_ASC";    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
+    public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
+    public final String SORT_NAME = "ID_ASC";    public final Driver DRIVER = DriverTestUtil.getDriver();
     public final String CAR_NOT_FOUND_MESSAGE = "Машина не найдена";
-    public final String DEFAULT_PATH = "/api/v1/cars";
+    public final String DEFAULT_PATH = "/api/v1/cars";    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
 
     public Car getCar() {
         return Car.builder()
@@ -290,6 +290,8 @@ public class CarTestUtil {
                 .totalPages(driverPage.getTotalPages())
                 .build();
     }
+
+
 
 
 

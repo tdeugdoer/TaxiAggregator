@@ -20,6 +20,7 @@ dependencies {
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
     implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
     implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'io.projectreactor:reactor-core:3.6.11'
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -30,10 +31,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation "org.wiremock:wiremock-jetty12:${wiremockVersion}"
     testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
     testImplementation 'org.testcontainers:mongodb'
     testImplementation 'org.testcontainers:kafka'
+    testImplementation "org.springframework.kafka:spring-kafka-test:${springKafkaTest}"
+    testImplementation "org.springframework.cloud:spring-cloud-starter-contract-stub-runner"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 }

@@ -20,7 +20,7 @@ import java.util.UUID;
 @UtilityClass
 public class DriverTestUtil {
     public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public final UUID SECOND_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public final UUID SECOND_ID = UUID.fromString("0ef7de40-7c91-46b7-8ecb-d68f7eb28ed5");
     public final UUID NON_EXISTING_ID = UUID.fromString("99999999-9999-9999-9999-999999999999");
     public final String NAME = "John Doe";
     public static final String SECOND_NAME = "Peter Jones";
@@ -38,7 +38,7 @@ public class DriverTestUtil {
     public static final Boolean AVAILABLE = true;
     public static final Boolean NON_AVAILABLE = false;
     public final Double RATING = 0.0;
-    public final Double SECOND_RATING = 8.0;
+    public final Double SECOND_RATING = 3.0;
     public final Integer PAGE = 0;
     public final Integer LIMIT = 10;
     public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
@@ -215,8 +215,8 @@ public class DriverTestUtil {
 
     public List<DriverResponse> getDriverResponses() {
         return List.of(
-                getDriverResponse(),
-                getSecondDriverResponse()
+                getSecondDriverResponse(),
+                getDriverResponse()
         );
     }
 

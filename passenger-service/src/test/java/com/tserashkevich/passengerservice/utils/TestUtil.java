@@ -23,7 +23,7 @@ import java.util.UUID;
 @UtilityClass
 public class TestUtil {
     public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
-    public final UUID SECOND_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
+    public final UUID SECOND_ID = UUID.fromString("0ef7de40-7c91-46b7-8ecb-d68f7eb28ed5");
     public final UUID NON_EXISTING_ID = UUID.fromString("44444444-4444-4444-4444-444444444444");
     public final String NAME = "John Doe";
     public final String SECOND_NAME = "Peter Jones";
@@ -35,13 +35,13 @@ public class TestUtil {
     public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
     public final String SORT_NAME = "ID_ASC";
     public final LocalDate BIRTH_DATE = LocalDate.of(2000, 1, 1);
-    public final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
+    public final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1980, 10, 20);
     public final LocalDate WRONG_BIRTH_DATE = LocalDate.of(2999, 5, 23);
     public final Gender GENDER = Gender.Men;
     public final Gender SECOND_GENDER = Gender.Women;
     public final String WRONG_GENDER = "Gender";
     public final Double RATING = 0.0;
-    public final Double SECOND_RATING = 8.0;
+    public final Double SECOND_RATING = 3.0;
     public final Integer PAGE = 0;
     public final Integer LIMIT = 10;
     public final String PASSENGER_NOT_FOUND_MESSAGE = "Пассажир не найден";
@@ -167,8 +167,8 @@ public class TestUtil {
 
     public List<PassengerResponse> getPassengerResponses() {
         return List.of(
-                getPassengerResponse(),
-                getSecondPassengerResponse()
+                getSecondPassengerResponse(),
+                getPassengerResponse()
         );
     }
 
