@@ -1,13 +1,16 @@
 package com.tserashkevich.passengerservice.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ValidationErrorResponse {
-    private final List<Violation> violations;
+    private List<Violation> violations;
 }
-

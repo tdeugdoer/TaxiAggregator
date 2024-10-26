@@ -2,7 +2,6 @@ package com.tserashkevich.passengerservice.dtos;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;

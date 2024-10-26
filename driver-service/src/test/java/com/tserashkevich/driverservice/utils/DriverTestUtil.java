@@ -14,29 +14,39 @@ import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @UtilityClass
 public class DriverTestUtil {
     public final UUID ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
     public final UUID SECOND_ID = UUID.fromString("22222222-2222-2222-2222-222222222222");
-    public final String NAME = "USERNAME1";
-    public static final String SECOND_NAME = "USERNAME2";
+    public final UUID NON_EXISTING_ID = UUID.fromString("99999999-9999-9999-9999-999999999999");
+    public final String NAME = "John Doe";
+    public static final String SECOND_NAME = "Peter Jones";
+    public final String WRONG_NAME = "";
     public final LocalDate BIRTH_DATE = LocalDate.of(2000, 1, 1);
     public final LocalDate SECOND_BIRTH_DATE = LocalDate.of(1999, 5, 23);
-    public final String PHONE = "+375292078876";
-    public final String SECOND_PHONE = "+375448713245";
+    public final LocalDate WRONG_BIRTH_DATE = LocalDate.of(2999, 5, 23);
+    public final String PHONE = "+375297435874";
+    public final String SECOND_PHONE = "+375331675879";
+    public final String NON_EXISTING_PHONE = "+375541675201";
+    public final String WRONG_PHONE = "+3752974fsd5874";
     public static final Gender GENDER = Gender.Men;
     public static final Gender SECOND_GENDER = Gender.Women;
-    public static final String GENDER_NAME = Gender.Men.name();
-    public static final String SECOND_GENDER_NAME = Gender.Women.name();
+    public final String WRONG_GENDER = "Gender";
     public static final Boolean AVAILABLE = true;
-    public static final Boolean SECOND_AVAILABLE = false;
-    public final Double RATING = 5.0;
+    public static final Boolean NON_AVAILABLE = false;
+    public final Double RATING = 0.0;
     public final Double SECOND_RATING = 8.0;
     public final Integer PAGE = 0;
     public final Integer LIMIT = 10;
     public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
+    public final String SORT_NAME = "ID_ASC";
+    public final String DRIVER_NOT_FOUND_MESSAGE = "Водитель не найден";
+    public final String DEFAULT_PATH = "/api/v1/drivers";
+    public final String AVG_REQUEST = "/avg/";
+    public final String AVG_REQUEST_WITH_UUID = "/avg/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}";
 
     public Driver getDriver() {
         return Driver.builder()
@@ -57,7 +67,7 @@ public class DriverTestUtil {
                 .birthDate(SECOND_BIRTH_DATE)
                 .phoneNumber(SECOND_PHONE)
                 .gender(SECOND_GENDER)
-                .available(SECOND_AVAILABLE)
+                .available(NON_AVAILABLE)
                 .cars(CarTestUtil.getCars())
                 .build();
     }
@@ -83,8 +93,27 @@ public class DriverTestUtil {
                 .name(NAME)
                 .birthDate(BIRTH_DATE)
                 .phoneNumber(PHONE)
-                .gender(GENDER_NAME)
+                .gender(GENDER.name())
                 .cars(CarTestUtil.getCarsWithoutDriverRequest())
+                .build();
+    }
+
+    public DriverRequest getNonExistingDriverRequest() {
+        return DriverRequest.builder()
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(NON_EXISTING_PHONE)
+                .gender(GENDER.name())
+                .cars(List.of(CarTestUtil.getThirdCarWithoutDriverRequest()))
+                .build();
+    }
+
+    public DriverRequest getInvalidPassengerRequest() {
+        return DriverRequest.builder()
+                .name(WRONG_NAME)
+                .birthDate(WRONG_BIRTH_DATE)
+                .phoneNumber(WRONG_PHONE)
+                .gender(WRONG_GENDER)
                 .build();
     }
 
@@ -93,7 +122,7 @@ public class DriverTestUtil {
                 .name(NAME)
                 .birthDate(BIRTH_DATE)
                 .phoneNumber(PHONE)
-                .gender(GENDER_NAME)
+                .gender(GENDER.name())
                 .build();
     }
 
@@ -102,7 +131,7 @@ public class DriverTestUtil {
                 .name(SECOND_NAME)
                 .birthDate(SECOND_BIRTH_DATE)
                 .phoneNumber(SECOND_PHONE)
-                .gender(SECOND_GENDER_NAME)
+                .gender(SECOND_GENDER.name())
                 .build();
     }
 
@@ -112,10 +141,36 @@ public class DriverTestUtil {
                 .name(NAME)
                 .birthDate(BIRTH_DATE)
                 .phoneNumber(PHONE)
-                .gender(GENDER_NAME)
+                .gender(GENDER.name())
                 .available(AVAILABLE)
-                .cars(CarTestUtil.getCarsWithoutDriverResponse())
+                .cars(List.of(CarTestUtil.getCarWithoutDriverResponse()))
                 .avgRating(RATING)
+                .build();
+    }
+
+    public DriverResponse getDriverResponseWithFalseAvailable() {
+        return DriverResponse.builder()
+                .id(ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(PHONE)
+                .gender(GENDER.name())
+                .available(NON_AVAILABLE)
+                .cars(List.of(CarTestUtil.getCarWithoutDriverResponse()))
+                .avgRating(RATING)
+                .build();
+    }
+
+    public DriverResponse getCreatedCarResponse() {
+        return DriverResponse.builder()
+                .id(NON_EXISTING_ID)
+                .name(NAME)
+                .birthDate(BIRTH_DATE)
+                .phoneNumber(NON_EXISTING_PHONE)
+                .gender(GENDER.name())
+                .available(AVAILABLE)
+                .avgRating(RATING)
+                .cars(List.of(CarTestUtil.getThirdCarWithoutDriverResponse()))
                 .build();
     }
 
@@ -125,9 +180,9 @@ public class DriverTestUtil {
                 .name(NAME)
                 .birthDate(BIRTH_DATE)
                 .phoneNumber(PHONE)
-                .gender(GENDER_NAME)
+                .gender(GENDER.name())
                 .available(AVAILABLE)
-                .cars(CarTestUtil.getCarsWithoutDriverResponse())
+                .cars(List.of(CarTestUtil.getCarWithoutDriverResponse()))
                 .avgRating(RATING)
                 .build();
     }
@@ -138,9 +193,9 @@ public class DriverTestUtil {
                 .name(SECOND_NAME)
                 .birthDate(SECOND_BIRTH_DATE)
                 .phoneNumber(SECOND_PHONE)
-                .gender(SECOND_GENDER_NAME)
-                .available(SECOND_AVAILABLE)
-                .cars(CarTestUtil.getCarsWithoutDriverResponse())
+                .gender(SECOND_GENDER.name())
+                .available(NON_AVAILABLE)
+                .cars(List.of(CarTestUtil.getSecondCarWithoutDriverResponse()))
                 .avgRating(SECOND_RATING)
                 .build();
     }
@@ -180,6 +235,14 @@ public class DriverTestUtil {
                 .build();
     }
 
+    public Map<String, Object> getFindAllParamsMap() {
+        return Map.of(
+                "page", PAGE,
+                "limit", LIMIT,
+                "sort", SORT_NAME
+        );
+    }
+
     public Predicate getPredicate() {
         return ExpressionUtils.allOf(Expressions.TRUE);
     }
@@ -192,10 +255,10 @@ public class DriverTestUtil {
         return new PageImpl<>(getDrivers());
     }
 
-    public PageResponse<DriverResponse> getPageResponse(List<DriverResponse> driverResponses) {
+    public PageResponse<DriverResponse> getPageResponse() {
         Page<Driver> driverPage = getPageOfDrivers();
         return PageResponse.<DriverResponse>builder()
-                .objectList(driverResponses)
+                .objectList(getDriverResponses())
                 .totalElements(driverPage.getTotalElements())
                 .totalPages(driverPage.getTotalPages())
                 .build();

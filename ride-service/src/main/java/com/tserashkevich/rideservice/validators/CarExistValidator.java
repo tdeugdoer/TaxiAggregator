@@ -7,11 +7,11 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CarExistValidator implements ConstraintValidator<CarExist, String> {
+public class CarExistValidator implements ConstraintValidator<CarExist, Long> {
     private final CarFeignClient carFeignClient;
 
     @Override
-    public boolean isValid(String carId, ConstraintValidatorContext context) {
-        return carFeignClient.getExistCar(Long.parseLong(carId));
+    public boolean isValid(Long carId, ConstraintValidatorContext context) {
+        return carFeignClient.getExistCar(carId);
     }
 }

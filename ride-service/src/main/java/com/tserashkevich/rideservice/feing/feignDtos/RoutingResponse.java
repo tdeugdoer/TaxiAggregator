@@ -2,12 +2,14 @@ package com.tserashkevich.rideservice.feing.feignDtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoutingResponse {
@@ -16,6 +18,7 @@ public class RoutingResponse {
     private String type;
 
     @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Feature {
@@ -24,6 +27,7 @@ public class RoutingResponse {
         private Geometry geometry;
 
         @Data
+        @Builder
         @NoArgsConstructor
         @AllArgsConstructor
         public static class Properties {

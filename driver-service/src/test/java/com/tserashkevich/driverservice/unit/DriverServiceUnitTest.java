@@ -173,7 +173,7 @@ public class DriverServiceUnitTest {
         PageRequest pageRequest = DriverTestUtil.getPageRequest();
         Page<Driver> driverPage = DriverTestUtil.getPageOfDrivers();
         List<DriverResponse> driverResponses = DriverTestUtil.getDriverResponses();
-        PageResponse<DriverResponse> driverPageResponse = DriverTestUtil.getPageResponse(driverResponses);
+        PageResponse<DriverResponse> driverPageResponse = DriverTestUtil.getPageResponse();
 
         doReturn(driverPage)
                 .when(driverRepository)
@@ -185,7 +185,7 @@ public class DriverServiceUnitTest {
         PageResponse<DriverResponse> result = driverService.findAll(findAllParams);
 
         verify(driverRepository).findAll(predicate, pageRequest);
-        assertThat(result).isEqualTo(driverPageResponse);
+        assertThat(result).usingRecursiveComparison().isEqualTo(driverPageResponse);
     }
 
     @Test

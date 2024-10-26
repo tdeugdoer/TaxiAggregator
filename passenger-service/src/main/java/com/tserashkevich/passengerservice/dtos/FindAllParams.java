@@ -3,7 +3,6 @@ package com.tserashkevich.passengerservice.dtos;
 import com.tserashkevich.passengerservice.models.enums.Gender;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
