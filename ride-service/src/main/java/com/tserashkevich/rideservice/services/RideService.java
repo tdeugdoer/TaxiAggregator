@@ -1,6 +1,7 @@
 package com.tserashkevich.rideservice.services;
 
 import com.tserashkevich.rideservice.dtos.*;
+import com.tserashkevich.rideservice.models.enums.Status;
 
 public interface RideService {
     CreateRideResponse create(CreateRideRequest createRideRequest);
@@ -11,7 +12,7 @@ public interface RideService {
 
     RideResponse findById(String rideId);
 
-    RideResponse changeStatus(String rideId, String status);
+    RideResponse changeStatus(String rideId, Status status);
 
     RideResponse changeDriver(String rideId, String driverId);
 

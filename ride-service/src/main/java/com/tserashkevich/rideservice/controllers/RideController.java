@@ -1,5 +1,6 @@
 package com.tserashkevich.rideservice.controllers;
 
+import com.tserashkevich.rideservice.configs.swagger.RideApi;
 import com.tserashkevich.rideservice.dtos.*;
 import com.tserashkevich.rideservice.models.enums.Status;
 import com.tserashkevich.rideservice.services.RideService;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/rides")
-public class RideController {
+public class RideController implements RideApi {
     private final RideService rideService;
 
     @PostMapping
@@ -72,9 +73,7 @@ public class RideController {
 
     @PatchMapping("/changeStatus/{rideId}/{status}")
     public RideResponse changeStatus(@PathVariable String rideId,
-                                     @NotBlank(message = ValidationList.STATUS_REQUIRED)
-                                     @Pattern(regexp = PatternList.STATUS_PATTERN, message = ValidationList.WRONG_STATUS)
-                                     @PathVariable String status) {
+                                     @PathVariable Status status) {
         return rideService.changeStatus(rideId, status);
     }
 
