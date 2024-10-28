@@ -1,5 +1,6 @@
 package com.tserashkevich.ratingservice.controllers;
 
+import com.tserashkevich.ratingservice.config.swagger.RatingApi;
 import com.tserashkevich.ratingservice.dtos.*;
 import com.tserashkevich.ratingservice.service.RatingService;
 import com.tserashkevich.ratingservice.utils.RatingSortList;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/ratings")
-public class RatingController {
+public class RatingController implements RatingApi {
     private final RatingService ratingService;
 
     @PostMapping
