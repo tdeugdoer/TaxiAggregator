@@ -1,5 +1,6 @@
 package com.tserashkevich.passengerservice.controllers;
 
+import com.tserashkevich.passengerservice.configs.swagger.PassengerApi;
 import com.tserashkevich.passengerservice.dtos.FindAllParams;
 import com.tserashkevich.passengerservice.dtos.PageResponse;
 import com.tserashkevich.passengerservice.dtos.PassengerRequest;
@@ -22,7 +23,7 @@ import java.util.UUID;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/passengers")
-public class PassengerController {
+public class PassengerController implements PassengerApi {
     private final PassengerService passengerService;
 
     @PostMapping
