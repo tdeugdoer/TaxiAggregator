@@ -1,5 +1,6 @@
 package com.tserashkevich.driverservice.controllers;
 
+import com.tserashkevich.driverservice.configs.swagger.CarApi;
 import com.tserashkevich.driverservice.dtos.CarFindAllParams;
 import com.tserashkevich.driverservice.dtos.CarRequest;
 import com.tserashkevich.driverservice.dtos.CarResponse;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/cars")
-public class CarController {
+public class CarController implements CarApi {
     private final CarService carService;
 
     @PostMapping

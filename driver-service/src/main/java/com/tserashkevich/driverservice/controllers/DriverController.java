@@ -1,5 +1,6 @@
 package com.tserashkevich.driverservice.controllers;
 
+import com.tserashkevich.driverservice.configs.swagger.DriverApi;
 import com.tserashkevich.driverservice.dtos.*;
 import com.tserashkevich.driverservice.models.enums.Gender;
 import com.tserashkevich.driverservice.services.DriverService;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/drivers")
-public class DriverController {
+public class DriverController implements DriverApi {
     private final DriverService driverService;
 
     @PostMapping
