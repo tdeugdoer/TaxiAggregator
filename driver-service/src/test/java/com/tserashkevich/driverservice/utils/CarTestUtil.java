@@ -36,7 +36,7 @@ public class CarTestUtil {
     public final Sort SORT = Sort.by(Sort.Direction.ASC, "id");
     public final String SORT_NAME = "ID_ASC";
     public final String CAR_NOT_FOUND_MESSAGE = "Машина не найдена";
-    public final String DEFAULT_PATH = "/api/v1/cars";    public final Driver DRIVER = DriverTestUtil.getDriver();
+    public final String DEFAULT_PATH = "/api/v1/cars";
 
     public Car getCar() {
         return Car.builder()
@@ -47,7 +47,7 @@ public class CarTestUtil {
                 .color(COLOR)
                 .driver(DRIVER)
                 .build();
-    }
+    }    public final Driver DRIVER = DriverTestUtil.getDriver();
 
     public Car getSecondCar() {
         return Car.builder()
@@ -78,7 +78,7 @@ public class CarTestUtil {
                 .color(SECOND_COLOR)
                 .driver(SECOND_DRIVER)
                 .build();
-    }    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
+    }
 
     public List<Car> getCars() {
         return List.of(
@@ -92,7 +92,7 @@ public class CarTestUtil {
                 getNonSavedCar(),
                 getSecondNonSavedCar()
         );
-    }
+    }    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
 
     public CarRequest getCarRequest() {
         return CarRequest.builder()

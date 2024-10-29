@@ -26,7 +26,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.matching;
 
 @UtilityClass
 public class TestUtil {
-    public final String RIDE_ID = "6592008029c8c3e4dc76256c";
+    public final String RIDE_ID = "66e777326df3cf7ede379779";
     public final String SECOND_RIDE_ID = "507f1f77bcf86cd799439011";
     public final String NON_EXISTING_RIDE_ID = "123f1f77bcf86cd799439999";
     public final UUID PASSENGER_ID = UUID.fromString("11111111-1111-1111-1111-111111111111");
