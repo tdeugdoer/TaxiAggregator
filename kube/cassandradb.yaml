@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cassandra-deployment
+spec:
+  selector:
+    matchLabels:
+      app: cassandra
+  template:
+    metadata:
+      labels:
+        app: cassandra
+    spec:
+      containers:
+        - name: cassandra
+          image: cassandra:latest
+          ports:
+            - containerPort: 9042
+          resources:
+            limits:
+              memory: "512Mi"
+          volumeMounts:
+            - name: cassandra-persistent-volume
+              mountPath: /var/lib/cassandra
+      volumes:
+        - name: cassandra-persistent-volume
+          persistentVolumeClaim:
+            claimName: cassandra-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cassandra-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "256Mi"

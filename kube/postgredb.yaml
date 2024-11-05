@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgredb
+spec:
+  selector:
+    matchLabels:
+      app: postgredb
+  template:
+    metadata:
+      labels:
+        app: postgredb
+    spec:
+      containers:
+        - name: postgredb
+          image: postgres:latest
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgre-data
+              mountPath: /var/lib/postgresql/data
+          resources:
+            limits:
+              memory: "512Mi"
+      volumes:
+        - name: postgre-data
+          persistentVolumeClaim:
+            claimName: postgre-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgre-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "500Mi"
