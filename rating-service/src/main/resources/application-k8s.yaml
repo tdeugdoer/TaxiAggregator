@@ -1,0 +1,8 @@
+spring:
+  cassandra:
+    contact-points: cassandradb
+    keyspace-name: mykeyspace
+    port: 9042
+    local-datacenter: datacenter1
+  kafka:
+    bootstrap-servers: kafka:9092

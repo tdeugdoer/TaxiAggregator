@@ -47,7 +47,7 @@ public class CarTestUtil {
                 .color(COLOR)
                 .driver(DRIVER)
                 .build();
-    }    public final Driver DRIVER = DriverTestUtil.getDriver();
+    }
 
     public Car getSecondCar() {
         return Car.builder()
@@ -58,7 +58,7 @@ public class CarTestUtil {
                 .color(SECOND_COLOR)
                 .driver(SECOND_DRIVER)
                 .build();
-    }
+    }    public final Driver DRIVER = DriverTestUtil.getDriver();
 
     public Car getNonSavedCar() {
         return Car.builder()
@@ -92,7 +92,7 @@ public class CarTestUtil {
                 getNonSavedCar(),
                 getSecondNonSavedCar()
         );
-    }    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
+    }
 
     public CarRequest getCarRequest() {
         return CarRequest.builder()
@@ -112,7 +112,7 @@ public class CarTestUtil {
                 .color(COLOR.name())
                 .driver(driver)
                 .build();
-    }
+    }    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
 
     public CarRequest getNonExistingCarRequest() {
         return CarRequest.builder()

@@ -1,39 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandradb
+spec:
+  selector:
+    app: cassandradb
+  ports:
+    - protocol: TCP
+      port: 9042
+      targetPort: 9042
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cassandra-deployment
+  name: cassandradb
 spec:
   selector:
     matchLabels:
-      app: cassandra
+      app: cassandradb
   template:
     metadata:
       labels:
-        app: cassandra
+        app: cassandradb
     spec:
       containers:
-        - name: cassandra
+        - name: cassandradb
           image: cassandra:latest
           ports:
             - containerPort: 9042
-          resources:
-            limits:
-              memory: "512Mi"
           volumeMounts:
-            - name: cassandra-persistent-volume
-              mountPath: /var/lib/cassandra
+            - name: cassandradb-data
+              mountPath: /var/lib/cassandradb
       volumes:
-        - name: cassandra-persistent-volume
+        - name: cassandradb-data
           persistentVolumeClaim:
-            claimName: cassandra-pvc
+            claimName: cassandradb-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: cassandra-pvc
+  name: cassandradb-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "256Mi"
+      storage: "500Mi"
