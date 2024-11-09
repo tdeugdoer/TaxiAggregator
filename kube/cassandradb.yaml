@@ -30,7 +30,7 @@ spec:
             - containerPort: 9042
           volumeMounts:
             - name: cassandradb-data
-              mountPath: /var/lib/cassandradb
+              mountPath: /var/lib/cassandra
       volumes:
         - name: cassandradb-data
           persistentVolumeClaim:
