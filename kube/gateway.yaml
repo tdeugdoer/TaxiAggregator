@@ -15,6 +15,13 @@ spec:
                 name: driver-service
                 port:
                   number: 8080
+          - path: /api/v1/cars
+            pathType: Prefix
+            backend:
+              service:
+                name: driver-service
+                port:
+                  number: 8080
           - path: /api/v1/passengers
             pathType: Prefix
             backend:

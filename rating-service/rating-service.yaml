@@ -33,5 +33,5 @@ spec:
               value: k8s
           resources:
             limits:
-              memory: "500Mi"
+              memory: "300Mi"
               cpu: "0.5"

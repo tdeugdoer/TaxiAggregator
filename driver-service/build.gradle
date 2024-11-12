@@ -29,6 +29,8 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'io.projectreactor:reactor-core:3.6.11'
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${swaggerVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
     implementation 'org.liquibase:liquibase-core'
     runtimeOnly 'org.postgresql:postgresql'
