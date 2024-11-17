@@ -15,7 +15,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RatingSteps extends DataStepsClass {
     @When("Send find all request to rating-service with sourceId and rideId")
-    public void sendFindAllRequestToRatingServiceWithSourceIdAndRideId() {
+    public void sendFindAllRequestToRatingServiceWithSourceIdAndRideId() throws InterruptedException {
+        Thread.sleep(3000L);
         Response response = given()
                 .baseUri(TestUtil.BASE_URL + TestUtil.RATINGS_PORT)
                 .contentType(ContentType.JSON)

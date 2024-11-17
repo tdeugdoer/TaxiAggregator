@@ -2,6 +2,7 @@ HELP.md
 .gradle
 build/
 gradle/
+volumes/
 
 !**/src/main/**/build/
 !**/src/test/**/build/
