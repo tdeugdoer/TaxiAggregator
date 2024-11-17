@@ -32,7 +32,8 @@ spec:
               mountPath: /data/db
           resources:
             limits:
-              memory: "512Mi"
+              memory: "500Mi"
+              cpu: "0.5"
       volumes:
         - name: mongo-data
           persistentVolumeClaim:
@@ -47,4 +48,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "500Mi"
+      storage: "200Mi"

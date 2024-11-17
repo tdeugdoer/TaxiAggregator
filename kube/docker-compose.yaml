@@ -1,0 +1,31 @@
+services:
+  prometheus-k8s:
+    image: prom/prometheus:latest
+    container_name: prometheus-k8s
+    restart: unless-stopped
+    ports:
+      - '9090:9090'
+    volumes:
+      - ../monitoring/prometheus/prometheus-k8s.yml:/etc/prometheus/prometheus.yml
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+
+  grafana-k8s:
+    image: grafana/grafana:latest
+    container_name: grafana-k8s
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - ../monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ../monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+    depends_on:
+      - prometheus-k8s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M

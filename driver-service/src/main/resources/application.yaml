@@ -31,6 +31,27 @@ spring:
       change-driver-status-topic:
         name: change-driver-status-topic
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus", "health" ]
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+  health:
+    circuitbreakers:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
 resilience4j:
   retry:
     instances:
@@ -48,5 +69,6 @@ resilience4j:
         max-wait-duration-in-half-open-state: 5s
         automatic-transition-from-open-to-half-open-enabled: true
         permitted-number-of-calls-in-half-open-state: 2
+
 server:
   port: 8080

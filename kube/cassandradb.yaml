@@ -31,6 +31,9 @@ spec:
           volumeMounts:
             - name: cassandradb-data
               mountPath: /var/lib/cassandra
+          resources:
+            limits:
+              cpu: "0.5"
       volumes:
         - name: cassandradb-data
           persistentVolumeClaim:
@@ -45,4 +48,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "500Mi"
+      storage: "200Mi"

@@ -14,5 +14,24 @@ spring:
       group-id: group-1
       create-rating-topic:
         name: create-rating-topic
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus", "health" ]
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
 server:
   port: 8083
