@@ -94,9 +94,9 @@ public class RideServiceImpl implements RideService {
 
     @Transactional
     @Override
-    public RideResponse changeStatus(String rideId, String status) {
+    public RideResponse changeStatus(String rideId, Status status) {
         Ride ride = getOrThrow(rideId);
-        ride.setStatus(Status.valueOf(status));
+        ride.setStatus(status);
         if (ride.getStatus().equals(Status.FINISHED)) {
             ride.getTime().setEndTime(LocalDateTime.now());
             ChangeDriverStatusEvent changeDriverStatusEvent = ChangeDriverStatusEvent.builder()
