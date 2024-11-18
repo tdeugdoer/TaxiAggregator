@@ -30,6 +30,8 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${swaggerVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+    implementation "net.logstash.logback:logstash-logback-encoder:${logstashVersion}"
+    implementation "io.micrometer:micrometer-tracing-bridge-brave:${tracingBridgeBraveVersion}"
 
     implementation 'org.liquibase:liquibase-core'
     runtimeOnly 'org.postgresql:postgresql'
