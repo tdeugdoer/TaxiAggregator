@@ -73,7 +73,7 @@ public class PassengerController implements PassengerApi {
     }
 
     @GetMapping("/exist/{passengerId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("(hasRole('USER') && #passengerId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public Boolean existPassenger(@PathVariable UUID passengerId) {
         return passengerService.existById(passengerId);
     }

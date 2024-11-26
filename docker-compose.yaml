@@ -200,7 +200,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
 
   passenger-service:
@@ -219,7 +219,7 @@ services:
       resources:
         limits:
           cpus: "0.9"
-          memory: 500M
+          memory: 300M
 
   driver-service:
     image: driver-service:latest
@@ -236,7 +236,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
 
   ride-service:
@@ -254,5 +254,5 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
