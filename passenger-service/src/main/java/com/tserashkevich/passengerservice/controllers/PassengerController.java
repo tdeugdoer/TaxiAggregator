@@ -29,17 +29,20 @@ public class PassengerController implements PassengerApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public PassengerResponse createPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
         return passengerService.create(passengerRequest);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("(hasRole('USER') && #id == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public PassengerResponse updatePassenger(@PathVariable UUID id, @Valid @RequestBody PassengerRequest passengerRequest) {
         return passengerService.update(id, passengerRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("(hasRole('USER') && #id == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public void deletePassenger(@PathVariable UUID id) {
         passengerService.delete(id);
     }
@@ -64,7 +67,7 @@ public class PassengerController implements PassengerApi {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("(hasRole('USER') && #id == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public PassengerResponse findPassengerById(@PathVariable UUID id) {
         return passengerService.findById(id);
     }

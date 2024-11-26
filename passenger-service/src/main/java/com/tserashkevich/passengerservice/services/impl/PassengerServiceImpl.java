@@ -6,6 +6,7 @@ import com.tserashkevich.passengerservice.dtos.FindAllParams;
 import com.tserashkevich.passengerservice.dtos.PageResponse;
 import com.tserashkevich.passengerservice.dtos.PassengerRequest;
 import com.tserashkevich.passengerservice.dtos.PassengerResponse;
+import com.tserashkevich.passengerservice.exceptions.PassengerAlreadyExistException;
 import com.tserashkevich.passengerservice.exceptions.PassengerNotFoundException;
 import com.tserashkevich.passengerservice.mappers.PassengerMapper;
 import com.tserashkevich.passengerservice.models.Passenger;
@@ -19,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +40,8 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public PassengerResponse create(PassengerRequest passengerRequest) {
         Passenger passenger = passengerMapper.toModel(passengerRequest);
+        checkPassengerNotExist();
+        passenger.setId(getPassengerIdFromPrincipal());
         passengerRepository.save(passenger);
         log.info(LogList.CREATE_PASSENGER, passenger.getId());
         return passengerMapper.toResponse(passenger);
@@ -97,8 +103,20 @@ public class PassengerServiceImpl implements PassengerService {
         return passengerRepository.existsByPhoneNumber(phoneNumber);
     }
 
-    public Passenger getOrThrow(UUID passengerId) {
+    private Passenger getOrThrow(UUID passengerId) {
         Optional<Passenger> optionalPassenger = passengerRepository.findById(passengerId);
         return optionalPassenger.orElseThrow(PassengerNotFoundException::new);
+    }
+
+    private UUID getPassengerIdFromPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        return UUID.fromString(jwt.getClaim("sub"));
+    }
+
+    private void checkPassengerNotExist() {
+        if (passengerRepository.existsById(getPassengerIdFromPrincipal())) {
+            throw new PassengerAlreadyExistException();
+        }
     }
 }
