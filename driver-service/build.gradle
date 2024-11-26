@@ -34,6 +34,8 @@ dependencies {
     implementation "net.logstash.logback:logstash-logback-encoder:${logstashVersion}"
     implementation "io.micrometer:micrometer-tracing-bridge-brave:${tracingBridgeBraveVersion}"
     implementation 'io.github.openfeign:feign-micrometer'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     implementation 'org.liquibase:liquibase-core'
     runtimeOnly 'org.postgresql:postgresql'

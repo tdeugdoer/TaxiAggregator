@@ -4,6 +4,7 @@ import com.tserashkevich.driverservice.dtos.ExceptionResponse;
 import com.tserashkevich.driverservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.driverservice.dtos.Violation;
 import com.tserashkevich.driverservice.exceptions.CarNotFoundException;
+import com.tserashkevich.driverservice.exceptions.DriverAlreadyExistException;
 import com.tserashkevich.driverservice.exceptions.DriverNotFoundException;
 import com.tserashkevich.driverservice.exceptions.feign.OtherServiceBadRequestException;
 import com.tserashkevich.driverservice.exceptions.feign.OtherServiceNotFoundException;
@@ -31,6 +32,15 @@ public class RestExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(new ExceptionResponse(ex.getMessage()));
     }
+
+    @ExceptionHandler(DriverAlreadyExistException.class)
+    public ResponseEntity<ExceptionResponse> handlePassengerAlreadyExistException(RuntimeException ex) {
+        log.error(LogList.ALREADY_EXIST_DRIVER, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ValidationErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {

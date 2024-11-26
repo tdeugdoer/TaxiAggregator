@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,22 +26,26 @@ public class DriverController implements DriverApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public DriverResponse createDriver(@Valid @RequestBody DriverRequest driverRequest) {
         return driverService.create(driverRequest);
     }
 
     @PutMapping("/{driverId}")
+    @PreAuthorize("(hasRole('USER') && #driverId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public DriverResponse updateDriver(@PathVariable UUID driverId, @Valid @RequestBody DriverUpdateRequest driverUpdateRequest) {
         return driverService.update(driverId, driverUpdateRequest);
     }
 
     @DeleteMapping("/{driverId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("(hasRole('USER') && #driverId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public void deleteDriver(@PathVariable UUID driverId) {
         driverService.delete(driverId);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public PageResponse<DriverResponse> findAllDrivers(@RequestParam(defaultValue = "0") @Min(0) int page,
                                                        @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
                                                        @RequestParam(defaultValue = "ID_ASC") DriverSortList sort,
@@ -61,16 +66,19 @@ public class DriverController implements DriverApi {
     }
 
     @GetMapping("/{driverId}")
+    @PreAuthorize("(hasRole('USER') && #driverId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public DriverResponse findDriverById(@PathVariable UUID driverId) {
         return driverService.findById(driverId);
     }
 
     @PatchMapping("/changeStatus/{driverId}/{available}")
+    @PreAuthorize("(hasRole('USER') && #driverId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public DriverResponse changeAvailableStatus(@PathVariable UUID driverId, @PathVariable Boolean available) {
         return driverService.changeAvailableStatus(driverId, available);
     }
 
     @GetMapping("/exist/{driverId}")
+    @PreAuthorize("(hasRole('USER') && #driverId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public Boolean existDriver(@PathVariable UUID driverId) {
         return driverService.existById(driverId);
     }

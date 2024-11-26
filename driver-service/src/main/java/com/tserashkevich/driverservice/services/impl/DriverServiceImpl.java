@@ -2,6 +2,7 @@ package com.tserashkevich.driverservice.services.impl;
 
 import com.querydsl.core.types.Predicate;
 import com.tserashkevich.driverservice.dtos.*;
+import com.tserashkevich.driverservice.exceptions.DriverAlreadyExistException;
 import com.tserashkevich.driverservice.exceptions.DriverNotFoundException;
 import com.tserashkevich.driverservice.mappers.DriverMapper;
 import com.tserashkevich.driverservice.models.Driver;
@@ -16,6 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,12 +39,17 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public DriverResponse create(DriverRequest driverRequest) {
         Driver driver = driverMapper.toModel(driverRequest);
+        checkDriverNotExist();
+        driver.setId(getDriverIdFromPrincipal());
         driver.setAvailable(true);
+
         driverRepository.saveAndFlush(driver);
+
         List<CarWithoutDriverRequest> carRequests = driverRequest.getCars();
         if (carRequests != null) {
             driver.setCars(carService.create(driver, carRequests));
         }
+
         log.info(LogList.CREATE_DRIVER, driver.getId());
         return driverMapper.toResponse(driver);
     }
@@ -111,8 +120,20 @@ public class DriverServiceImpl implements DriverService {
         return driverMapper.toResponse(driver);
     }
 
-    public Driver getOrThrow(UUID driverId) {
+    private Driver getOrThrow(UUID driverId) {
         Optional<Driver> optionalCar = driverRepository.findById(driverId);
         return optionalCar.orElseThrow(DriverNotFoundException::new);
+    }
+
+    private UUID getDriverIdFromPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Jwt jwt = (Jwt) authentication.getPrincipal();
+        return UUID.fromString(jwt.getClaim("sub"));
+    }
+
+    private void checkDriverNotExist() {
+        if (driverRepository.existsById(getDriverIdFromPrincipal())) {
+            throw new DriverAlreadyExistException();
+        }
     }
 }
