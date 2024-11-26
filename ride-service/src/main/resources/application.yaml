@@ -35,6 +35,21 @@ spring:
         name: create-rating-topic
       change-driver-status-topic:
         name: change-driver-status-topic
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8085/realms/taxi-aggregator
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8085/realms/taxi-aggregator
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: passenger-service
+            client-secret: mLpVyia4h1OPejq0ZDAHSdDpQDVc8Let
+            scope: openid
 
 management:
   endpoints:
@@ -60,12 +75,6 @@ management:
     sampling:
       probability: 1
     enabled: true
-
-logging:
-  level:
-    root: INFO
-  pattern:
-    console: '{"timestamp":"%d{yyyy-MM-dd HH:mm:ss.SSS}", "level":"%p", "traceId":"%X{traceId}", "spanId":"%X{spanId}", "message":"%msg"}'
 
 resilience4j:
   retry:
