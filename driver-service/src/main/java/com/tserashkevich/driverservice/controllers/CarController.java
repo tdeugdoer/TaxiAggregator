@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,22 +26,26 @@ public class CarController implements CarApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("(hasRole('USER') && #carRequest.driver == authentication.principal.getClaim('sub')) || hasRole('ADMIN')")
     public CarResponse createCar(@Valid @RequestBody CarRequest carRequest) {
         return carService.create(carRequest);
     }
 
     @PutMapping("/{carId}")
+    @PreAuthorize("(hasRole('USER') && #carRequest.driver == authentication.principal.getClaim('sub')) || hasRole('ADMIN')")
     public CarResponse updateCar(@PathVariable Long carId, @Valid @RequestBody CarRequest carRequest) {
         return carService.update(carId, carRequest);
     }
 
     @DeleteMapping("/{carId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteCar(@PathVariable Long carId) {
         carService.delete(carId);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public PageResponse<CarResponse> findAllCars(@RequestParam(defaultValue = "0") @Min(0) int page,
                                                  @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
                                                  @RequestParam(defaultValue = "ID_ASC") CarSortList sort,
@@ -61,11 +66,13 @@ public class CarController implements CarApi {
     }
 
     @GetMapping("/{carId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public CarResponse findCarById(@PathVariable Long carId) {
         return carService.findById(carId);
     }
 
     @GetMapping("/exist/{carId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Boolean existCar(@PathVariable Long carId) {
         return carService.existById(carId);
     }

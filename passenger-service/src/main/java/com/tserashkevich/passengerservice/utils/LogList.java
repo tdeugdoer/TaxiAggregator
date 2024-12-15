@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class LogList {
     public static final String NOT_FOUND_ERROR = "Not Found exception thrown: {}";
+    public static final String ALREADY_EXIST_PASSENGER = "Passenger already exist: {}";
     public static final String METHOD_ARGUMENT_ERROR = "Not Valid Method Argument exception thrown: {}";
     public static final String CONSTRAINT_VIOLATION_ERROR = "Failed parameter verification exception thrown: {}";
     public static final String CREATE_PASSENGER = "Passenger created with ID: {}";
@@ -19,5 +20,4 @@ public class LogList {
     public static final String EXIST_PASSENGER_BY_PHONE_NUMBER = "Exist passenger by phone number: {}";
     public static final String CIRCUITBREAKER_OPEN = "CircuitBreaker is open: {}";
     public static final String CONNECTION_ERROR = "Connection error: {}";
-
 }

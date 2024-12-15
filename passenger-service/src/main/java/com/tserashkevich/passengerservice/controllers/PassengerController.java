@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,22 +29,26 @@ public class PassengerController implements PassengerApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public PassengerResponse createPassenger(@Valid @RequestBody PassengerRequest passengerRequest) {
         return passengerService.create(passengerRequest);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("(hasRole('USER') && #id == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public PassengerResponse updatePassenger(@PathVariable UUID id, @Valid @RequestBody PassengerRequest passengerRequest) {
         return passengerService.update(id, passengerRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("(hasRole('USER') && #id == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public void deletePassenger(@PathVariable UUID id) {
         passengerService.delete(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public PageResponse<PassengerResponse> findAllPassengers(@RequestParam(defaultValue = "0") @Min(0) int page,
                                                              @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
                                                              @RequestParam(defaultValue = "ID_ASC") SortList sort,
@@ -62,11 +67,13 @@ public class PassengerController implements PassengerApi {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("(hasRole('USER') && #id == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public PassengerResponse findPassengerById(@PathVariable UUID id) {
         return passengerService.findById(id);
     }
 
     @GetMapping("/exist/{passengerId}")
+    @PreAuthorize("(hasRole('USER') && #passengerId == T(java.util.UUID).fromString(authentication.principal.getClaim('sub'))) || hasRole('ADMIN')")
     public Boolean existPassenger(@PathVariable UUID passengerId) {
         return passengerService.existById(passengerId);
     }

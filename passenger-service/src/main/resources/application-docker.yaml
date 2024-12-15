@@ -14,3 +14,18 @@ spring:
             url: http://rating-service:8083/api/v1/ratings
             connect-timeout: 3000
             read-timeout: 5000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/taxi-aggregator
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak:8080/realms/taxi-aggregator
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            client-id: passenger-service
+            client-secret: mLpVyia4h1OPejq0ZDAHSdDpQDVc8Let
+            scope: openid

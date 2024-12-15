@@ -68,7 +68,7 @@ public class CarTestUtil {
                 .color(COLOR)
                 .driver(DRIVER)
                 .build();
-    }    public final Driver DRIVER = DriverTestUtil.getDriver();
+    }
 
     public Car getSecondNonSavedCar() {
         return Car.builder()
@@ -78,7 +78,7 @@ public class CarTestUtil {
                 .color(SECOND_COLOR)
                 .driver(SECOND_DRIVER)
                 .build();
-    }
+    }    public final Driver DRIVER = DriverTestUtil.getDriver();
 
     public List<Car> getCars() {
         return List.of(
@@ -132,7 +132,7 @@ public class CarTestUtil {
                 .color(SECOND_COLOR.name())
                 .driver(DriverTestUtil.SECOND_ID.toString())
                 .build();
-    }    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
+    }
 
     public CarWithoutDriverRequest getCarWithoutDriverRequest() {
         return CarWithoutDriverRequest.builder()
@@ -150,7 +150,7 @@ public class CarTestUtil {
                 .model(SECOND_MODEL)
                 .color(SECOND_COLOR.name())
                 .build();
-    }
+    }    public final Driver SECOND_DRIVER = DriverTestUtil.getSecondDriver();
 
     public CarWithoutDriverRequest getThirdCarWithoutDriverRequest() {
         return CarWithoutDriverRequest.builder()

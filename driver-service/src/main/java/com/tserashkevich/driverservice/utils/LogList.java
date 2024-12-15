@@ -5,6 +5,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class LogList {
     public static final String NOT_FOUND_ERROR = "Not Found exception thrown: {}";
+    public static final String ALREADY_EXIST_DRIVER = "Driver already exist: {}";
     public static final String METHOD_ARGUMENT_ERROR = "Not Valid Method Argument exception thrown: {}";
     public static final String CONSTRAINT_VIOLATION_ERROR = "Failed parameter verification exception thrown: {}";
     public static final String CREATE_DRIVER = "Driver created with ID: {}";

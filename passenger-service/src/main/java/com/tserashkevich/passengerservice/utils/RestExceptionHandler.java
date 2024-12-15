@@ -3,6 +3,7 @@ package com.tserashkevich.passengerservice.utils;
 import com.tserashkevich.passengerservice.dtos.ExceptionResponse;
 import com.tserashkevich.passengerservice.dtos.ValidationErrorResponse;
 import com.tserashkevich.passengerservice.dtos.Violation;
+import com.tserashkevich.passengerservice.exceptions.PassengerAlreadyExistException;
 import com.tserashkevich.passengerservice.exceptions.PassengerNotFoundException;
 import com.tserashkevich.passengerservice.exceptions.feign.OtherServiceBadRequestException;
 import com.tserashkevich.passengerservice.exceptions.feign.OtherServiceNotFoundException;
@@ -28,6 +29,14 @@ public class RestExceptionHandler {
         log.error(LogList.NOT_FOUND_ERROR, ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
+                .body(new ExceptionResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(PassengerAlreadyExistException.class)
+    public ResponseEntity<ExceptionResponse> handlePassengerAlreadyExistException(RuntimeException ex) {
+        log.error(LogList.ALREADY_EXIST_PASSENGER, ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionResponse(ex.getMessage()));
     }
 

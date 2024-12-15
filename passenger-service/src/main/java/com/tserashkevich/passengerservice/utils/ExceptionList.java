@@ -14,8 +14,8 @@ public enum ExceptionList {
     BAD_REQUEST_OTHER_SERVICE("bad.request.other.service"),
     NOT_FOUND_OTHER_SERVICE("not.found.other.service"),
     SERVER_OTHER_SERVICE("server.other.service"),
-    EXTERNAL_SERVICE("external.service");
-
+    EXTERNAL_SERVICE("external.service"),
+    PASSENGER_ALREADY_EXIST("passenger.already.exist");
 
     private static MessageSource messageSource;
 

@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,17 +29,20 @@ public class RideController implements RideApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public CreateRideResponse createRide(@Valid @RequestBody CreateRideRequest rideRequest) {
         return rideService.create(rideRequest);
     }
 
     @DeleteMapping("/{rideId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteRide(@PathVariable String rideId) {
         rideService.delete(rideId);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public PageResponse<RideResponse> findAllRides(@RequestParam(defaultValue = "0") @Min(0) int page,
                                                    @RequestParam(defaultValue = "20") @Min(1) @Max(50) int limit,
                                                    @RequestParam(defaultValue = "ID_ASC") RideSortList sort,
@@ -67,17 +71,20 @@ public class RideController implements RideApi {
     }
 
     @GetMapping("/{rideId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RideResponse findRideById(@PathVariable String rideId) {
         return rideService.findById(rideId);
     }
 
     @PatchMapping("/changeStatus/{rideId}/{status}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RideResponse changeStatus(@PathVariable String rideId,
                                      @PathVariable Status status) {
         return rideService.changeStatus(rideId, status);
     }
 
     @PatchMapping("/changeDriver/{rideId}/{driverId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RideResponse changeDriver(@PathVariable String rideId,
                                      @DriverExist(message = ValidationList.DRIVER_NOT_EXIST)
                                      @NotBlank(message = ValidationList.DRIVER_ID_REQUIRED)
@@ -87,6 +94,7 @@ public class RideController implements RideApi {
     }
 
     @PatchMapping("/changeCar/{rideId}/{carId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public RideResponse changeCar(@PathVariable String rideId,
                                   @CarExist(message = ValidationList.CAR_NOT_EXIST)
                                   @NotNull(message = ValidationList.CAR_ID_REQUIRED)
@@ -97,12 +105,14 @@ public class RideController implements RideApi {
 
     @PostMapping("/driverComment")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public void createDriverComment(@Valid @RequestBody CreateRatingRequest createRatingRequest) {
         rideService.createDriverComment(createRatingRequest);
     }
 
     @PostMapping("/passengerComment")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public void createPassengerComment(@Valid @RequestBody CreateRatingRequest createRatingRequest) {
         rideService.createPassengerComment(createRatingRequest);
     }

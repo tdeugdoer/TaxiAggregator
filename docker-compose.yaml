@@ -166,6 +166,25 @@ services:
         limits:
           memory: 1g
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - TZ=Europe/Moscow
+    volumes:
+      - ./volumes/keycloak/themes:/opt/keycloak/themes/custom/login
+    command:
+      - start-dev
+    ports:
+      - "8085:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 1g
+
   rating-service:
     image: rating-service:latest
     container_name: rating-service
@@ -176,11 +195,12 @@ services:
     depends_on:
       - cassandradb
       - kafka
+      - keycloak
     restart: always
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
 
   passenger-service:
@@ -193,11 +213,12 @@ services:
     depends_on:
       - postgredb
       - kafka
+      - keycloak
     restart: always
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
 
   driver-service:
@@ -210,11 +231,12 @@ services:
     depends_on:
       - postgredb
       - kafka
+      - keycloak
     restart: always
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
 
   ride-service:
@@ -227,9 +249,10 @@ services:
     depends_on:
       - mongodb
       - kafka
+      - keycloak
     restart: always
     deploy:
       resources:
         limits:
-          cpus: "0.5"
+          cpus: "0.9"
           memory: 300M
